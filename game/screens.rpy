@@ -356,25 +356,9 @@ screen main_menu():
     tag menu
 
     add gui.main_menu_background
-
-    ## Esse quadro vazio escurece o menu principal.
-    frame:
-        style "main_menu_frame"
-
-    ## A instrução de uso inclui outra tela dentro desta. O conteúdo real do
-    ## menu principal está na tela de navegação.
-    use navigation
-
-    if gui.show_name:
-
-        vbox:
-            style "main_menu_vbox"
-
-            text "[config.name!t]":
-                style "main_menu_title"
-
-            text "[config.version]":
-                style "main_menu_version"
+    
+    # Usar menu customizado do Behind The Smile
+    use main_menu_custom
 
 
 style main_menu_frame is empty

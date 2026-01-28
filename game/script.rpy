@@ -36,14 +36,16 @@ label start_game:
     $ dangers_resolved = 0
     $ difficulty_multiplier = 1.0
     
+    # Ocultar elementos de visual novel
+    window hide
+    $ renpy.block_rollback()
+    $ _skipping = False
+    
     # Iniciar timer
     $ start_game_timer()
     
     # Cena do jogo
     scene black with fade
-    
-    system "Turno iniciado. Boa sorte, Funcionário #402."
-    system "Lembre-se: {color=#ff4444}SORRIA SEMPRE{/color}."
     
     jump game_loop
 
@@ -75,6 +77,7 @@ label pause_game:
 
 label game_over:
     hide screen game_hud
+    window hide
     
     call screen game_over_screen()
     

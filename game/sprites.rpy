@@ -1,7 +1,7 @@
 # Behind The Smile - Sistema de Sprites Pixel Art
 # Renderiza sprites usando código Python no Ren'Py
 
-init python:
+init python: 
     import pygame
     
     # ==================== PALETA DE CORES ====================

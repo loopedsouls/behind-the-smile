@@ -23,11 +23,11 @@ define config.check_conflicting_properties = True
 
 ## Cores #######################################################################
 ##
-## As cores do texto na interface.
+## As cores do texto na interface - Tema Behind The Smile (Distópico)
 
 ## Uma cor de destaque usada em toda a interface para rotular e destacar o
 ## texto.
-define gui.accent_color = '#cc6600'
+define gui.accent_color = '#f4d03f'
 
 ## A cor usada para um botão de texto quando ele não está selecionado nem passa
 ## o mouse.
@@ -38,7 +38,7 @@ define gui.idle_color = '#888888'
 define gui.idle_small_color = '#aaaaaa'
 
 ## A cor que é usada para botões e barras que passam pelo mouse.
-define gui.hover_color = '#e0a366'
+define gui.hover_color = '#f4d03f'
 
 ## A cor usada em um botão de texto quando ele está selecionado, mas não
 ## focalizado. Um botão estará selecionado se for a tela atual ou o valor de
@@ -46,17 +46,17 @@ define gui.hover_color = '#e0a366'
 define gui.selected_color = '#ffffff'
 
 ## A cor usada para um botão de texto quando ele não pode ser selecionado.
-define gui.insensitive_color = '#8888887f'
+define gui.insensitive_color = '#4444447f'
 
 ## Cores usadas para as partes das barras que não estão preenchidas. Elas não
 ## são usadas diretamente, mas são usadas ao gerar novamente os arquivos de
 ## imagem de barra.
-define gui.muted_color = '#512800'
-define gui.hover_muted_color = '#7a3d00'
+define gui.muted_color = '#1a1a2e'
+define gui.hover_muted_color = '#2a2a4e'
 
 ## As cores usadas para o diálogo e o texto da opção de menu.
 define gui.text_color = '#ffffff'
-define gui.interface_text_color = '#ffffff'
+define gui.interface_text_color = '#cccccc'
 
 
 ## Fontes e tamanhos de fonte ##################################################
@@ -92,8 +92,8 @@ define gui.title_text_size = 50
 ## Menus principal e de jogos ##################################################
 
 ## As imagens usadas nos menus principal e de jogo.
-define gui.main_menu_background = "gui/main_menu.png"
-define gui.game_menu_background = "gui/game_menu.png"
+define gui.main_menu_background = Solid("#0f0f23")
+define gui.game_menu_background = Solid("#0f0f23")
 
 
 ## Diálogo #####################################################################
