@@ -12,7 +12,7 @@
 ##
 ## O _() ao redor da string a marca como elegível para tradução.
 
-define config.name = _("behind the smile")
+define config.name = _("Behind The Smile")
 
 
 ## Determina se o título fornecido acima será mostrado na tela do menu
