@@ -1,0 +1,1 @@
+# Behind the Smile\n\nProjeto focado em desenvolvimento de jogos ou narrativa visual.\n\n## Estrutura\n- `game/`: Arquivos principais do jogo.\n- `oldcode/`: Legado de código.\n\n## Como executar\nInstruções em breve.
