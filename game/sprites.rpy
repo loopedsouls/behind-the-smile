@@ -390,6 +390,53 @@ init python:
         "..WWWW..",
     ]
     
+    # ==================== SPRITE DA PORTA ====================
+    SPRITE_DOOR_CLOSED = [
+        "KKKKKKKKKKKKKKKKKKKK",
+        "KkkkkkkkkkkkkkkkkkKK",
+        "Kk................kK",
+        "Kk................kK",
+        "Kk................kK",
+        "Kk................kK",
+        "Kk......YYYY......kK",
+        "Kk......YYYY......kK",
+        "Kk................kK",
+        "Kk................kK",
+        "Kk................kK",
+        "Kk..........MM....kK",
+        "Kk..........MM....kK",
+        "Kk................kK",
+        "Kk................kK",
+        "Kk................kK",
+        "Kk................kK",
+        "Kk................kK",
+        "KkkkkkkkkkkkkkkkkkKK",
+        "KKKKKKKKKKKKKKKKKKKK",
+    ]
+    
+    SPRITE_DOOR_OPEN = [
+        "KKKKKK...............",
+        "Kkkkk................",
+        "Kk...................",
+        "Kk...................",
+        "Kk...................",
+        "Kk...................",
+        "Kk.YYYY..............",
+        "Kk.YYYY..............",
+        "Kk...................",
+        "Kk...................",
+        "Kk...................",
+        "Kk.MM................",
+        "Kk.MM................",
+        "Kk...................",
+        "Kk...................",
+        "Kk...................",
+        "Kk...................",
+        "Kk...................",
+        "Kkkkk................",
+        "KKKKKK...............",
+    ]
+    
     # ==================== FUNÇÕES DE RENDERIZAÇÃO ====================
     def hex_to_rgb(hex_color):
         """Converte cor hex para RGB"""
@@ -480,3 +527,64 @@ image danger_glitch = PixelSprite(SPRITE_DANGERS["glitch"], 6)
 image danger_phone = PixelSprite(SPRITE_DANGERS["phone"], 6)
 
 image surveillance_eye = PixelSprite(SPRITE_EYE, 4)
+
+# Porta
+image door_closed = PixelSprite(SPRITE_DOOR_CLOSED, 6)
+image door_open = PixelSprite(SPRITE_DOOR_OPEN, 6)
+
+# ==================== ANIMAÇÕES ====================
+
+# Posição da porta
+transform door_idle:
+    xpos 1000 ypos 280
+
+# Animação do cliente entrando - movimento linear da porta até o centro
+# Usa anchor para centralizar o sprite
+transform customer_enter:
+    anchor (0.5, 1.0)
+    ypos 570
+    xpos 1100
+    linear 1.5 xpos 640
+    block:
+        linear 0.12 yoffset -4 rotate 2
+        linear 0.12 yoffset 0 rotate 0
+        linear 0.12 yoffset -4 rotate -2
+        linear 0.12 yoffset 0 rotate 0
+        repeat
+
+# Cliente parado no centro
+transform customer_idle:
+    anchor (0.5, 1.0)
+    xpos 640 ypos 570
+    
+# Cliente saindo
+transform customer_leave:
+    anchor (0.5, 1.0)
+    ypos 570
+    xpos 640
+    linear 1.0 xpos 1100
+    linear 0.2 alpha 0.0
+
+# Animação de andar (balanço das pernas)
+transform walking:
+    block:
+        linear 0.12 yoffset -4 rotate 2
+        linear 0.12 yoffset 0 rotate 0
+        linear 0.12 yoffset -4 rotate -2
+        linear 0.12 yoffset 0 rotate 0
+        repeat
+
+# Respiração sutil quando parado
+transform idle_breathing:
+    block:
+        linear 1.0 yoffset -2
+        linear 1.0 yoffset 0
+        repeat
+
+# Jogador respirando
+transform player_breathing:
+    xpos 150 ypos 450
+    block:
+        linear 1.2 yoffset -1
+        linear 1.2 yoffset 0
+        repeat

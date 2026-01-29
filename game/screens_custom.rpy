@@ -29,12 +29,19 @@ init python:
             renpy.jump("game_over")
             return
         
+        # Atualizar animação de entrada do cliente
+        if store.customer_entering and store.current_customer:
+            enter_elapsed = current_time - store.customer_enter_time
+            if enter_elapsed >= 1.5:  # Duração da animação de entrada (1.5s)
+                store.customer_entering = False
+        
         # Atualizar timers de cliente e perigo
-        if store.current_customer:
-            customer_elapsed = current_time - store.current_customer.get("spawn_time", current_time)
+        if store.current_customer and not store.customer_entering:
+            customer_elapsed = current_time - store.current_customer.get("spawn_time", current_time) - 1.5
             store.customer_time_left = max(0, store.current_customer["patience"] - int(customer_elapsed))
             if store.customer_time_left <= 0:
                 store.current_customer = None
+                store.customer_entering = False
         
         if store.current_danger:
             danger_elapsed = current_time - store.current_danger.get("spawn_time", current_time)
@@ -71,6 +78,8 @@ init python:
         store.current_customer = get_random_customer()
         store.current_customer["spawn_time"] = pytime.time()
         store.customer_time_left = store.current_customer["patience"]
+        store.customer_entering = True
+        store.customer_enter_time = pytime.time()
     
     def spawn_danger():
         """Spawna um novo perigo"""
@@ -82,8 +91,8 @@ init python:
         """Alterna o estado da máscara"""
         store.mask_on = not store.mask_on
         
-        # Se tirou a máscara com cliente presente = GAME OVER
-        if not store.mask_on and store.current_customer:
+        # Se tirou a máscara com cliente presente (e não está entrando) = GAME OVER
+        if not store.mask_on and store.current_customer and not store.customer_entering:
             store.game_state = "game_over"
             store.game_over_reason = "caught"
             renpy.jump("game_over")
@@ -127,53 +136,35 @@ screen game_hud():
     # Background da loja
     add "bg store"
     
+    # Porta (lado direito)
+    if current_customer and customer_entering:
+        add "door_open" at door_idle
+    else:
+        add "door_closed" at door_idle
+    
     # Jogador (lado esquerdo, atrás do balcão)
     if mask_on:
-        add "player_mask" xpos 150 ypos 450
+        add "player_mask" at player_breathing
     else:
-        add "player_idle" xpos 150 ypos 450
+        add "player_idle" at player_breathing
     
-    # Cliente (centro da tela)
+    # Cliente com animação
     if current_customer:
         $ cust_id = current_customer.get("id", "normal")
-        if cust_id == "normal":
-            add "customer_normal" xpos 700 ypos 470
-        elif cust_id == "bizarre":
-            add "customer_bizarre" xpos 700 ypos 470
-        elif cust_id == "angry":
-            add "customer_angry" xpos 700 ypos 470
-        elif cust_id == "vip":
-            add "customer_vip" xpos 700 ypos 470
-        elif cust_id == "inspector":
-            add "customer_inspector" xpos 700 ypos 470
-        elif cust_id == "robot":
-            add "customer_robot" xpos 700 ypos 470
-        elif cust_id == "child":
-            add "customer_child" xpos 700 ypos 490
-        elif cust_id == "paranoid":
-            add "customer_paranoid" xpos 700 ypos 470
+        $ cust_sprite = "customer_" + cust_id
+        
+        if customer_entering:
+            # Cliente andando da porta até o centro (transform já inclui animação de andar)
+            add cust_sprite at customer_enter
+        else:
+            # Cliente parado no centro com respiração
+            add cust_sprite at customer_idle, idle_breathing
     
     # Perigo (canto superior direito)
     if current_danger:
         $ dang_id = current_danger.get("id", "alarm")
-        if dang_id == "fire":
-            add "danger_fire" xpos 1100 ypos 150
-        elif dang_id == "alarm":
-            add "danger_alarm" xpos 1100 ypos 150
-        elif dang_id == "monster":
-            add "danger_monster" xpos 1100 ypos 150
-        elif dang_id == "mail":
-            add "danger_mail" xpos 1100 ypos 150
-        elif dang_id == "leak":
-            add "danger_leak" xpos 1100 ypos 150
-        elif dang_id == "blackout":
-            add "danger_blackout" xpos 1100 ypos 150
-        elif dang_id == "rat":
-            add "danger_rat" xpos 1100 ypos 150
-        elif dang_id == "glitch":
-            add "danger_glitch" xpos 1100 ypos 150
-        elif dang_id == "phone":
-            add "danger_phone" xpos 1100 ypos 150
+        $ dang_sprite = "danger_" + dang_id
+        add dang_sprite xpos 900 ypos 120
     
     # Olhos de vigilância nos cantos
     add "surveillance_eye" xpos 30 ypos 30
@@ -401,11 +392,22 @@ screen main_menu_custom():
         
         null height 15
         
-        # Botão Iniciar
-        textbutton "▶ INICIAR TURNO":
+        # Botões
+        hbox:
             xalign 0.5
-            action Jump("start_game")
-            style "menu_button"
+            spacing 20
+            
+            textbutton "▶ INICIAR TURNO":
+                action Jump("start_game")
+                style "menu_button"
+            
+            textbutton "📜 HISTÓRIA":
+                action Jump("show_intro")
+                style "menu_button"
+            
+            textbutton "📁 ARQUIVOS":
+                action ShowMenu("lore_screen")
+                style "menu_button"
     
     # Aviso de vigilância (parte inferior)
     frame:

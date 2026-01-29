@@ -230,6 +230,10 @@ default customers_served = 0
 default dangers_resolved = 0
 default game_over_reason = ""
 
+# Controle de animação
+default customer_entering = False
+default customer_enter_time = 0.0
+
 # Controle de tempo
 default game_start_time = 0.0
 default last_spawn_check = 0.0
