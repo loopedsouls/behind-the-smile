@@ -150,11 +150,11 @@ Mantenha o sorriso.
             "O fungo não pensa. Não sente. Só... consome."
         ],
         "clients": [
-            {"id": "vizinha", "name": "Vizinha Solícita", "description": "Uma vizinha amigável que sempre sorri.", "line": "Boa noite, querida. Sorria, sempre sorria — deixa tudo mais fácil.", "emoji": "👩"},
-            {"id": "corporativo", "name": "Funcionário Corporativo", "description": "Um trabalhador dedicado à empresa.", "line": "A Gerência lembra tudo. Cumpre o contrato: sorriso, produtividade, silêncio.", "emoji": "👔"},
-            {"id": "crianca", "name": "Criança de Olhos Fundos", "description": "Uma criança com olhar estranho.", "line": "Quando você mostra seu rosto, eles... se lembram do que comem.", "emoji": "👶"},
-            {"id": "velho", "name": "Velho Que Não Sorri", "description": "Um idoso que evita sorrir.", "line": "Antes do contrato, a loja era diferente. A máscara mantém as coisas... calmas.", "emoji": "👴"},
-            {"id": "sorriso_esticado", "name": "O Sorriso Esticado", "description": "Alguém com um sorriso forçado.", "line": "Eles querem o real. A casca é distração. Caia a casca, e nós lembramos.", "emoji": "😀"}
+            {"id": "vizinha", "name": "Vizinha Solícita", "description": "Uma vizinha amigável que sempre sorri.", "line": "Boa noite, querida. Sorria, sempre sorria — deixa tudo mais fácil.", "emoji": "👩", "patience": 10},
+            {"id": "corporativo", "name": "Funcionário Corporativo", "description": "Um trabalhador dedicado à empresa.", "line": "A Gerência lembra tudo. Cumpre o contrato: sorriso, produtividade, silêncio.", "emoji": "👔", "patience": 10},
+            {"id": "crianca", "name": "Criança de Olhos Fundos", "description": "Uma criança com olhar estranho.", "line": "Quando você mostra seu rosto, eles... se lembram do que comem.", "emoji": "👶", "patience": 10},
+            {"id": "velho", "name": "Velho Que Não Sorri", "description": "Um idoso que evita sorrir.", "line": "Antes do contrato, a loja era diferente. A máscara mantém as coisas... calmas.", "emoji": "👴", "patience": 10},
+            {"id": "sorriso_esticado", "name": "O Sorriso Esticado", "description": "Alguém com um sorriso forçado.", "line": "Eles querem o real. A casca é distração. Caia a casca, e nós lembramos.", "emoji": "😀", "patience": 10}
         ]
     }
 
