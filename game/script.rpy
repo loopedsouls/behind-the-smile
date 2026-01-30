@@ -6,7 +6,12 @@ define narrator_dystopia = Character(None, what_color="#cccccc")
 define system = Character("SISTEMA", color="#f4d03f", what_color="#ffdd88")
 
 init python:
-    import renpy, random, time as _time
+    # Fix for renpy.error not being callable
+    def error(msg):
+        print("Error:", msg)
+    renpy.error = error
+
+    import random, time as pytime
     store = renpy.store
 
     def spawn_customer():
@@ -14,10 +19,10 @@ init python:
         client_inst = dict(client)
         client_inst['is_looking'] = random.choice([True, False])
         store.current_customer = client_inst
-        store.customer_leave_time = _time.time() + random.uniform(4.0, 8.0)
+        store.customer_leave_time = pytime.time() + random.uniform(4.0, 8.0)
         renpy.notify("{name}: {line}".format(**client_inst))
         # schedule next spawn
-        store.next_customer_time = _time.time() + random.uniform(5.0, 12.0)
+        store.next_customer_time = pytime.time() + random.uniform(5.0, 12.0)
 
     def is_customer_looking(c):
         return c and c.get('is_looking', False)

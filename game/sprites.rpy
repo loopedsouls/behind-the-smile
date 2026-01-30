@@ -3,6 +3,7 @@
 
 init python: 
     import pygame
+    from renpy.display.displayable import Displayable
     
     # ==================== PALETA DE CORES ====================
     PALETTE = {
@@ -464,7 +465,7 @@ init python:
         
         return surface
     
-    class PixelSprite(renpy.Displayable):
+    class PixelSprite(Displayable):
         """Displayable customizado para sprites pixel art"""
         
         def __init__(self, sprite_data, pixel_size=4, **kwargs):

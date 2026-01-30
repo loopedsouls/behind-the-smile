@@ -150,11 +150,11 @@ Mantenha o sorriso.
             "O fungo não pensa. Não sente. Só... consome."
         ],
         "clients": [
-            {"id": "vizinha", "name": "Vizinha Solícita", "line": "Boa noite, querida. Sorria, sempre sorria — deixa tudo mais fácil."},
-            {"id": "corporativo", "name": "Funcionário Corporativo", "line": "A Gerência lembra tudo. Cumpre o contrato: sorriso, produtividade, silêncio."},
-            {"id": "crianca", "name": "Criança de Olhos Fundos", "line": "Quando você mostra seu rosto, eles... se lembram do que comem."},
-            {"id": "velho", "name": "Velho Que Não Sorri", "line": "Antes do contrato, a loja era diferente. A máscara mantém as coisas... calmas."},
-            {"id": "sorriso_esticado", "name": "O Sorriso Esticado", "line": "Eles querem o real. A casca é distração. Caia a casca, e nós lembramos."}
+            {"id": "vizinha", "name": "Vizinha Solícita", "line": "Boa noite, querida. Sorria, sempre sorria — deixa tudo mais fácil.", "emoji": "👩"},
+            {"id": "corporativo", "name": "Funcionário Corporativo", "line": "A Gerência lembra tudo. Cumpre o contrato: sorriso, produtividade, silêncio.", "emoji": "👔"},
+            {"id": "crianca", "name": "Criança de Olhos Fundos", "line": "Quando você mostra seu rosto, eles... se lembram do que comem.", "emoji": "👶"},
+            {"id": "velho", "name": "Velho Que Não Sorri", "line": "Antes do contrato, a loja era diferente. A máscara mantém as coisas... calmas.", "emoji": "👴"},
+            {"id": "sorriso_esticado", "name": "O Sorriso Esticado", "line": "Eles querem o real. A casca é distração. Caia a casca, e nós lembramos.", "emoji": "😀"}
         ]
     }
 
