@@ -92,8 +92,10 @@ define gui.title_text_size = 50
 ## Menus principal e de jogos ##################################################
 
 ## As imagens usadas nos menus principal e de jogo.
-define gui.main_menu_background = Solid("#0f0f23")
-define gui.game_menu_background = Solid("#0f0f23")
+# Usar a imagem do menu em vez de uma cor sólida.
+# A imagem está em `game/images/menu.png`.
+define gui.main_menu_background = im.Scale("menu.png", config.screen_width, config.screen_height)
+define gui.game_menu_background = im.Scale("menu.png", config.screen_width, config.screen_height)
 
 
 ## Diálogo #####################################################################

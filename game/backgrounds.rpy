@@ -157,6 +157,9 @@ init python:
 image bg store = StoreBackground()
 image mask_overlay = MaskOverlay()
 
+# Fundo do menu (stretched igual splashscreen)
+image menu_bg = im.Scale("images/menu.png", 1280, 720)
+
 # Fundo sólido escuro para menus
 image bg dark = Solid("#0f0f23")
 image bg game_over = Solid("#1a0f0f")

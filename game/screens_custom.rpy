@@ -308,117 +308,46 @@ screen game_hud():
     key "K_ESCAPE" action Jump("pause_game")
 
 # ==================== TELA DE MENU ====================
+
+# Variável usada para controlar o hover dos itens do menu (Start/Options/Exit)
+default _menu_hover = None
+
 screen main_menu_custom():
     tag menu
     
-    add "bg dark"
+    # Fundo do menu: imagem do menu (escalada) - sem sobreposição
+    add "menu_bg"
     
-    # Olhos decorativos (posições relativas para 16:9)
-    text "👁️" xpos 0.05 ypos 0.15 size 30 color "#ffffff4D"
-    text "👁️" xpos 0.85 ypos 0.25 size 30 color "#ffffff4D"
-    text "👁️" xpos 0.08 ypos 0.6 size 30 color "#ffffff4D"
-    text "👁️" xpos 0.9 ypos 0.7 size 30 color "#ffffff4D"
-    
-    # Container principal centralizado
-    vbox:
-        xalign 0.5
-        yalign 0.5
-        spacing 15
-        
-        # Logo
-        text "BEHIND THE SMILE" size 42 color "#f4d03f" xalign 0.5 outlines [(2, "#000000", 0, 0)]
-        text "Central de Triagem da Felicidade" size 20 color "#888888" xalign 0.5
-        
-        null height 10
-        
-        # ID do Funcionário
-        frame:
-            background "#2a2a4e"
-            xpadding 20
-            ypadding 8
-            xalign 0.5
-            text "FUNCIONÁRIO #402" size 16 color "#f4d03f" xalign 0.5
-        
-        # Conteúdo em duas colunas
-        hbox:
-            xalign 0.5
-            spacing 20
-            
-            # Coluna esquerda - Briefing
-            frame:
-                background "#1a1a2eDD"
-                xpadding 20
-                ypadding 15
-                xsize 400
-                
-                vbox:
-                    spacing 8
-                    text "📋 Briefing Diário" size 18 color "#f4d03f"
-                    text "{b}Sorria, você está sendo observado!{/b}" size 14 color "#ffffff"
-                    null height 5
-                    text "O mundo acabou em um colapso burocrático. Você trabalha na única instituição que sobreviveu: a {i}Central de Triagem da Felicidade{/i}." size 13 color "#cccccc"
-                    null height 5
-                    text "Sua missão: manter a máscara sorridente ao atender clientes, mas lembre-se — enquanto sorri, você não enxerga os perigos." size 13 color "#cccccc"
-                    null height 5
-                    text "⚠️ Se um cliente ver seu rosto triste, é GAME OVER." size 14 color "#ff4444"
-            
-            # Coluna direita - Controles
-            frame:
-                background "#1a1a2eDD"
-                xpadding 20
-                ypadding 15
-                xsize 280
-                
-                vbox:
-                    spacing 8
-                    text "🎮 Controles" size 18 color "#f4d03f"
-                    null height 5
-                    hbox:
-                        spacing 10
-                        text "[[ESPAÇO]]" size 14 color "#f4d03f" min_width 80
-                        text "Alternar máscara" size 14 color "#cccccc"
-                    hbox:
-                        spacing 10
-                        text "[[E]]" size 14 color "#f4d03f" min_width 80
-                        text "Atender cliente" size 14 color "#cccccc"
-                    hbox:
-                        spacing 10
-                        text "[[R]]" size 14 color "#f4d03f" min_width 80
-                        text "Resolver perigo" size 14 color "#cccccc"
-                    hbox:
-                        spacing 10
-                        text "[[ESC]]" size 14 color "#f4d03f" min_width 80
-                        text "Pausar" size 14 color "#cccccc"
-        
-        null height 15
-        
-        # Botões
-        hbox:
-            xalign 0.5
-            spacing 20
-            
-            textbutton "▶ INICIAR TURNO":
-                action Jump("start_game")
-                style "menu_button"
-            
-            textbutton "📜 HISTÓRIA":
-                action Jump("show_intro")
-                style "menu_button"
-            
-            textbutton "📁 ARQUIVOS":
-                action ShowMenu("lore_screen")
-                style "menu_button"
-    
-    # Aviso de vigilância (parte inferior)
+    # Menu minimalista no rodapé (botões em linha, centralizados)
     frame:
+        background None
         xalign 0.5
         yalign 1.0
-        yoffset -15
-        background "#ff444433"
-        xpadding 15
-        ypadding 8
-        
-        text "📹 Câmeras Ativas - Sorria Sempre" size 14 color "#ff4444"
+        yoffset -60
+        xpadding 0
+        ypadding 0
+
+        hbox:
+            xalign 0.5
+            spacing 60
+
+            textbutton "[_menu_hover == 'start' and '{size=40}{color=#f4d03f}Start Game{/color}{/size}' or '{size=36}{color=#ffffff}Start Game{/color}{/size}']":
+                hovered SetVariable("_menu_hover", "start")
+                unhovered SetVariable("_menu_hover", None)
+                action Jump("start_game")
+                style "menu_button"
+
+            textbutton "[_menu_hover == 'options' and '{size=40}{color=#f4d03f}Options{/color}{/size}' or '{size=36}{color=#ffffff}Options{/color}{/size}']":
+                hovered SetVariable("_menu_hover", "options")
+                unhovered SetVariable("_menu_hover", None)
+                action ShowMenu("preferences")
+                style "menu_button_secondary"
+
+            textbutton "[_menu_hover == 'exit' and '{size=40}{color=#f4d03f}Exit{/color}{/size}' or '{size=36}{color=#ffffff}Exit{/color}{/size}']":
+                hovered SetVariable("_menu_hover", "exit")
+                unhovered SetVariable("_menu_hover", None)
+                action Quit(confirm=True)
+                style "menu_button_secondary"
 
 # ==================== TELA DE GAME OVER ====================
 screen game_over_screen():
@@ -537,22 +466,30 @@ screen pause_screen():
 
 # ==================== ESTILOS ====================
 style menu_button:
-    background "#f4d03f"
-    hover_background "#ffdd55"
-    padding (30, 15)
-    
+    # Text-only button (no background)
+    background None
+    hover_background None
+    padding (0, 0)
+    xalign 0.5
+
 style menu_button_text:
-    color "#1a1a2e"
-    size 20
-    
+    color "#f4d03f"
+    size 36
+    bold True
+    outlines [(2, "#000000", 0, 0)]
+
 style menu_button_secondary:
-    background "#4a4a6e"
-    hover_background "#5a5a8e"
-    padding (30, 15)
-    
+    # Secondary text-only buttons
+    background None
+    hover_background None
+    padding (0, 0)
+    xalign 0.5
+
 style menu_button_secondary_text:
     color "#ffffff"
-    size 20
+    size 28
+    bold True
+    outlines [(1, "#000000", 0, 0)]
 
 style game_button:
     background "#4a4a6e"
