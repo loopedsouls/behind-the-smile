@@ -219,6 +219,8 @@ default game_state = "menu"  # menu, playing, paused, game_over
 default time_left = 90
 default score = 0
 default mask_on = True
+# Estado visual do jogador: normal, alert, infected
+default player_status = "normal"
 default difficulty_multiplier = 1.0
 
 default current_customer = None

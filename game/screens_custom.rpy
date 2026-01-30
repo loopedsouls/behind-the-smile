@@ -80,12 +80,19 @@ init python:
         store.customer_time_left = store.current_customer["patience"]
         store.customer_entering = True
         store.customer_enter_time = pytime.time()
+        # voltar ao estado normal ao aparecer cliente
+        store.player_status = "normal"
     
     def spawn_danger():
         """Spawna um novo perigo"""
         store.current_danger = get_random_danger()
         store.current_danger["spawn_time"] = pytime.time()
         store.danger_time_left = store.current_danger["resolve_time"]
+        # ajustar estado visual baseado na severidade do perigo
+        if store.current_danger.get("severity") == "critical":
+            store.player_status = "infected"
+        else:
+            store.player_status = "alert"
     
     def toggle_mask():
         """Alterna o estado da máscara"""
@@ -106,10 +113,13 @@ init python:
             renpy.notify("Coloque a máscara para atender!")
             return False
         
-        store.score += store.current_customer["points"]
+        points = store.current_customer["points"]
+        store.score += points
         store.customers_served += 1
         store.current_customer = None
-        renpy.notify("Cliente atendido! +" + str(store.current_customer["points"] if store.current_customer else 0) + " pontos")
+        # voltar ao estado visual normal
+        store.player_status = "normal"
+        renpy.notify("Cliente atendido! +" + str(points) + " pontos")
         return True
     
     def resolve_danger():
@@ -125,6 +135,8 @@ init python:
         store.score += points
         store.dangers_resolved += 1
         store.current_danger = None
+        # reset estado visual
+        store.player_status = "normal"
         renpy.notify("Perigo resolvido! +" + str(points) + " pontos")
         return True
 
@@ -132,9 +144,29 @@ init python:
 screen game_hud():
     # Atualizar lógica do jogo
     timer 0.1 repeat True action Function(update_game_logic)
-    
-    # Background da loja
-    add "bg store"
+
+    # Background da loja — seleciona variante por status e máscara
+    if player_status == "normal":
+        if mask_on:
+            add "bg store_normal" at bg_crossfade
+        else:
+            add "bg store_unmasked_normal" at bg_crossfade
+    elif player_status == "alert":
+        if mask_on:
+            add "bg store_alert" at bg_crossfade
+        else:
+            add "bg store_unmasked_alert" at bg_crossfade
+    elif player_status == "infected":
+        if mask_on:
+            add "bg store_infected" at bg_crossfade
+        else:
+            add "bg store_unmasked_infected" at bg_crossfade
+    else:
+        # fallback
+        if mask_on:
+            add "bg store_normal" at bg_crossfade
+        else:
+            add "bg store_unmasked_normal" at bg_crossfade
     
     # Porta (lado direito)
     if current_customer and customer_entering:
@@ -330,6 +362,11 @@ transform glitch_flash:
     pause 0.03
     linear 0.01 alpha 0.0
 
+# Transform global para crossfade de background usado no HUD
+transform bg_crossfade:
+    alpha 0.0
+    linear 0.15 alpha 1.0
+
 screen main_menu_custom():
     tag menu
     
@@ -465,14 +502,15 @@ screen pause_screen():
     tag menu
     modal True
     
-    add "#00000099"
+    # Fundo: placa centralizada
+    add "pause_plate" xalign 0.5 yalign 0.5
     
     frame:
         xalign 0.5
         yalign 0.5
         xpadding 50
         ypadding 40
-        background "#1a1a2eEE"
+        background None
         
         vbox:
             spacing 20

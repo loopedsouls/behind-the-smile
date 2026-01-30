@@ -90,14 +90,17 @@ screen splash_title():
 label splashscreen:
     scene black
     with fade
-    
+
     # Splash do estúdio
     show screen splash_studio
     $ renpy.pause(4.5, hard=True)
     hide screen splash_studio
-    
+
+    # Inicia som ambiente em loop após o splash do estúdio
+    play music "audio/ambiente.mp3" loop
+
     # Transição para o menu
     scene black
     with fade
-    
+
     return
