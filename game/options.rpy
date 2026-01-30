@@ -64,7 +64,40 @@ define config.has_voice = True
 ## continuará sendo reproduzido no jogo até que seja interrompido ou outro
 ## arquivo seja reproduzido.
 
-# define config.main_menu_music = "main-menu-theme.ogg"
+define config.main_menu_music = "audio/ambiente.mp3"
+
+# Preferência customizada para silenciar apenas a música (persistente)
+default preferences.music_muted = False
+default _music_prev_volume = 1.0
+
+init python:
+    # Toggle para silenciar/desilenciar música apenas no canal 'music'.
+    def toggle_music_mute():
+        global _music_prev_volume
+        try:
+            # Se não está silenciado, armazena volume atual e zera o volume do canal 'music'
+            if not preferences.music_muted:
+                try:
+                    _music_prev_volume = preferences.music_volume
+                except Exception:
+                    _music_prev_volume = 1.0
+                try:
+                    renpy.music.set_volume(0.0, 0.0, channel='music')
+                except TypeError:
+                    # fallback para versões que usam posição em vez de palavra-chave
+                    renpy.music.set_volume(0.0, 0.0, 'music')
+                preferences.music_muted = True
+            else:
+                # Restaura o volume anterior (ou o preferido) ao desmutar
+                vol = _music_prev_volume if _music_prev_volume is not None else getattr(preferences, 'music_volume', 1.0)
+                try:
+                    renpy.music.set_volume(vol, 0.0, channel='music')
+                except TypeError:
+                    renpy.music.set_volume(vol, 0.0, 'music')
+                preferences.music_muted = False
+        except Exception:
+            # Segurança: não deixar a função quebrar a engine
+            preferences.music_muted = not preferences.music_muted
 
 
 ## Transições ##################################################################

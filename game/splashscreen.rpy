@@ -97,7 +97,7 @@ label splashscreen:
     hide screen splash_studio
 
     # Inicia som ambiente em loop após o splash do estúdio
-    play music "audio/ambiente.mp3" loop
+    play music "audio/ambiente.mp3" fadein 1.0 loop
 
     # Transição para o menu
     scene black

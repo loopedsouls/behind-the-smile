@@ -298,45 +298,14 @@ screen game_hud():
             else:
                 text "Nenhum" size 18 color "#666666"
     
-    # Controles (parte inferior)
-    frame:
-        xalign 0.5
-        yalign 1.0
-        yoffset -20
-        xpadding 20
-        ypadding 15
-        background "#1a1a2eDD"
-        
-        hbox:
-            spacing 30
-            
-            # Botão Máscara
-            textbutton ("😐 Tirar Máscara [[ESPAÇO]]" if mask_on else "😊 Colocar Máscara [[ESPAÇO]]"):
-                action Function(toggle_mask)
-                style "game_button"
-            
-            # Botão Atender
-            if current_customer:
-                textbutton "🤝 Atender [[E]]":
-                    action Function(serve_customer)
-                    style "game_button"
-            else:
-                textbutton "🤝 Atender [[E]]":
-                    style "game_button_disabled"
-            
-            # Botão Resolver
-            if current_danger:
-                textbutton "🔧 Resolver [[R]]":
-                    action Function(resolve_danger)
-                    style "game_button"
-            else:
-                textbutton "🔧 Resolver [[R]]":
-                    style "game_button_disabled"
+    # Controles removidos da tela — usar teclado
+    # Exibir dica discreta indicando as teclas (ajuda completa em Options)
+    text "Teclas: Z = Máscara · X = Atender · C = Resolver (Opções > Ajuda de Controles)" xalign 0.5 yalign 1.0 yoffset -30 size 18 color "#bbbbbb"
     
     # Atalhos de teclado
-    key "K_SPACE" action Function(toggle_mask)
-    key "K_e" action Function(serve_customer)
-    key "K_r" action Function(resolve_danger)
+    key "K_z" action Function(toggle_mask)
+    key "K_x" action Function(serve_customer)
+    key "K_c" action Function(resolve_danger)
     key "K_ESCAPE" action Jump("pause_game")
 
 # ==================== TELA DE MENU ====================
@@ -407,7 +376,7 @@ screen main_menu_custom():
             textbutton "[_menu_hover == 'options' and '{size=40}{color=#f4d03f}Options{/color}{/size}' or '{size=36}{color=#ffffff}Options{/color}{/size}']":
                 hovered SetVariable("_menu_hover", "options")
                 unhovered SetVariable("_menu_hover", None)
-                action ShowMenu("preferences")
+                action [ShowMenu("preferences"), ShowMenu("controls_help")]
                 style "menu_button_secondary"
 
             textbutton "[_menu_hover == 'exit' and '{size=40}{color=#f4d03f}Exit{/color}{/size}' or '{size=36}{color=#ffffff}Exit{/color}{/size}']":
@@ -417,6 +386,28 @@ screen main_menu_custom():
                 style "menu_button_secondary"
 
 # ==================== TELA DE GAME OVER ====================
+screen controls_help():
+    tag menu
+    modal True
+    zorder 100
+    add Solid("#00000080")
+    frame:
+        xalign 0.5
+        yalign 0.5
+        xpadding 20
+        ypadding 20
+        background "#1a1a1aDD"
+        vbox:
+            spacing 12
+            xalign 0.5
+            text "Ajuda de Controles" size 28 color "#f4d03f" xalign 0.5
+            text "Z — Alternar Máscara (colocar/tirar)" size 18
+            text "X — Atender cliente (quando disponível)" size 18
+            text "C — Resolver perigo (quando disponível)" size 18
+            text "ESC — Pausar / Abrir menu" size 18
+            text "Dica: Os botões na tela foram removidos. Use o teclado para maior imersão." size 16 color "#bbbbbb"
+            textbutton "Fechar" action Return() xalign 0.5 style "menu_button_secondary"
+
 screen game_over_screen():
     tag menu
     

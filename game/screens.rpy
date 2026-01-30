@@ -768,6 +768,10 @@ screen preferences():
 
                         hbox:
                             bar value Preference("music volume")
+                            # Botão para silenciar/desilenciar apenas a música (usa toggle customizado)
+                            textbutton (preferences.music_muted and _("Ouvir música") or _("Silenciar música")):
+                                action Function(toggle_music_mute)
+                                style "mute_all_button"
 
                     if config.has_sound:
 
