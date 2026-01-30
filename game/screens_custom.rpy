@@ -309,15 +309,45 @@ screen game_hud():
 
 # ==================== TELA DE MENU ====================
 
-# Variável usada para controlar o hover dos itens do menu (Start/Options/Exit)
+# Variáveis usadas para controlar o estado do menu
+# Hover para itens e erro (glitch) para o background
 default _menu_hover = None
+default _menu_error = False
+
+# Transforms para efeito de picote / glitch (2D)
+transform glitch_jitter:
+    # movimentos rápidos laterais para simular 'picote' (mais rápidos)
+    xoffset 0
+    linear 0.01 xoffset 16
+    linear 0.01 xoffset -16
+    linear 0.01 xoffset 8
+    linear 0.01 xoffset -8
+    linear 0.01 xoffset 0
+
+transform glitch_flash:
+    alpha 0.0
+    linear 0.01 alpha 1.0
+    pause 0.03
+    linear 0.01 alpha 0.0
 
 screen main_menu_custom():
     tag menu
     
     # Fundo do menu: imagem do menu (escalada) - sem sobreposição
     add "menu_bg"
-    
+
+    # Camadas de glitch/erro (aparecem quando _menu_error é True) — durante o glitch, trocamos para menu2_bg
+    if _menu_error:
+        add "menu2_bg" at glitch_jitter alpha 1.0
+        add Solid("#ff4444") alpha 0.16
+        add Solid("#ffffff") at glitch_flash alpha 0.08
+
+    # Timers para alternar o estado de erro (rajadas mais rápidas)
+    timer 4.0 action SetVariable("_menu_error", True) repeat True
+    # Timer que desativa o erro após 0.2s — definido somente enquanto _menu_error for True
+    if _menu_error:
+        timer 0.2 action SetVariable("_menu_error", False)
+
     # Menu minimalista no rodapé (botões em linha, centralizados)
     frame:
         background None
