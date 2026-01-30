@@ -32,7 +32,7 @@ init python:
         # Atualizar animação de entrada do cliente
         if store.customer_entering and store.current_customer:
             enter_elapsed = current_time - store.customer_enter_time
-            if enter_elapsed >= 1.5:  # Duração da animação de entrada (1.5s)
+            if enter_elapsed >= 0.4:  # Duração da animação de entrada (fade 0.4s)
                 store.customer_entering = False
         
         # Atualizar timers de cliente e perigo
@@ -168,17 +168,10 @@ screen game_hud():
         else:
             add "bg store_unmasked_normal" at bg_crossfade
     
-    # Porta (lado direito)
-    if current_customer and customer_entering:
-        add "door_open" at door_idle
-    else:
-        add "door_closed" at door_idle
+    # Porta removida (anteriormente mostrada à direita)
     
-    # Jogador (lado esquerdo, atrás do balcão)
-    if mask_on:
-        add "player_mask" at player_breathing
-    else:
-        add "player_idle" at player_breathing
+    # Jogador removido do canto esquerdo (oculto por solicitação)
+    # Antes: add "player_idle" at player_breathing
     
     # Cliente com animação
     if current_customer:
@@ -186,8 +179,8 @@ screen game_hud():
         $ cust_sprite = "customer_" + cust_id
         
         if customer_entering:
-            # Cliente andando da porta até o centro (transform já inclui animação de andar)
-            add cust_sprite at customer_enter
+            # Cliente aparece com fade no centro
+            add cust_sprite at customer_fade
         else:
             # Cliente parado no centro com respiração
             add cust_sprite at customer_idle, idle_breathing
@@ -206,10 +199,8 @@ screen game_hud():
     # Overlay da máscara (se ativa)
     if mask_on:
         add "mask_overlay"
-        # Texto "SORRIA!" no topo
-        text "☺ SORRIA! ☺" xalign 0.5 ypos 40 size 36 color "#f4d03f" outlines [(2, "#000000", 0, 0)]
-    
-    # HUD Superior
+        # Texto "SORRIA!" no topo (sem emojis)
+        text "SORRIA!" xalign 0.5 ypos 40 size 36 color "#f4d03f" outlines [(2, "#000000", 0, 0)]
     frame:
         xalign 0.5
         yalign 0.0
@@ -224,7 +215,7 @@ screen game_hud():
             # Timer
             hbox:
                 spacing 5
-                text "⏱️" size 24
+                text "Tempo" size 24
                 if time_left <= GameConfig.TIME_CRITICAL:
                     text "[time_left]s" size 24 color "#ff4444"
                 elif time_left <= GameConfig.TIME_WARNING:
@@ -236,18 +227,26 @@ screen game_hud():
             hbox:
                 spacing 5
                 if mask_on:
-                    text "😊" size 24
                     text "Máscara ON" size 20 color "#44ff44"
                 else:
-                    text "😐" size 24
                     text "Máscara OFF" size 20 color "#ff4444"
             
             # Pontuação
             hbox:
                 spacing 5
-                text "⭐" size 24
+                text "Pontos" size 24
                 text "[score]" size 24 color "#f4d03f"
-    
+
+    # Aviso: cliente chegando (aparece enquanto customer_entering for True)
+    if customer_entering:
+        frame:
+            xalign 0.5
+            yalign 0.12
+            background "#1a1a2eCC"
+            xpadding 12
+            ypadding 6
+            text "Cliente chegando..." size 20 color "#f4d03f"
+
     # Status do Cliente (lado esquerdo)
     frame:
         xalign 0.0
@@ -259,13 +258,12 @@ screen game_hud():
         
         vbox:
             spacing 5
-            text "👤 CLIENTE" size 18 color "#aaaaaa"
+            text "CLIENTE" size 18 color "#aaaaaa"
             if current_customer:
                 text current_customer["emoji"] + " " + current_customer["name"] size 20
                 text current_customer["description"] size 14 color "#888888"
                 hbox:
                     spacing 5
-                    text "⏳" size 16
                     if customer_time_left <= 2:
                         text "[customer_time_left]s" size 16 color "#ff4444"
                     else:
@@ -284,13 +282,12 @@ screen game_hud():
         
         vbox:
             spacing 5
-            text "⚠️ PERIGO" size 18 color "#aaaaaa"
+            text "PERIGO" size 18 color "#aaaaaa"
             if current_danger:
                 text current_danger["emoji"] + " " + current_danger["name"] size 20 color "#ff6666"
                 text current_danger["description"] size 14 color "#aa6666"
                 hbox:
                     spacing 5
-                    text "⏳" size 16
                     if danger_time_left <= 3:
                         text "[danger_time_left]s" size 16 color "#ff4444"
                     else:
@@ -300,7 +297,6 @@ screen game_hud():
     
     # Controles removidos da tela — usar teclado
     # Exibir dica discreta indicando as teclas (ajuda completa em Options)
-    text "Teclas: Z = Máscara · X = Atender · C = Resolver (Opções > Ajuda de Controles)" xalign 0.5 yalign 1.0 yoffset -30 size 18 color "#bbbbbb"
     
     # Atalhos de teclado
     key "K_z" action Function(toggle_mask)
@@ -445,7 +441,7 @@ screen game_over_screen():
                 
                 vbox:
                     spacing 10
-                    text "📊 Relatório de Desempenho" size 20 color "#f4d03f" xalign 0.5
+                    text "Relatório de Desempenho" size 20 color "#f4d03f" xalign 0.5
                     
                     null height 10
                     
@@ -475,11 +471,11 @@ screen game_over_screen():
                 spacing 20
                 xalign 0.5
                 
-                textbutton "🔄 Tentar Novamente":
+                textbutton "Tentar Novamente":
                     action Jump("start_game")
                     style "menu_button"
                 
-                textbutton "◀ Voltar ao Menu":
+                textbutton "Voltar ao Menu":
                     action Jump("main_menu")
                     style "menu_button_secondary"
             
@@ -507,16 +503,16 @@ screen pause_screen():
             spacing 20
             xalign 0.5
             
-            text "⏸️ PAUSADO" size 36 color "#f4d03f" xalign 0.5
+            text "PAUSADO" size 36 color "#f4d03f" xalign 0.5
             
             null height 20
             
-            textbutton "▶ Continuar":
+            textbutton "Continuar":
                 xalign 0.5
                 action Return()
                 style "menu_button"
             
-            textbutton "◀ Voltar ao Menu":
+            textbutton "Voltar ao Menu":
                 xalign 0.5
                 action Jump("main_menu")
                 style "menu_button_secondary"

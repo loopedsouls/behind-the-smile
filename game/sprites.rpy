@@ -505,16 +505,18 @@ init python:
 
 # ==================== IMAGENS DINÂMICAS ====================
 image player_idle = PixelSprite(SPRITE_PLAYER_IDLE, 6)
-image player_mask = PixelSprite(SPRITE_PLAYER_MASK, 6)
+# image player_mask removed (canvas-based masked sprite eliminated)
 
-image customer_normal = PixelSprite(SPRITE_CUSTOMERS["normal"], 6)
-image customer_bizarre = PixelSprite(SPRITE_CUSTOMERS["bizarre"], 6)
-image customer_angry = PixelSprite(SPRITE_CUSTOMERS["angry"], 6)
-image customer_vip = PixelSprite(SPRITE_CUSTOMERS["vip"], 6)
-image customer_inspector = PixelSprite(SPRITE_CUSTOMERS["inspector"], 6)
-image customer_robot = PixelSprite(SPRITE_CUSTOMERS["robot"], 6)
-image customer_child = PixelSprite(SPRITE_CUSTOMERS["child"], 6)
-image customer_paranoid = PixelSprite(SPRITE_CUSTOMERS["paranoid"], 6)
+# Customer images replaced by client PNGs (1.png is the main asset)
+image customer_normal = "images/client/1.png"
+image customer_bizarre = "images/client/2.png"  # placeholder
+image customer_angry = "images/client/3.png"    # placeholder
+image customer_vip = "images/client/4.png"      # placeholder
+image customer_inspector = "images/client/5.png"# placeholder
+# Fallbacks for other types (use main asset)
+image customer_robot = "images/client/1.png"
+image customer_child = "images/client/1.png"
+image customer_paranoid = "images/client/1.png"
 
 image danger_fire = PixelSprite(SPRITE_DANGERS["fire"], 6)
 image danger_alarm = PixelSprite(SPRITE_DANGERS["alarm"], 6)
@@ -528,29 +530,19 @@ image danger_phone = PixelSprite(SPRITE_DANGERS["phone"], 6)
 
 image surveillance_eye = PixelSprite(SPRITE_EYE, 4)
 
-# Porta
-image door_closed = PixelSprite(SPRITE_DOOR_CLOSED, 6)
-image door_open = PixelSprite(SPRITE_DOOR_OPEN, 6)
+# Porta removida — displayables `door_*` eliminados
 
 # ==================== ANIMAÇÕES ====================
 
 # Posição da porta
-transform door_idle:
-    xpos 1000 ypos 280
+# transform door_idle removed (porta eliminada)
 
-# Animação do cliente entrando - movimento linear da porta até o centro
-# Usa anchor para centralizar o sprite
-transform customer_enter:
+# Entrada do cliente: agora aparece com fade no centro (sem animação linear)
+transform customer_fade:
     anchor (0.5, 1.0)
-    ypos 570
-    xpos 1100
-    linear 1.5 xpos 640
-    block:
-        linear 0.12 yoffset -4 rotate 2
-        linear 0.12 yoffset 0 rotate 0
-        linear 0.12 yoffset -4 rotate -2
-        linear 0.12 yoffset 0 rotate 0
-        repeat
+    xpos 640 ypos 570
+    alpha 0.0
+    linear 0.4 alpha 1.0
 
 # Cliente parado no centro
 transform customer_idle:
@@ -581,10 +573,6 @@ transform idle_breathing:
         linear 1.0 yoffset 0
         repeat
 
-# Jogador respirando
-transform player_breathing:
-    xpos 150 ypos 450
-    block:
-        linear 1.2 yoffset -1
-        linear 1.2 yoffset 0
-        repeat
+# transform player_breathing removed — jogador oculto no HUD
+
+# player_center_fade removed (player não deve ficar translúcido)
