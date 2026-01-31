@@ -488,7 +488,14 @@ screen controls_help():
 screen game_over_screen():
     tag menu
     
-    add "bg game_over"
+    # Fundo vermelho escuro
+    add Solid("#330000")
+    
+    # Overlay da máscara quebrada
+    add "mask_overlay"
+    
+    # Filtro vermelho intenso
+    add Solid("#ff000080")
     
     frame:
         xalign 0.5
