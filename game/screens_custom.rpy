@@ -146,7 +146,21 @@ screen game_hud():
     timer 0.1 repeat True action Function(update_game_logic)
 
     # Background da loja — seleciona variante por status e máscara
-    if player_status == "normal":
+    if current_danger:
+        $ danger_bg_map = {
+            "fire": "mask/fogopratileira.jpg",
+            "alarm": "mask/alarmeseguranca.jpg",
+            "monster": "mask/algonassombras.jpg",
+            "mail": "mask/cartacentral.jpg",
+            "leak": "mask/vazamento.jpg",
+            "blackout": "mask/quedadeluz.jpg",
+            "rat": "mask/infestacao.jpg",
+            "glitch": "mask/glitchnacamera.jpg",
+            "phone": "mask/ligacaocentral.jpg"
+        }
+        $ danger_bg = danger_bg_map.get(current_danger["id"], "bg store_normal")
+        add danger_bg size (1280, 720) at bg_crossfade
+    elif player_status == "normal":
         if mask_on:
             add "bg store_normal" at bg_crossfade
         else:
@@ -182,7 +196,6 @@ screen game_hud():
             "bizarre": "customer_alien",
             "robot": "customer_alien",
             "angry": "customer_he",
-            "child": "customer_he",
             "vip": "customer_she",
             "paranoid": "customer_she"
         }
@@ -194,11 +207,11 @@ screen game_hud():
             # Cliente parado no centro com respiração
             add cust_sprite at customer_idle, idle_breathing
     
-    # Perigo (canto superior direito)
-    if current_danger:
-        $ dang_id = current_danger.get("id", "alarm")
-        $ dang_sprite = "danger_" + dang_id
-        add dang_sprite xpos 900 ypos 120
+    # Perigo (removido - agora usa background)
+    # if current_danger:
+    #     $ dang_id = current_danger.get("id", "alarm")
+    #     $ dang_sprite = "danger_" + dang_id
+    #     add dang_sprite xpos 900 ypos 120
     
     # Olhos de vigilância nos cantos
     add "surveillance_eye" xpos 30 ypos 30

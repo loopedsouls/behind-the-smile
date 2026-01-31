@@ -22,13 +22,13 @@ init python:
         TIME_WARNING = 30
         TIME_CRITICAL = 10
     
-    # ==================== TIPOS DE CLIENTES ====================
+    # ==================== TIPOS DE FUNCIONÁRIOS ====================
     CUSTOMER_TYPES = [
         {
             "id": "normal",
-            "name": "Cliente Normal",
-            "description": "Um cidadão comum querendo compras simples.",
-            "line": "Olá, preciso de algumas coisas básicas.",
+            "name": "Funcionário Monstro",
+            "description": "Um colega de trabalho comum, precisa de ajuda.",
+            "line": "Ei, pode me ajudar com isso?",
             "patience": 6,
             "emoji": "🧑",
             "points": 10,
@@ -36,9 +36,9 @@ init python:
         },
         {
             "id": "bizarre",
-            "name": "Cliente Bizarro",
-            "description": "Alguém muito estranho... mas precisa ser atendido.",
-            "line": "As sombras... elas sussurram segredos.",
+            "name": "Funcionário Alien",
+            "description": "Parece estranho... mas trabalha aqui.",
+            "line": "As máquinas... elas falam comigo.",
             "patience": 4,
             "emoji": "🤪",
             "points": 15,
@@ -46,9 +46,9 @@ init python:
         },
         {
             "id": "angry",
-            "name": "Cliente Irritado",
-            "description": "Já chegou bravo. Melhor ser rápido!",
-            "line": "Por que demora tanto? Estou com pressa!",
+            "name": "Funcionário He",
+            "description": "Já está irritado. Melhor resolver rápido!",
+            "line": "Por que tudo demora tanto aqui?!",
             "patience": 3,
             "emoji": "😠",
             "points": 20,
@@ -56,9 +56,9 @@ init python:
         },
         {
             "id": "vip",
-            "name": "Cliente VIP",
-            "description": "Um oficial da Central. Atenção redobrada!",
-            "line": "A Central exige o melhor serviço.",
+            "name": "Funcionária She",
+            "description": "Uma supervisora da Central. Atenção máxima!",
+            "line": "A Central espera eficiência total.",
             "patience": 8,
             "emoji": "🎩",
             "points": 30,
@@ -67,8 +67,8 @@ init python:
         {
             "id": "inspector",
             "name": "Inspetor de Felicidade",
-            "description": "Está aqui para avaliar seu sorriso.",
-            "line": "Seu sorriso está adequado aos padrões?",
+            "description": "Avalia se todos estão sorrindo adequadamente.",
+            "line": "Seu sorriso está dentro dos padrões?",
             "patience": 5,
             "emoji": "🕵️",
             "points": 40,
@@ -76,29 +76,19 @@ init python:
         },
         {
             "id": "robot",
-            "name": "Robô de Compras",
-            "description": "Máquina enviada pela Central. Eficiência máxima.",
-            "line": "Processando pedido... Eficiência: 100%.",
+            "name": "Robô de Manutenção",
+            "description": "Máquina da Central para reparos. Eficiência máxima.",
+            "line": "Executando protocolo de manutenção...",
             "patience": 10,
             "emoji": "🤖",
             "points": 25,
             "rarity": "uncommon"
         },
         {
-            "id": "child",
-            "name": "Criança Perdida",
-            "description": "Procura os pais. Muita paciência, mas observadora.",
-            "line": "Onde estão meus pais? Estou com medo...",
-            "patience": 12,
-            "emoji": "👶",
-            "points": 15,
-            "rarity": "uncommon"
-        },
-        {
             "id": "paranoid",
-            "name": "Cliente Paranóico",
-            "description": "Acha que está sendo seguido. Muito nervoso.",
-            "line": "Eles estão me observando... não estão?",
+            "name": "Funcionária Paranóica",
+            "description": "Acha que está sendo vigiada. Muito nervosa.",
+            "line": "Eles estão nos observando o tempo todo...",
             "patience": 2,
             "emoji": "😰",
             "points": 35,
