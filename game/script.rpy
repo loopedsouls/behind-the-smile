@@ -15,12 +15,12 @@ init python:
     store = renpy.store
 
     def spawn_customer():
-        client = random.choice(store.LORE['clients'])
+        client = store.get_random_customer()
         client_inst = dict(client)
         client_inst['is_looking'] = random.choice([True, False])
         store.current_customer = client_inst
         store.customer_leave_time = pytime.time() + random.uniform(4.0, 8.0)
-        renpy.notify("{name}: {line}".format(**client_inst))
+        renpy.show_screen("customer_dialogue", customer=client_inst)
         # schedule next spawn
         store.next_customer_time = pytime.time() + random.uniform(5.0, 12.0)
 

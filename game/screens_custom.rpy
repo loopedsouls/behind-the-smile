@@ -176,8 +176,17 @@ screen game_hud():
     # Cliente com animação
     if current_customer:
         $ cust_id = current_customer.get("id", "normal")
-        $ cust_sprite = "customer_" + cust_id
-        
+        $ sprite_mapping = {
+            "normal": "customer_monstro",
+            "inspector": "customer_monstro",
+            "bizarre": "customer_alien",
+            "robot": "customer_alien",
+            "angry": "customer_he",
+            "child": "customer_he",
+            "vip": "customer_she",
+            "paranoid": "customer_she"
+        }
+        $ cust_sprite = sprite_mapping.get(cust_id, "customer_monstro")
         if customer_entering:
             # Cliente aparece com fade no centro
             add cust_sprite at customer_fade
@@ -558,6 +567,33 @@ style game_button_text:
 style game_button_disabled:
     background "#2a2a3e"
     padding (20, 10)
+
+# ==================== TELA DE DIÁLOGO DO CLIENTE ====================
+screen customer_dialogue(customer):
+    zorder 100
+    modal False
+
+    # Timer para esconder após 3 segundos
+    timer 3.0 action Hide("customer_dialogue")
+
+    # Fundo semi-transparente
+    add Solid("#00000080")
+
+    # Caixa de diálogo no centro inferior
+    frame:
+        xalign 0.5
+        yalign 1.0
+        xsize 800
+        ysize 150
+        background Solid("#1a1a2e")
+        padding (20, 20)
+
+        vbox:
+            spacing 10
+            # Nome do cliente
+            text customer["name"] size 24 color "#f4d03f" bold True
+            # Linha de diálogo com efeito letra por letra
+            text "{cps=25}" + customer["line"] size 18 color "#ffffff"
     
 style game_button_disabled_text:
     color "#666666"

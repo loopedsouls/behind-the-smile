@@ -509,15 +509,22 @@ image player_idle = PixelSprite(SPRITE_PLAYER_IDLE, 6)
 # image player_mask removed (canvas-based masked sprite eliminated)
 
 # Customer images replaced by client PNGs (1.png is the main asset)
-image customer_normal = "images/client/1.png"
-image customer_bizarre = "images/client/2.png"  # placeholder
-image customer_angry = "images/client/3.png"    # placeholder
-image customer_vip = "images/client/4.png"      # placeholder
-image customer_inspector = "images/client/5.png"# placeholder
-# Fallbacks for other types (use main asset)
-image customer_robot = "images/client/1.png"
-image customer_child = "images/client/1.png"
-image customer_paranoid = "images/client/1.png"
+
+# Imagens dos clientes atualizadas conforme arquivos reais
+image customer_monstro = "images/client/monstro.png"
+image customer_alien = "images/client/alien.png"
+image customer_he = "images/client/he.png"
+image customer_she = "images/client/she.png"
+
+# Fallbacks para tipos não mapeados
+image customer_normal = "images/client/monstro.png"
+image customer_bizarre = "images/client/alien.png"
+image customer_angry = "images/client/he.png"
+image customer_vip = "images/client/she.png"
+image customer_inspector = "images/client/monstro.png"
+image customer_robot = "images/client/alien.png"
+image customer_child = "images/client/he.png"
+image customer_paranoid = "images/client/she.png"
 
 image danger_fire = PixelSprite(SPRITE_DANGERS["fire"], 6)
 image danger_alarm = PixelSprite(SPRITE_DANGERS["alarm"], 6)
@@ -541,14 +548,16 @@ image surveillance_eye = PixelSprite(SPRITE_EYE, 4)
 # Entrada do cliente: agora aparece com fade no centro (sem animação linear)
 transform customer_fade:
     anchor (0.5, 1.0)
-    xpos 640 ypos 570
+    xpos 560 ypos 640
+    zoom 0.5
     alpha 0.0
     linear 0.4 alpha 1.0
 
 # Cliente parado no centro
 transform customer_idle:
     anchor (0.5, 1.0)
-    xpos 640 ypos 570
+    xpos 560 ypos 640
+    zoom 0.5
     
 # Cliente saindo
 transform customer_leave:
