@@ -223,99 +223,100 @@ screen game_hud():
         add "mask_overlay"
         # Texto "SORRIA!" no topo (sem emojis)
         text "SORRIA!" xalign 0.5 ypos 40 size 36 color "#f4d03f" outlines [(2, "#000000", 0, 0)]
-    frame:
-        xalign 0.5
-        yalign 0.0
-        yoffset 10
-        xpadding 20
-        ypadding 10
-        background "#1a1a2eDD"
-        
-        hbox:
-            spacing 50
-            
-            # Timer
-            hbox:
-                spacing 5
-                text "Tempo" size 24
-                if time_left <= GameConfig.TIME_CRITICAL:
-                    text "[time_left]s" size 24 color "#ff4444"
-                elif time_left <= GameConfig.TIME_WARNING:
-                    text "[time_left]s" size 24 color "#ffaa00"
-                else:
-                    text "[time_left]s" size 24 color "#44ff44"
-            
-            # Status da Máscara
-            hbox:
-                spacing 5
-                if mask_on:
-                    text "Máscara ON" size 20 color "#44ff44"
-                else:
-                    text "Máscara OFF" size 20 color "#ff4444"
-            
-            # Pontuação
-            hbox:
-                spacing 5
-                text "Pontos" size 24
-                text "[score]" size 24 color "#f4d03f"
+    # HUD removido — lógica mantida
+    # frame:
+    #     xalign 0.5
+    #     yalign 0.0
+    #     yoffset 10
+    #     xpadding 20
+    #     ypadding 10
+    #     background "#1a1a2eDD"
+    #     
+    #     hbox:
+    #         spacing 50
+    #         
+    #         # Timer
+    #         hbox:
+    #             spacing 5
+    #             text "Tempo" size 24
+    #             if time_left <= GameConfig.TIME_CRITICAL:
+    #                 text "[time_left]s" size 24 color "#ff4444"
+    #             elif time_left <= GameConfig.TIME_WARNING:
+    #                 text "[time_left]s" size 24 color "#ffaa00"
+    #             else:
+    #                 text "[time_left]s" size 24 color "#44ff44"
+    #         
+    #         # Status da Máscara
+    #         hbox:
+    #             spacing 5
+    #             if mask_on:
+    #                 text "Máscara ON" size 20 color "#44ff44"
+    #             else:
+    #                 text "Máscara OFF" size 20 color "#ff4444"
+    #         
+    #         # Pontuação
+    #         hbox:
+    #             spacing 5
+    #             text "Pontos" size 24
+    #             text "[score]" size 24 color "#f4d03f"
 
-    # Aviso: cliente chegando (aparece enquanto customer_entering for True)
-    if customer_entering:
-        frame:
-            xalign 0.5
-            yalign 0.12
-            background "#1a1a2eCC"
-            xpadding 12
-            ypadding 6
-            text "Cliente chegando..." size 20 color "#f4d03f"
+    # Aviso: cliente chegando (removido)
+    # if customer_entering:
+    #     frame:
+    #         xalign 0.5
+    #         yalign 0.12
+    #         background "#1a1a2eCC"
+    #         xpadding 12
+    #         ypadding 6
+    #         text "Cliente chegando..." size 20 color "#f4d03f"
 
-    # Status do Cliente (lado esquerdo)
-    frame:
-        xalign 0.0
-        yalign 0.5
-        xpadding 15
-        ypadding 15
-        xoffset 20
-        background "#2a2a4eDD"
-        
-        vbox:
-            spacing 5
-            text "CLIENTE" size 18 color "#aaaaaa"
-            if current_customer:
-                text current_customer["emoji"] + " " + current_customer["name"] size 20
-                text current_customer["description"] size 14 color "#888888"
-                hbox:
-                    spacing 5
-                    if customer_time_left <= 2:
-                        text "[customer_time_left]s" size 16 color "#ff4444"
-                    else:
-                        text "[customer_time_left]s" size 16 color "#ffaa00"
-            else:
-                text "Nenhum" size 18 color "#666666"
+    # Status do Cliente (removido)
+    # frame:
+    #     xalign 0.0
+    #     yalign 0.5
+    #     xpadding 15
+    #     ypadding 15
+    #     xoffset 20
+    #     background "#2a2a4eDD"
+    #     
+    #     vbox:
+    #         spacing 5
+    #         text "CLIENTE" size 18 color "#aaaaaa"
+    #         if current_customer:
+    #             text current_customer["emoji"] + " " + current_customer["name"] size 20
+    #             text current_customer["description"] size 14 color "#888888"
+    #             hbox:
+    #                 spacing 5
+    #                 if customer_time_left <= 2:
+    #                     text "[customer_time_left]s" size 16 color "#ff4444"
+    #                 else:
+    #                     text "[customer_time_left]s" size 16 color "#ffaa00"
+    #         else:
+    #             text "Nenhum" size 18 color "#666666"
     
-    # Status do Perigo (lado direito)
-    frame:
-        xalign 1.0
-        yalign 0.5
-        xpadding 15
-        ypadding 15
-        xoffset -20
-        background "#4e2a2aDD"
-        
-        vbox:
-            spacing 5
-            text "PERIGO" size 18 color "#aaaaaa"
-            if current_danger:
-                text current_danger["emoji"] + " " + current_danger["name"] size 20 color "#ff6666"
-                text current_danger["description"] size 14 color "#aa6666"
-                hbox:
-                    spacing 5
-                    if danger_time_left <= 3:
-                        text "[danger_time_left]s" size 16 color "#ff4444"
-                    else:
-                        text "[danger_time_left]s" size 16 color "#ffaa00"
-            else:
-                text "Nenhum" size 18 color "#666666"
+    # Status do Perigo (removido)
+    # frame:
+    #     xalign 1.0
+    #     yalign 0.5
+    #     xpadding 15
+    #     ypadding 15
+    #     xoffset -20
+    #     background "#4e2a2aDD"
+    #     
+    #     vbox:
+    #         spacing 5
+    #         text "PERIGO" size 18 color "#aaaaaa"
+    #         if current_danger:
+    #             text current_danger["emoji"] + " " + current_danger["name"] size 20 color "#ff6666"
+    #             text current_danger["description"] size 14 color "#aa6666"
+    #             hbox:
+    #                 spacing 5
+    #                 if danger_time_left <= 3:
+    #                     text "[danger_time_left]s" size 16 color "#ff4444"
+    #                 else:
+    #                     text "[danger_time_left]s" size 16 color "#ffaa00"
+    #         else:
+    #             text "Nenhum" size 18 color "#666666"
     
     # Controles removidos da tela — usar teclado
     # Exibir dica discreta indicando as teclas (ajuda completa em Options)
@@ -420,8 +421,8 @@ screen controls_help():
             xalign 0.5
             text "Ajuda de Controles" size 28 color "#f4d03f" xalign 0.5
             text "Z — Alternar Máscara (colocar/tirar)" size 18
-            text "X — Atender cliente (quando disponível)" size 18
-            text "C — Resolver perigo (quando disponível)" size 18
+            text "X — Atender funcionário (quando disponível)" size 18
+            text "C — Resolver emergência (quando disponível)" size 18
             text "ESC — Pausar / Abrir menu" size 18
             text "Dica: Os botões na tela foram removidos. Use o teclado para maior imersão." size 16 color "#bbbbbb"
             textbutton "Fechar" action Return() xalign 0.5 style "menu_button_secondary"
@@ -446,9 +447,9 @@ screen game_over_screen():
             
             # Razão do game over
             if game_over_reason == "caught":
-                text "O cliente viu seu rosto triste!" size 24 color "#ff6666" xalign 0.5
+                text "O funcionário viu seu rosto triste!" size 24 color "#ff6666" xalign 0.5
             elif game_over_reason == "danger":
-                text "O perigo não foi resolvido a tempo!" size 24 color "#ff6666" xalign 0.5
+                text "A emergência não foi resolvida a tempo!" size 24 color "#ff6666" xalign 0.5
             else:
                 text "Turno encerrado!" size 24 color "#ffaa00" xalign 0.5
             
@@ -478,12 +479,12 @@ screen game_over_screen():
                         
                         vbox:
                             xalign 0.5
-                            text "Clientes" size 14 color "#888888" xalign 0.5
+                            text "Funcionários" size 14 color "#888888" xalign 0.5
                             text "[customers_served]" size 32 color "#44ff44" xalign 0.5
                         
                         vbox:
                             xalign 0.5
-                            text "Perigos" size 14 color "#888888" xalign 0.5
+                            text "Emergências" size 14 color "#888888" xalign 0.5
                             text "[dangers_resolved]" size 32 color "#ffaa00" xalign 0.5
             
             null height 20
