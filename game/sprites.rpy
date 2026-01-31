@@ -548,7 +548,7 @@ image surveillance_eye = PixelSprite(SPRITE_EYE, 4)
 # Entrada do cliente: agora aparece com fade no centro (sem animação linear)
 transform customer_fade:
     anchor (0.5, 1.0)
-    xpos 560 ypos 640
+    xpos 540 ypos 640
     zoom 0.5
     alpha 0.0
     linear 0.4 alpha 1.0
@@ -556,7 +556,7 @@ transform customer_fade:
 # Cliente parado no centro
 transform customer_idle:
     anchor (0.5, 1.0)
-    xpos 560 ypos 640
+    xpos 540 ypos 640
     zoom 0.5
     
 # Cliente saindo
