@@ -25,8 +25,6 @@ init python:
         store.next_customer_time = pytime.time() + random.uniform(5.0, 12.0)
         # Ativar máscara automaticamente
         store.mask_on = True
-        # Resetar estabilidade para o novo atendimento
-        store.arm_stability = 100.0
 
     def is_customer_looking(c):
         return c and c.get('is_looking', False)

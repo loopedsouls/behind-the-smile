@@ -261,7 +261,7 @@ screen game_hud():
             if arm_stability < 30:
                 $ mask_x += renpy.random.randint(-10, 10)
                 $ mask_y += renpy.random.randint(-10, 10)
-            add "mask_overlay" pos (mask_x, mask_y)
+            add "mask_overlay" pos (mask_x, mask_y) anchor (0.5, 0.5)
         else:
             # Normal: overlay estático
             add "mask_overlay"

@@ -99,6 +99,7 @@ screen say(who, what):
 
     window:
         id "window"
+        background None
 
         if who is not None:
 
