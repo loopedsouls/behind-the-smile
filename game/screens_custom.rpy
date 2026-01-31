@@ -42,15 +42,29 @@ init python:
             if store.customer_time_left <= 0:
                 store.current_customer = None
                 store.customer_entering = False
+                store.mask_on = False  # Desativar máscara quando cliente vai embora
         
-        if store.current_danger:
-            danger_elapsed = current_time - store.current_danger.get("spawn_time", current_time)
-            store.danger_time_left = max(0, store.current_danger["resolve_time"] - int(danger_elapsed))
-            if store.danger_time_left <= 0:
-                store.game_state = "game_over"
-                store.game_over_reason = "danger"
-                renpy.jump("game_over")
-                return
+        # Atualizar posição do mouse
+        mouse_pos = renpy.get_mouse_pos()
+        store.mouse_x, store.mouse_y = mouse_pos
+        
+        # Atualizar estabilidade do braço
+        if store.mask_on:
+            stability_elapsed = current_time - store.last_stability_update
+            if stability_elapsed >= 1.0:  # Atualizar a cada segundo
+                # Decaimento exponencial baseado no número de clientes atendidos
+                base_decay = 5.0
+                exponential_factor = 1.15 ** (store.customers_served // 3)  # Aumenta a cada 3 clientes atendidos
+                current_decay_rate = base_decay * exponential_factor
+                store.arm_stability = max(0, store.arm_stability - current_decay_rate)
+                store.last_stability_update = current_time
+                if store.arm_stability <= 0:
+                    store.game_state = "game_over"
+                    store.game_over_reason = "exhaustion"
+                    renpy.jump("game_over")
+        else:
+            # Pausar decaimento quando máscara está baixa (não recupera)
+            store.last_stability_update = current_time
         
         # Spawn check
         if current_time - store.last_spawn_check >= GameConfig.SPAWN_INTERVAL:
@@ -76,6 +90,9 @@ init python:
     def spawn_customer():
         """Spawna um novo cliente"""
         store.current_customer = get_random_customer()
+        # Reduzir paciência baseado no número de clientes atendidos (mais rápido a cada 3 atendidos)
+        speed_reduction = store.customers_served // 3
+        store.current_customer["patience"] = max(1, store.current_customer["patience"] - speed_reduction)
         store.current_customer["spawn_time"] = pytime.time()
         store.customer_time_left = store.current_customer["patience"]
         store.customer_entering = True
@@ -86,6 +103,9 @@ init python:
     def spawn_danger():
         """Spawna um novo perigo"""
         store.current_danger = get_random_danger()
+        # Reduzir tempo de resolução baseado no número de perigos resolvidos (mais rápido a cada 2 resolvidos)
+        speed_reduction = store.dangers_resolved // 2
+        store.current_danger["resolve_time"] = max(1, store.current_danger["resolve_time"] - speed_reduction)
         store.current_danger["spawn_time"] = pytime.time()
         store.danger_time_left = store.current_danger["resolve_time"]
         # ajustar estado visual baseado na severidade do perigo
@@ -119,6 +139,7 @@ init python:
         store.current_customer = None
         # voltar ao estado visual normal
         store.player_status = "normal"
+        renpy.hide_screen("customer_dialogue")  # Esconder diálogo ao atender
         renpy.notify("Cliente atendido! +" + str(points) + " pontos")
         return True
     
@@ -218,11 +239,48 @@ screen game_hud():
     add "surveillance_eye" xpos 1200 ypos 30
     add "surveillance_eye" xpos 1200 ypos 350
     
-    # Overlay da máscara (se ativa)
+    # Overlay da máscara (se ativa) - segue mouse apenas quando estabilidade baixa
     if mask_on:
-        add "mask_overlay"
+        if arm_stability < 50:
+            # Quando estabilidade baixa, máscara segue mouse (clamp para área do rosto)
+            $ mask_x = max(500, min(780, mouse_x))
+            $ mask_y = max(200, min(400, mouse_y))
+            # Adicionar tremor se estabilidade muito baixa
+            if arm_stability < 30:
+                $ mask_x += renpy.random.randint(-10, 10)
+                $ mask_y += renpy.random.randint(-10, 10)
+            add "mask_overlay" pos (mask_x, mask_y)
+        else:
+            # Normal: overlay estático
+            add "mask_overlay"
         # Texto "SORRIA!" no topo (sem emojis)
         text "SORRIA!" xalign 0.5 ypos 40 size 36 color "#f4d03f" outlines [(2, "#000000", 0, 0)]
+    
+    # Barra de Estabilidade do Braço
+    frame:
+        xalign 0.5
+        yalign 1.0
+        yoffset -80
+        xpadding 20
+        ypadding 10
+        background "#1a1a2eDD"
+        
+        vbox:
+            spacing 5
+            text "Estabilidade do Braço" size 16 color "#ffffff"
+            bar value arm_stability range 100 xsize 300 ysize 20
+    
+    # Botões para Android (lado direito)
+    frame:
+        xalign 1.0
+        yalign 0.5
+        xoffset -10
+        background None
+        
+        vbox:
+            spacing 10
+            textbutton "Máscara" action Function(toggle_mask) style "game_button"
+            textbutton "Resolver" action Function(resolve_danger) style "game_button"
     # HUD removido — lógica mantida
     # frame:
     #     xalign 0.5
@@ -511,6 +569,7 @@ screen game_over_screen():
 screen pause_screen():
     tag menu
     modal True
+    zorder 200
     
     # Fundo: placa centralizada
     add "pause_plate" xalign 0.5 yalign 0.5
@@ -572,11 +631,11 @@ style menu_button_secondary_text:
 style game_button:
     background "#4a4a6e"
     hover_background "#5a5a8e"
-    padding (20, 10)
+    padding (30, 15)
     
 style game_button_text:
     color "#ffffff"
-    size 16
+    size 18
 
 style game_button_disabled:
     background "#2a2a3e"
@@ -587,27 +646,39 @@ screen customer_dialogue(customer):
     zorder 100
     modal False
 
-    # Timer para esconder após 3 segundos
-    timer 3.0 action Hide("customer_dialogue")
+    # Só mostrar se o jogo estiver rodando
+    if game_state != "playing":
+        pass
+    else:
+        # Timer para esconder após 3 segundos
+        timer 3.0 action Hide("customer_dialogue")
 
-    # Fundo semi-transparente
-    add Solid("#00000080")
+        # Tecla espaço para pular
+        key "K_SPACE" action Hide("customer_dialogue")
 
-    # Caixa de diálogo no centro inferior
-    frame:
-        xalign 0.5
-        yalign 1.0
-        xsize 800
-        ysize 150
-        background Solid("#1a1a2e")
-        padding (20, 20)
+        # Fundo semi-transparente
+        add Solid("#00000080")
 
-        vbox:
-            spacing 10
-            # Nome do cliente
-            text customer["name"] size 24 color "#f4d03f" bold True
-            # Linha de diálogo com efeito letra por letra
-            text "{cps=25}" + customer["line"] size 18 color "#ffffff"
+        # Caixa de diálogo no centro inferior
+        frame:
+            xalign 0.5
+            yalign 1.0
+            xsize 800
+            ysize 200
+            background Solid("#1a1a2e")
+            padding (20, 20)
+
+            vbox:
+                spacing 10
+                # Nome do cliente
+                text customer["name"] size 24 color "#f4d03f" bold True
+                # Linha de diálogo com efeito letra por letra
+                text "{cps=25}" + customer["line"] size 18 color "#ffffff"
+                # Botão para atender
+                textbutton "Atender" action Function(serve_customer) style "game_button" xalign 1.0
+        
+        # Botão para pular diálogo
+        textbutton "Pular" action Hide("customer_dialogue") xalign 0.95 yalign 0.05 style "menu_button_secondary"
     
 style game_button_disabled_text:
     color "#666666"

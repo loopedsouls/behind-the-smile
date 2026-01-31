@@ -234,7 +234,9 @@ default game_over_reason = ""
 default customer_entering = False
 default customer_enter_time = 0.0
 
-# Controle de tempo
-default game_start_time = 0.0
-default last_spawn_check = 0.0
-default last_difficulty_increase = 0.0
+# Controle de mouse para máscara
+default mouse_x = 640
+default mouse_y = 360
+default arm_stability = 100.0  # 0-100
+default stability_decay_rate = 5.0  # por segundo
+default last_stability_update = 0.0
