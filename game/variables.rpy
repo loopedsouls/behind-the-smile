@@ -126,15 +126,6 @@ init python:
             "severity": "critical"
         },
         {
-            "id": "mail",
-            "name": "Carteiro Urgente",
-            "description": "Carta da Central! Precisa assinar!",
-            "resolve_time": 6,
-            "emoji": "📮",
-            "points": 12,
-            "severity": "medium"
-        },
-        {
             "id": "leak",
             "name": "Vazamento",
             "description": "Líquido estranho vazando do teto!",

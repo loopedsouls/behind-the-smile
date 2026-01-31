@@ -159,11 +159,26 @@ Mantenha o sorriso.
     }
 
 # ==================== TELA DE LORE ====================
+# ==================== TELA DE LORE ====================
+transform balancing:
+    xalign 0.5
+    yalign 0.5
+    linear 1.0 xoffset 5
+    linear 1.0 xoffset -5
+    repeat
+
 screen lore_screen():
     tag menu
     modal True
     
-    add Solid("#0a0a15")
+    # Fundo da loja
+    add "bg store_normal"
+    
+    # Personagem balançando no centro
+    add "customer_monstro" at balancing
+    
+    # Overlay escuro para legibilidade
+    add Solid("#00000080")
     
     frame:
         xfill True
@@ -205,7 +220,7 @@ screen lore_screen():
                     vbox:
                         text "// A ARMA //" size 24 color "#ff4444"
                         null height 10
-                        text LORE["the_weapon"] size 16 color "#aaaaaa" font "DejaVuSansMono.ttf"
+                        text LORE["the_weapon"] size 16 color "#aaaaaa"
                 
                 # Os Infectados
                 frame:
@@ -216,7 +231,7 @@ screen lore_screen():
                     vbox:
                         text "// OS INFECTADOS //" size 24 color "#44ff44"
                         null height 10
-                        text LORE["the_infected"] size 16 color "#aaaaaa" font "DejaVuSansMono.ttf"
+                        text LORE["the_infected"] size 16 color "#aaaaaa"
                 
                 # As Máscaras
                 frame:
@@ -227,7 +242,7 @@ screen lore_screen():
                     vbox:
                         text "// AS MÁSCARAS //" size 24 color "#ffff44"
                         null height 10
-                        text LORE["the_masks"] size 16 color "#aaaaaa" font "DejaVuSansMono.ttf"
+                        text LORE["the_masks"] size 16 color "#aaaaaa"
                 
                 # Sua Função
                 frame:
@@ -238,7 +253,7 @@ screen lore_screen():
                     vbox:
                         text "// SUA MISSÃO //" size 24 color "#4444ff"
                         null height 10
-                        text LORE["your_role"] size 16 color "#aaaaaa" font "DejaVuSansMono.ttf"
+                        text LORE["your_role"] size 16 color "#aaaaaa"
                 
                 null height 50
                 

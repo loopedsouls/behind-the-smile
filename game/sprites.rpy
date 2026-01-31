@@ -297,22 +297,6 @@ init python:
             "...XX..XX...",
             "..XX....XX..",
         ],
-        "mail": [
-            "....BBBB....",
-            "...BBBBBB...",
-            "..BBBBBBBB..",
-            "..BSSSSSBB..",
-            "..SSSSSSSS..",
-            "..S.SS.SS...",
-            "...SSSSSS...",
-            "..WWWWWWWW..",
-            "..WYYYYYYW..",
-            "..WYYYYYYW..",
-            "..WWWWWWWW..",
-            "..SS....SS..",
-            "..SS....SS..",
-            "..BB....BB..",
-        ],
         "leak": [
             "....BBBB....",
             "...B....B...",
@@ -529,7 +513,6 @@ image customer_paranoid = "images/client/she.png"
 image danger_fire = PixelSprite(SPRITE_DANGERS["fire"], 6)
 image danger_alarm = PixelSprite(SPRITE_DANGERS["alarm"], 6)
 image danger_monster = PixelSprite(SPRITE_DANGERS["monster"], 6)
-image danger_mail = PixelSprite(SPRITE_DANGERS["mail"], 6)
 image danger_leak = PixelSprite(SPRITE_DANGERS["leak"], 6)
 image danger_blackout = PixelSprite(SPRITE_DANGERS["blackout"], 6)
 image danger_rat = PixelSprite(SPRITE_DANGERS["rat"], 6)
