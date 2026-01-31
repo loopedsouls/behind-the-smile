@@ -8,35 +8,35 @@ init python:
         "title": "A Crise do Sorriso",
         
         "background": """
-O mundo como conhecíamos acabou em 2031.
+O mundo como conhecíamos se despedaçou em uma fenda da realidade.
 
-Não foi com um estrondo. Foi com um sorriso.
+Não foi com um estrondo. Foi com um sorriso forçado.
 
-A Grande Crise Burocrática já havia esgotado os recursos de todas as nações. 
-Filas intermináveis, documentos perdidos, sistemas que nunca funcionavam. 
-O povo estava à beira do colapso - e os governos sabiam disso.
+A Grande Crise Burocrática havia transformado o trabalho em uma prisão infinita.
+Filas intermináveis, documentos perdidos, sistemas que nunca funcionavam.
+O povo estava à beira do colapso - e os monstros sabiam disso.
 
-Então veio a guerra. Silenciosa. Covarde. Perfeita.
+Então veio a anomalia. Silenciosa. Covarde. Perfeita.
         """,
         
         "the_weapon": """
 ═══════════════════════════════════════════════════
     ARQUIVO CONFIDENCIAL - NÍVEL ÔMEGA
-    PROJETO: CORDYCEPS-7 (CODINOME: "SORRISO")
+    PROJETO: FENDA DA REALIDADE (CODINOME: "SORRISO")
 ═══════════════════════════════════════════════════
 
-Um país - ninguém sabe mais qual, os registros foram apagados - liberou algo.
+Uma anomalia - ninguém sabe de onde veio, os registros foram perdidos - rasgou a realidade.
 
 Não era uma bomba. Não era um vírus comum.
 
-Era um FUNGO.
+Era uma FENDA.
 
-Engenheirado em laboratórios secretos, o Cordyceps-7 foi projetado para ser 
+Criada em dimensões paralelas, a Fenda da Realidade foi projetada para ser 
 a arma perfeita: invisível, silenciosa, e absolutamente devastadora.
 
-O fungo se aloja no sistema nervoso central. Cresce lentamente, 
-estendendo seus filamentos pelo cérebro, tomando controle motor 
-enquanto mantém a consciência... parcialmente intacta.
+Ela atrai entidades de outras realidades. Cresce lentamente, 
+estendendo seus tentáculos pela loja, trazendo monstros que se alimentam 
+de negatividade enquanto mantém a consciência... parcialmente intacta.
 
 A vítima não percebe. Não no começo.
 
@@ -46,63 +46,63 @@ descoordenados, uma fome inexplicável...
         
         "the_infected": """
 ═══════════════════════════════════════════════════
-    OS INFECTADOS - RELATÓRIO MÉDICO #7749
+    OS MONSTROS - RELATÓRIO DE ANOMALIA #7749
 ═══════════════════════════════════════════════════
 
-Os estágios da infecção são insidiosos:
+Os estágios da anomalia são insidiosos:
 
 ESTÁGIO 1 - INFILTRAÇÃO (1-7 dias)
-- Nenhum sintoma visível
-- Esporos se alojam nos pulmões e migram para o cérebro
-- A pessoa continua sua vida normal
+- Nenhum sinal visível na loja
+- Entidades se infiltram através da fenda e migram para os clientes
+- A loja continua funcionando normalmente
 
 ESTÁGIO 2 - INTEGRAÇÃO (1-4 semanas)  
 - Sorrisos involuntários em momentos inapropriados
-- Leve descoordenação motora
-- Aumento do apetite
-- A pessoa ainda é "ela mesma"... mais ou menos
+- Leve descoordenação motora nos clientes
+- Aumento do apetite por negatividade
+- Os clientes ainda parecem normais... mais ou menos
 
 ESTÁGIO 3 - DOMINAÇÃO (1-2 meses)
-- O fungo assume controle parcial
+- A anomalia assume controle parcial dos clientes
 - Impulsos violentos surgem sem explicação
-- A fome se torna... específica
+- A fome se torna... específica para emoções negativas
 - A consciência original ainda está lá, gritando, presa
 
 ESTÁGIO 4 - CONSUMAÇÃO (Irreversível)
 - Controle total do hospedeiro
-- Única motivação: ALIMENTAR-SE
+- Única motivação: ALIMENTAR-SE DE NEGATIVIDADE
 - Não há lógica. Não há razão. Não há misericórdia.
 - O monstro não quer conquistar. Não quer dominar.
-- Ele quer COMER. Apenas isso. Sem explicação. Sem satisfação.
+- Ele quer COMER emoções. Apenas isso. Sem explicação. Sem satisfação.
 - Uma fome eterna que nunca pode ser saciada.
         """,
         
         "the_masks": """
 ═══════════════════════════════════════════════════
-    A SOLUÇÃO - DECRETO FEDERAL #001-SORRISO
+    A SOLUÇÃO - DECRETO DA GERÊNCIA #001-SORRISO
 ═══════════════════════════════════════════════════
 
-O governo encontrou uma "solução".
+A Gerência encontrou uma "solução".
 
 Não uma cura. Uma MÁSCARA.
 
-A teoria era simples: se todos usassem máscaras sorridentes, 
-ninguém poderia identificar os infectados pelo sorriso involuntário.
-A sociedade poderia "funcionar" novamente.
+A teoria era simples: se o funcionário usasse uma máscara sorridente, 
+os monstros não poderiam detectar a negatividade por trás dela.
+A loja poderia "funcionar" novamente.
 
 Mas havia um efeito colateral conveniente:
 
-Com todos sorrindo o tempo todo, ninguém poderia expressar 
+Com o sorriso permanente, o funcionário não poderia expressar 
 descontentamento. Medo. Raiva. Tristeza.
 
-A burocracia finalmente tinha sua utopia:
-CIDADÃOS PERMANENTEMENTE FELIZES.
+A Gerência finalmente tinha sua utopia:
+FUNCIONÁRIOS PERMANENTEMENTE FELIZES.
 
 (Ou pelo menos, permanentemente parecendo felizes.)
 
-É proibido tirar a máscara em público.
+É proibido tirar a máscara quando o cliente olhar.
 É proibido mostrar emoções negativas.
-É proibido questionar o sistema.
+É proibido questionar a Gerência.
 
 Sorria. Sempre.
 Porque se você não sorrir... como vamos saber que você não é um deles?
@@ -110,44 +110,44 @@ Porque se você não sorrir... como vamos saber que você não é um deles?
         
         "your_role": """
 ═══════════════════════════════════════════════════
-    SUA FUNÇÃO - AGENTE DE TRIAGEM
+    SUA FUNÇÃO - FUNCIONÁRIO #404
 ═══════════════════════════════════════════════════
 
-Você é um Agente de Triagem da Felicidade.
+Você é o Funcionário #404.
 
 Seu trabalho é simples:
-1. MANTENHA A MÁSCARA ao atender os cidadãos
+1. MANTENHA A MÁSCARA ao atender os clientes
 2. PROCESSE seus pedidos com eficiência e um sorriso
 3. REMOVA A MÁSCARA apenas para lidar com "anomalias"
 
-As anomalias podem ser qualquer coisa: um incêndio, um vazamento, 
-um alarme... ou algo pior. Coisas que exigem que você veja claramente.
+As anomalias podem ser qualquer coisa: um produto fora de lugar, um alarme, 
+um cliente suspeito... ou algo pior. Coisas que exigem que você veja claramente.
 Coisas que exigem que você aja sem o sorriso falso atrapalhando.
 
-Mas cuidado: se um cidadão ver você sem a máscara, é GAME OVER.
+Mas cuidado: se um cliente ver você sem a máscara, é GAME OVER.
 
 Por quê? Porque se você pode tirar a máscara...
-...talvez você não tenha nada a esconder.
-...talvez você não esteja sorrindo por baixo.
+...talvez você tenha negatividade a esconder.
+...talvez você não esteja sorrindo por dentro.
 ...talvez você seja um DELES.
 
-E no mundo pós-Cordyceps, a dúvida é uma sentença de morte.
+E na loja da fenda, a dúvida é uma sentença de morte.
 
-Boa sorte, Agente.
+Boa sorte, Funcionário.
 Mantenha o sorriso.
         """,
         
         "fragments": [
-            "Os arquivos dizem que a guerra durou 3 dias. Ninguém acredita.",
-            "Dizem que os primeiros infectados foram políticos. Irônico.",
-            "O fungo não mata. Ele... substitui.",
+            "Os arquivos dizem que a fenda se abriu durante uma noite de turno. Ninguém acredita.",
+            "Dizem que os primeiros monstros foram clientes regulares. Irônico.",
+            "A anomalia não mata. Ela... substitui.",
             "Algumas pessoas tiram a máscara de propósito. Querem ser livres. Por um segundo.",
             "Os olhos são a última coisa a mudar. É assim que você sabe.",
             "A cura existe. Está trancada. 'Muito cara para produzir em massa.'",
-            "O sorriso da máscara foi desenhado por um infectado. Ninguém percebeu.",
-            "Alguns infectados mantêm suas memórias. Assistem enquanto seus corpos...",
-            "A fome nunca para. Nunca. Mesmo depois de comer.",
-            "O fungo não pensa. Não sente. Só... consome."
+            "O sorriso da máscara foi desenhado por um monstro. Ninguém percebeu.",
+            "Alguns monstros mantêm suas memórias. Assistem enquanto seus corpos...",
+            "A fome nunca para. Nunca. Mesmo depois de comer negatividade.",
+            "A anomalia não pensa. Não sente. Só... consome."
         ],
         "clients": [
             {"id": "vizinha", "name": "Vizinha Solícita", "description": "Uma vizinha amigável que sempre sorri.", "line": "Boa noite, querida. Sorria, sempre sorria — deixa tudo mais fácil.", "emoji": "👩", "patience": 10},
@@ -257,14 +257,14 @@ label show_intro:
     # Estilo de terminal
     window show
     
-    narrator_dystopia "O mundo como conhecíamos acabou em 2031."
+    narrator_dystopia "O mundo como conhecíamos se despedaçou em uma fenda da realidade."
     narrator_dystopia "Não foi com um estrondo."
-    narrator_dystopia "Foi com um sorriso."
+    narrator_dystopia "Foi com um sorriso forçado."
     
     scene black with dissolve
     pause 0.5
     
-    narrator_dystopia "A Grande Crise Burocrática já havia esgotado tudo."
+    narrator_dystopia "A Grande Crise Burocrática já havia transformado o trabalho em prisão."
     narrator_dystopia "Filas. Documentos. Sistemas quebrados."
     narrator_dystopia "O povo estava à beira do colapso."
     
@@ -272,60 +272,60 @@ label show_intro:
     pause 0.5
     
     system "ALERTA DE SEGURANÇA NÍVEL ÔMEGA"
-    narrator_dystopia "Então veio a guerra. Silenciosa. Covarde."
-    narrator_dystopia "Um país liberou algo. Ninguém sabe mais qual."
+    narrator_dystopia "Então veio a anomalia. Silenciosa. Covarde."
+    narrator_dystopia "Uma fenda rasgou a realidade. Ninguém sabe de onde."
     
     scene black with dissolve
     pause 0.3
     
     narrator_dystopia "Não era uma bomba."
-    narrator_dystopia "Era um FUNGO."
+    narrator_dystopia "Era uma FENDA."
     
     scene black with dissolve
     pause 0.5
     
-    narrator_dystopia "Cordyceps-7. Codinome: 'Sorriso'."
-    narrator_dystopia "Ele se aloja no cérebro. Cresce. Toma controle."
+    narrator_dystopia "Fenda da Realidade. Codinome: 'Sorriso'."
+    narrator_dystopia "Ela atrai entidades. Cresce. Toma controle."
     narrator_dystopia "A vítima não percebe. Não no começo."
     
     narrator_dystopia "Apenas alguns sinais..."
     narrator_dystopia "Um sorriso involuntário."
-    narrator_dystopia "Uma fome inexplicável."
+    narrator_dystopia "Uma fome por negatividade."
     
     scene black with dissolve
     pause 0.5
     
-    narrator_dystopia "Os infectados não querem conquistar."
+    narrator_dystopia "Os monstros não querem conquistar."
     narrator_dystopia "Não querem dominar."
-    narrator_dystopia "Eles querem COMER."
+    narrator_dystopia "Eles querem COMER emoções negativas."
     narrator_dystopia "Sem razão. Sem satisfação. Apenas... fome."
     
     scene black with dissolve
     pause 0.5
     
-    system "DECRETO FEDERAL #001-SORRISO"
-    narrator_dystopia "A solução do governo foi simples:"
-    narrator_dystopia "MÁSCARAS. Para todos. Sempre."
+    system "DECRETO DA GERÊNCIA #001-SORRISO"
+    narrator_dystopia "A solução da Gerência foi simples:"
+    narrator_dystopia "MÁSCARAS. Para funcionários. Sempre."
     
-    narrator_dystopia "Se todos sorriem, ninguém pode identificar os infectados."
-    narrator_dystopia "Se todos sorriem, ninguém pode expressar descontentamento."
-    narrator_dystopia "A burocracia finalmente tinha sua utopia."
+    narrator_dystopia "Se o funcionário sorri, os monstros não detectam a negatividade."
+    narrator_dystopia "Se o funcionário sorri, não pode expressar descontentamento."
+    narrator_dystopia "A Gerência finalmente tinha sua utopia."
     
     scene black with dissolve
     pause 0.5
     
-    system "DESIGNAÇÃO: AGENTE DE TRIAGEM"
-    narrator_dystopia "Você é um Agente de Triagem da Felicidade."
-    narrator_dystopia "Seu trabalho: manter o sorriso. Processar cidadãos."
+    system "DESIGNAÇÃO: FUNCIONÁRIO #404"
+    narrator_dystopia "Você é o Funcionário #404."
+    narrator_dystopia "Seu trabalho: manter o sorriso. Processar clientes."
     narrator_dystopia "Só tire a máscara para lidar com 'anomalias'."
     
-    narrator_dystopia "Mas se um cidadão ver você sem máscara..."
+    narrator_dystopia "Mas se um cliente ver você sem máscara..."
     narrator_dystopia "...a dúvida é uma sentença de morte."
     
     scene black with dissolve
     pause 0.3
     
-    system "BOA SORTE, AGENTE"
+    system "BOA SORTE, FUNCIONÁRIO"
     system "MANTENHA O SORRISO"
     
     window hide

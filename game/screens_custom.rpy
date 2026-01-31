@@ -161,10 +161,23 @@ init python:
         renpy.notify("Perigo resolvido! +" + str(points) + " pontos")
         return True
 
+# Transform para texto rolando da lore
+transform scrolling_lore:
+    # Começa fora da tela à direita
+    xpos 1280
+    # Move para a esquerda lentamente
+    linear 30.0 xpos -2000  # Ajustar velocidade e distância baseada no comprimento do texto
+    # Repete
+    repeat
+
 # ==================== TELA DO HUD DO JOGO ====================
 screen game_hud():
     # Atualizar lógica do jogo
     timer 0.1 repeat True action Function(update_game_logic)
+
+    # Texto da lore rolando no topo
+    $ lore_text = " | ".join(store.LORE["fragments"] * 3)  # Repetir 3 vezes para texto mais longo
+    text lore_text at scrolling_lore ypos 10 size 18 color "#666666"
 
     # Background da loja — seleciona variante por status e máscara
     if current_danger:

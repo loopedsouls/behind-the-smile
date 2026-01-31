@@ -26,7 +26,7 @@ init python:
     CUSTOMER_TYPES = [
         {
             "id": "normal",
-            "name": "Funcionário Monstro",
+            "name": "Monstro",
             "description": "Um ex-colega que enlouqueceu após demissão.",
             "line": "Eu era como você... até que me demitiram. Ajude-me!",
             "patience": 6,
@@ -36,7 +36,7 @@ init python:
         },
         {
             "id": "bizarre",
-            "name": "Funcionário Alien",
+            "name": "Alien",
             "description": "Parece estranho... mas trabalha aqui.",
             "line": "As máquinas... elas falam comigo. Você ouve?",
             "patience": 4,
@@ -46,7 +46,7 @@ init python:
         },
         {
             "id": "angry",
-            "name": "Funcionário He",
+            "name": "Raivoso",
             "description": "Já está irritado. Melhor resolver rápido!",
             "line": "Por que tudo demora tanto aqui?! Eu odeio este lugar!",
             "patience": 3,
@@ -56,7 +56,7 @@ init python:
         },
         {
             "id": "vip",
-            "name": "Funcionária She",
+            "name": "She",
             "description": "Uma supervisora da Central. Atenção máxima!",
             "line": "A Central espera eficiência total. Não me decepcione.",
             "patience": 8,
@@ -86,7 +86,7 @@ init python:
         },
         {
             "id": "paranoid",
-            "name": "Funcionária Paranóica",
+            "name": "Paranóica",
             "description": "Acha que está sendo vigiada. Muito nervosa.",
             "line": "Eles estão nos observando o tempo todo... Não confie em ninguém.",
             "patience": 2,
