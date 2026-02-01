@@ -467,25 +467,25 @@ screen game_hud():
             text "DIA [current_day]" size 18 color "#f4d03f" bold True
             text "[time_left]s" size 24 color "#f4d03f" bold True
     
-    # Barra de Estabilidade do Braço
+    # Barra de Estabilidade do Braço (Vertical - Lado Esquerdo)
     frame:
-        xalign 0.5
-        yalign 1.0
-        yoffset -80
-        xpadding 20
-        ypadding 10
+        xalign 0.0
+        xoffset 20
+        yalign 0.5
+        xpadding 15
+        ypadding 20
         background "#1a1a2eDD"
         
         vbox:
             spacing 5
-            text "Estabilidade do Braço" size 16 color "#ffffff"
-            bar value arm_stability range 100 xsize 300 ysize 20
+            text "Estabilidade do Braço" size 14 color "#ffffff" xalign 0.5
+            bar value arm_stability range 100 xsize 25 ysize 200
     
     # Relógio de Spawn de Cliente (Canvas Sprite)
     frame:
         xalign 0.5
         yalign 1.0
-        yoffset -160
+        yoffset -100
         xpadding 15
         ypadding 10
         background "#1a1a2eDD"
