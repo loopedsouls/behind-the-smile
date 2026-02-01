@@ -323,6 +323,7 @@ label day_1_intro:
 
 label day_1_gameplay:
     # Gameplay do Dia 1 - clientes normais, dificuldade baixa
+    scene bg store_normal
     $ difficulty_multiplier = 1.0
     $ time_left = GameConfig.GAME_DURATION
     $ game_state = "playing"
@@ -331,6 +332,7 @@ label day_1_gameplay:
     
     # Após o turno
     window show
+    scene bg store_normal
     
     gerente "Funcionário #404. Relatório do turno."
     
@@ -374,6 +376,7 @@ label day_2_intro:
 
 label day_2_gameplay:
     # Gameplay do Dia 2 - dificuldade média, mais clientes
+    scene bg store_normal
     $ difficulty_multiplier = 1.2
     $ time_left = GameConfig.GAME_DURATION
     $ game_state = "playing"
@@ -423,6 +426,7 @@ label day_3_intro:
 
 label day_3_gameplay:
     # Gameplay do Dia 3 - dificuldade alta, clientes especiais aparecem
+    scene bg store_normal
     $ difficulty_multiplier = 1.5
     $ time_left = GameConfig.GAME_DURATION
     $ game_state = "playing"
@@ -470,6 +474,7 @@ label day_4_intro:
 
 label day_4_gameplay:
     # Gameplay do Dia 4 - dificuldade muito alta, anomalias
+    scene bg store_normal
     $ difficulty_multiplier = 1.8
     $ time_left = GameConfig.GAME_DURATION
     $ game_state = "playing"
