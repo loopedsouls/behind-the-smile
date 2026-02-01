@@ -492,7 +492,10 @@ screen game_hud():
         vbox:
             spacing 5
             text "Estabilidade do Braço" size 14 color "#ffffff" xalign 0.5
-            bar value arm_stability range 100 xsize 25 ysize 200 vertical True
+            bar value arm_stability range 100 xsize 200 ysize 25:
+                xalign 0.5
+                yalign 1.0
+                rotate 270
     
     # Relógio de Spawn de Cliente (Canvas Sprite)
     frame:
