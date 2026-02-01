@@ -237,9 +237,6 @@ label start_game:
     # Iniciar timer
     $ start_game_timer()
     
-    # Cena do jogo
-    scene black with fade
-    
     # Começar narrativa do Dia 1
     jump day_1_intro
 
@@ -520,6 +517,7 @@ label day_5_intro:
 
 label day_5_gameplay:
     # Gameplay do Dia 5 - dificuldade máxima, clímax
+    scene bg store_normal
     $ difficulty_multiplier = 2.0
     $ time_left = GameConfig.GAME_DURATION
     $ game_state = "playing"
