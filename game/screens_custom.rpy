@@ -26,9 +26,7 @@ init python:
         
         # Verificar fim do jogo por tempo
         if store.time_left <= 0:
-            store.game_state = "game_over"
-            store.game_over_reason = "time"
-            renpy.jump("game_over")
+            store.game_state = "day_end"
             return
         
         # Atualizar animação de entrada do cliente
@@ -409,7 +407,10 @@ screen game_hud():
         ypadding 10
         background "#1a1a2eDD"
         
-        text "[time_left]s" size 24 color "#f4d03f" bold True
+        vbox:
+            spacing 5
+            text "DIA [current_day]" size 18 color "#f4d03f" bold True
+            text "[time_left]s" size 24 color "#f4d03f" bold True
     
     # Barra de Estabilidade do Braço
     frame:
