@@ -254,17 +254,8 @@ label game_loop:
     if game_state == "game_over":
         jump game_over
     elif game_state == "day_end":
-        # Avançar para o próximo dia
-        if current_day == 1:
-            jump day_1_gameplay
-        elif current_day == 2:
-            jump day_2_gameplay
-        elif current_day == 3:
-            jump day_3_gameplay
-        elif current_day == 4:
-            jump day_4_gameplay
-        elif current_day == 5:
-            jump day_5_gameplay
+        # Dia terminou - retornar para continuar a narrativa
+        return
     elif game_state == "playing":
         jump game_loop
     
