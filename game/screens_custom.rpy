@@ -10,6 +10,7 @@ init python:
         store.game_start_time = pytime.time()
         store.last_spawn_check = store.game_start_time
         store.last_difficulty_increase = store.game_start_time
+        store.last_stability_update = store.game_start_time
     
     def update_game_logic():
         """Atualiza a lógica do jogo a cada frame"""
@@ -63,8 +64,12 @@ init python:
                     store.game_over_reason = "exhaustion"
                     renpy.jump("game_over")
         else:
-            # Pausar decaimento quando máscara está baixa (não recupera)
-            store.last_stability_update = current_time
+            # Recuperar estabilidade gradualmente quando máscara está baixa
+            stability_elapsed = current_time - store.last_stability_update
+            if stability_elapsed >= 1.0:  # Atualizar a cada segundo
+                recovery_rate = 3.0  # Recupera 3 pontos por segundo
+                store.arm_stability = min(100.0, store.arm_stability + recovery_rate)
+                store.last_stability_update = current_time
         
         # Spawn check
         if current_time - store.last_spawn_check >= GameConfig.SPAWN_INTERVAL:

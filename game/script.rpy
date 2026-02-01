@@ -57,6 +57,7 @@ label main_menu:
     $ score = 0
     $ time_left = GameConfig.GAME_DURATION
     $ mask_on = True
+    $ arm_stability = 100.0
     $ current_customer = None
     $ current_danger = None
     $ customers_served = 0
@@ -72,6 +73,7 @@ label start_game:
     $ score = 0
     $ time_left = GameConfig.GAME_DURATION
     $ mask_on = True
+    $ arm_stability = 100.0
     $ mask_lower_count = 0
     $ current_customer = None
     $ current_danger = None
