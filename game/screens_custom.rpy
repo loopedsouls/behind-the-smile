@@ -382,69 +382,6 @@ screen game_hud():
     add "surveillance_eye" xpos 1200 ypos 30
     add "surveillance_eye" xpos 1200 ypos 350
     
-    # Scanner e produtos no balcão (quando há produtos para escanear)
-    if products_to_scan:
-        # Background do scanner
-        add "mask/scannerbarcode.jpg" xpos 400 ypos 500 size (480, 150)
-        
-        # Produtos clicáveis no balcão
-        $ product_positions = [(450, 520), (550, 520), (650, 520), (750, 520)]
-        for i, product in enumerate(products_to_scan):
-            if i < len(product_positions):
-                $ pos_x, pos_y = product_positions[i]
-                $ is_scanned = product["id"] in scanned_products
-                $ is_scanning = scanning_product and scanning_product["id"] == product["id"]
-                
-                # Botão de texto para o produto
-                textbutton product["emoji"] + "\n" + product["name"]:
-                    pos (pos_x, pos_y)
-                    anchor (0.5, 0.5)
-                    action Function(scan_product, product["id"])
-                    style "product_button"
-                    text_color ("#44ff44" if is_scanned else "#ffffff")
-                
-                # Barra de progresso se escaneando
-                if is_scanning:
-                    $ elapsed = pytime.time() - scan_start_time
-                    $ progress = min(1.0, elapsed / scanning_product["scan_time"])
-                    bar value progress range 1.0 pos (pos_x - 30, pos_y + 40) xsize 60 ysize 8
-    
-    # Carimbos (sempre visíveis quando máscara está baixa)
-    if not mask_on:
-        frame:
-            xalign 0.0
-            yalign 0.8
-            xoffset 20
-            background "#2a2a4eDD"
-            xpadding 15
-            ypadding 15
-            
-            vbox:
-                spacing 8
-                text "CARIMBOS" size 16 color "#f4d03f"
-                
-                for stamp in STAMPS:
-                    $ is_selected = current_stamp and current_stamp["id"] == stamp["id"]
-                    textbutton stamp["name"]:
-                        action Function(select_stamp, stamp["id"])
-                        style "stamp_button"
-                        text_color (stamp["color"] if not is_selected else "#ffffff")
-                        background ("#444444" if is_selected else "#2a2a2a")
-                
-                null height 10
-                
-                textbutton "Aplicar Carimbo":
-                    action Function(apply_stamp)
-                    style "game_button"
-                    sensitive (current_stamp is not None and current_customer is not None)
-    
-    # Botão de Café
-    if not mask_on:
-        textbutton "☕ CAFÉ":
-            pos (1100, 600)
-            action Function(drink_coffee)
-            style "game_button"
-    
     # Overlay da máscara (se ativa) - segue mouse apenas quando estabilidade baixa
     if mask_on:
         if arm_stability < 50:
@@ -599,9 +536,7 @@ screen game_hud():
     
     # Atalhos de teclado
     key "K_z" action Function(toggle_mask)
-    key "K_x" action Function(apply_stamp)  # Aplicar carimbo
     key "K_c" action Function(resolve_danger)
-    key "K_v" action Function(drink_coffee)  # Beber café
     key "K_ESCAPE" action Jump("pause_game")
 
 # ==================== TELA DE MENU ====================

@@ -5,6 +5,9 @@
 define narrator_dystopia = Character(None, what_color="#cccccc")
 define system = Character("SISTEMA", color="#f4d03f", what_color="#ffdd88")
 define customer_char = Character(None, color="#f4d03f", what_color="#ffffff")
+define narrator = Character(None, what_color="#ffffff")
+define gerente = Character("GERÊNCIA", color="#ff4444", what_color="#ffaaaa")
+define eu = Character("Funcionário #404", color="#44aaff", what_color="#88ddff")
 
 init python:
     # Fix for renpy.error not being callable
@@ -54,11 +57,115 @@ label customer_dialogue_label:
     $ dialogue_line = current_customer["line"]
     customer_char "[dialogue_line]"
     
-    menu:
-        "Entendido, vou preparar a compra.":
-            pass
-        "Um momento, por favor.":
-            pass
+    # Menu baseado no tipo de cliente para conversa profissional e fluida
+    if current_customer["id"] == "normal":
+        menu:
+            "Certamente, vou processar seu pedido imediatamente.":
+                $ serve_customer()
+                $ score += 5  # Bônus por eficiência
+            "Aguarde um momento enquanto verifico os detalhes.":
+                $ customer_time_left = max(1, customer_time_left - 1)
+                $ renpy.notify("Cliente aguardando...")
+            "Desculpe, estamos com fila. Retorne em breve.":
+                $ current_customer = None
+                $ renpy.notify("Cliente saiu insatisfeito.")
+            "Antes de prosseguir, vou preparar um café para maior eficiência.":
+                $ drink_coffee()
+                $ renpy.notify("Café preparado. Cliente mais calmo.")
+    elif current_customer["id"] == "bizarre":
+        menu:
+            "Entendo sua preocupação. Vou auxiliar com eficiência.":
+                $ serve_customer()
+                $ arm_stability += 5  # Recupera estabilidade por empatia
+            "Preciso de mais informações sobre sua solicitação.":
+                $ customer_time_left = max(1, customer_time_left - 1.5)
+                $ renpy.notify("Cliente explicando...")
+            "Isso parece incomum. Sugiro aguardar suporte.":
+                $ current_customer = None
+                $ renpy.notify("Cliente confuso saiu.")
+            "Vou escanear os produtos para verificar a anomalia.":
+                # Simular escaneamento rápido
+                if products_to_scan:
+                    $ scanned_products.extend(products_to_scan)
+                    $ products_to_scan = []
+                    $ renpy.notify("Produtos escaneados com sucesso.")
+                else:
+                    $ renpy.notify("Nenhum produto para escanear.")
+    elif current_customer["id"] == "angry":
+        menu:
+            "Calma, vou resolver isso rapidamente para você.":
+                $ serve_customer()
+                $ score += 10  # Bônus por acalmar
+            "Entendo sua frustração. Um instante.":
+                $ customer_time_left = max(1, customer_time_left - 2)
+                $ renpy.notify("Cliente se acalmando...")
+            "Por favor, mantenha a compostura.":
+                $ current_customer = None
+                $ score -= 5  # Penalidade
+                $ renpy.notify("Cliente raivoso saiu furioso!")
+            "Vou aplicar o carimbo de validação para acalmar.":
+                $ apply_stamp()
+                $ renpy.notify("Carimbo aplicado. Cliente validado.")
+    elif current_customer["id"] == "vip":
+        menu:
+            "É um prazer atendê-la, supervisora. Tudo em ordem.":
+                $ serve_customer()
+                $ score += 15  # Grande bônus
+            "Verificarei pessoalmente os protocolos.":
+                $ customer_time_left = max(1, customer_time_left - 0.5)
+                $ renpy.notify("Supervisora aprovando...")
+            "A Gerência será informada.":
+                $ current_customer = None
+                $ renpy.notify("Supervisora saiu satisfeita.")
+            "Vou preparar um café especial para a supervisora.":
+                $ drink_coffee()
+                $ score += 5
+                $ renpy.notify("Café premium servido.")
+    elif current_customer["id"] == "inspector":
+        menu:
+            "Meu sorriso está sempre nos padrões. Como posso ajudar?":
+                $ serve_customer()
+                $ arm_stability += 10  # Recupera por conformidade
+            "Vou ajustar minha expressão imediatamente.":
+                $ customer_time_left = max(1, customer_time_left - 1)
+                $ renpy.notify("Inspetor avaliando...")
+            "A máscara garante a felicidade obrigatória.":
+                $ current_customer = None
+                $ renpy.notify("Inspetor satisfeito.")
+            "Vou escanear os produtos para verificação.":
+                $ scan_product()
+                $ score += 5
+                $ renpy.notify("Produtos escaneados com sucesso.")
+    elif current_customer["id"] == "robot":
+        menu:
+            "Protocolos otimizados. Processando solicitação.":
+                $ serve_customer()
+                $ score += 8  # Bônus por eficiência
+            "Executando diagnóstico do sistema.":
+                $ customer_time_left = max(1, customer_time_left - 1.2)
+                $ renpy.notify("Robô processando...")
+            "Humanos são ineficientes, mas vou tentar.":
+                $ current_customer = None
+                $ renpy.notify("Robô saiu.")
+            "Vou aplicar o carimbo necessário.":
+                $ apply_stamp()
+                $ score += 5
+                $ renpy.notify("Carimbo aplicado com precisão.")
+    else:  # paranoid or default
+        menu:
+            "Estamos seguros aqui. Vou ajudar discretamente.":
+                $ serve_customer()
+                $ arm_stability += 3
+            "Entendo sua paranoia. Fique tranquilo.":
+                $ customer_time_left = max(1, customer_time_left - 1.8)
+                $ renpy.notify("Cliente se acalmando...")
+            "Não há motivo para preocupação.":
+                $ current_customer = None
+                $ renpy.notify("Cliente paranóico saiu desconfiado.")
+            "Vou preparar um café para acalmá-lo.":
+                $ drink_coffee()
+                $ arm_stability += 5
+                $ renpy.notify("Café servido, cliente mais calmo.")
     
     return
 
