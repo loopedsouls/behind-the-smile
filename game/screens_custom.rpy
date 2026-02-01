@@ -5,6 +5,8 @@ init python:
     # Timer para controle do jogo
     game_timer = None
     
+    import math  # Para cálculos do relógio
+    
     def start_game_timer():
         global game_timer
         store.game_start_time = pytime.time()
@@ -290,6 +292,59 @@ init python:
         store.last_coffee_time = current_time
         renpy.notify("Café bebido! Estabilidade +" + str(int(actual_recovery)))
 
+    # ==================== FUNÇÕES DO RELÓGIO DE SPAWN ====================
+    
+    def draw_clock_background(canvas):
+        """Desenha o fundo circular do relógio"""
+        # Círculo externo (borda)
+        canvas.circle("#2a2a4e", (40, 40), 38, 2)  # Borda azul escura
+        # Círculo interno (fundo)
+        canvas.circle("#1a1a2e", (40, 40), 35, 0)  # Fundo roxo escuro
+        
+        # Marcas das horas (12, 3, 6, 9)
+        for angle in [0, 90, 180, 270]:  # 0 = topo (12h), 90 = direita (3h), etc.
+            rad = math.radians(angle - 90)  # -90 para começar do topo
+            x1 = 40 + 28 * math.cos(rad)
+            y1 = 40 + 28 * math.sin(rad)
+            x2 = 40 + 35 * math.cos(rad)
+            y2 = 40 + 35 * math.sin(rad)
+            canvas.line("#f4d03f", (x1, y1), (x2, y2), 2)  # Linhas amarelas
+    
+    def draw_clock_hand(canvas):
+        """Desenha o ponteiro do relógio baseado no tempo restante"""
+        if not hasattr(store, 'next_customer_time') or store.next_customer_time is None:
+            return
+            
+        current_time = pytime.time()
+        time_to_next = max(0, store.next_customer_time - current_time)
+        
+        # Máximo 60 segundos para uma volta completa
+        max_time = 60.0
+        progress = min(1.0, time_to_next / max_time)
+        
+        # Calcular ângulo (começa do topo e vai no sentido horário)
+        angle = (1.0 - progress) * 360.0  # 360 graus = volta completa
+        rad = math.radians(angle - 90)  # -90 para começar do topo
+        
+        # Desenhar ponteiro
+        hand_length = 25
+        x_end = 40 + hand_length * math.cos(rad)
+        y_end = 40 + hand_length * math.sin(rad)
+        
+        # Cor baseada no tempo restante
+        if time_to_next <= 10:
+            color = "#ff4444"  # Vermelho quando pouco tempo
+        elif time_to_next <= 30:
+            color = "#ffaa44"  # Laranja
+        else:
+            color = "#44ff44"  # Verde
+        
+        canvas.line(color, (40, 40), (x_end, y_end), 3)
+    
+    def draw_clock_center(canvas):
+        """Desenha o centro do relógio"""
+        canvas.circle("#f4d03f", (40, 40), 3, 0)  # Centro amarelo
+
 # Transform para texto rolando da lore removido
 # transform scrolling_lore:
 #     # Começa fora da tela à direita
@@ -425,6 +480,38 @@ screen game_hud():
             spacing 5
             text "Estabilidade do Braço" size 16 color "#ffffff"
             bar value arm_stability range 100 xsize 300 ysize 20
+    
+    # Relógio de Spawn de Cliente (Canvas Sprite)
+    frame:
+        xalign 0.5
+        yalign 1.0
+        yoffset -160
+        xpadding 15
+        ypadding 10
+        background "#1a1a2eDD"
+        
+        vbox:
+            spacing 5
+            text "Próximo Cliente" size 14 color "#f4d03f" xalign 0.5
+            
+            # Canvas com relógio circular
+            fixed:
+                xsize 80
+                ysize 80
+                align (0.5, 0.5)
+                
+                # Círculo do relógio (fundo)
+                add Canvas(80, 80, draw_clock_background)
+                
+                # Ponteiro do tempo restante
+                add Canvas(80, 80, draw_clock_hand)
+                
+                # Centro do relógio
+                add Canvas(80, 80, draw_clock_center)
+            
+            # Texto com tempo restante
+            $ time_to_next = max(0, int(store.next_customer_time - pytime.time())) if store.next_customer_time else 0
+            text "[time_to_next]s" size 16 color "#ffffff" xalign 0.5
     
     # Botões para Android (lado direito)
     frame:
@@ -672,6 +759,9 @@ screen game_over_screen():
                 text "O funcionário viu seu rosto triste!" size 24 color "#ff6666" xalign 0.5
             elif game_over_reason == "danger":
                 text "A emergência não foi resolvida a tempo!" size 24 color "#ff6666" xalign 0.5
+            elif game_over_reason == "mask_off_spawn":
+                text "Cliente apareceu sem máscara ativa!" size 24 color "#ff6666" xalign 0.5
+                text "A Gerência não tolera exposição." size 18 color "#ffaaaa" xalign 0.5
             else:
                 text "Turno encerrado!" size 24 color "#ffaa00" xalign 0.5
             

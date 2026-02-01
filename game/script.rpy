@@ -19,6 +19,15 @@ init python:
     store = renpy.store
 
     def spawn_customer():
+        # VERIFICAÇÃO CRÍTICA: Máscara deve estar ativa para spawn de cliente
+        if not store.mask_on:
+            store.game_state = "game_over"
+            store.game_over_reason = "mask_off_spawn"
+            renpy.notify("CONTRATO VIOLADO - Cliente apareceu sem máscara ativa!")
+            renpy.notify("A Gerência não tolera exposição.")
+            renpy.jump("game_over")
+            return
+        
         client = store.get_random_customer()
         client_inst = dict(client)
         # Chance de olhar aumenta com o número de clientes atendidos
@@ -29,8 +38,7 @@ init python:
         renpy.call("customer_dialogue_label")
         # schedule next spawn
         store.next_customer_time = pytime.time() + random.uniform(5.0, 12.0)
-        # Ativar máscara automaticamente
-        store.mask_on = True
+        # Manter máscara ativa (já está ativa da verificação acima)
 
     def is_customer_looking(c):
         return c and c.get('is_looking', False)
@@ -245,7 +253,14 @@ label game_loop:
     # Checar spawn/saída de clientes
     $ now = pytime.time()
     if current_customer is None and now >= next_customer_time:
-        $ spawn_customer()
+        # Adicionar delay extra para evitar spawns muito próximos
+        $ time_since_last_spawn = now - getattr(store, 'last_spawn_time', 0)
+        if time_since_last_spawn >= 8.0:  # Mínimo 8 segundos entre spawns
+            $ spawn_customer()
+            $ store.last_spawn_time = now
+        else:
+            # Reagendar para daqui a pouco
+            $ store.next_customer_time = now + (8.0 - time_since_last_spawn)
     if current_customer is not None and customer_leave_time and now >= customer_leave_time:
         $ renpy.notify(current_customer['name'] + " saiu.")
         $ current_customer = None

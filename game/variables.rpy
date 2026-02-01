@@ -8,8 +8,8 @@ init python:
     # ==================== CONFIGURAÇÕES ====================
     class GameConfig:
         GAME_DURATION = 60          # segundos (1 minuto)
-        SPAWN_INTERVAL = 8.0        # segundos entre checks de spawn (aumentado para dar mais tempo)
-        SPAWN_CUSTOMER_CHANCE = 0.15  # reduzido para spawns menos frequentes
+        SPAWN_INTERVAL = 12.0       # segundos entre checks de spawn (aumentado ainda mais)
+        SPAWN_CUSTOMER_CHANCE = 0.10  # reduzido ainda mais para spawns muito menos frequentes
         SPAWN_DANGER_CHANCE = 0.25
         
         POINTS_PER_DANGER = 15
