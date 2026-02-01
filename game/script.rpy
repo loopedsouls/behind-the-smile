@@ -540,6 +540,48 @@ label ending:
     window hide
     jump main_menu
 
+# ==================== SISTEMA DE RETRY ====================
+
+label retry_current_day:
+    # Reinicia apenas o dia atual, mantendo progresso
+    $ game_state = "playing"
+    $ time_left = GameConfig.GAME_DURATION
+    $ mask_on = True
+    $ arm_stability = 100.0
+    $ mask_lower_count = 0
+    
+    # Resetar sistema de produtos
+    $ products_to_scan = []
+    $ scanned_products = []
+    $ scanning_product = None
+    $ scan_start_time = 0.0
+    
+    # Resetar sistema de carimbos
+    $ stamps_available = []
+    $ current_stamp = None
+    
+    # Resetar sistema de café
+    $ coffee_available = True
+    $ coffee_cooldown = 0.0
+    $ last_coffee_time = 0.0
+    
+    # Manter current_day e dificuldade
+    # Pular para o gameplay do dia atual
+    if current_day == 1:
+        jump day_1_gameplay
+    elif current_day == 2:
+        jump day_2_gameplay
+    elif current_day == 3:
+        jump day_3_gameplay
+    elif current_day == 4:
+        jump day_4_gameplay
+    elif current_day == 5:
+        jump day_5_gameplay
+    else:
+        # Fallback para dia 1 se algo der errado
+        $ current_day = 1
+        jump day_1_gameplay
+
 label game_over:
     hide screen game_hud
     window hide

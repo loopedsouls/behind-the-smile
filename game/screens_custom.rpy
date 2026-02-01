@@ -717,7 +717,7 @@ screen game_over_screen():
                 xalign 0.5
                 
                 textbutton "Tentar Novamente":
-                    action Jump("start_game")
+                    action [SetVariable("game_state", "playing"), Jump("retry_current_day")]
                     style "menu_button"
                 
                 textbutton "Voltar ao Menu":
