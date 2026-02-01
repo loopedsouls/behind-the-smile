@@ -203,6 +203,23 @@ init python:
         filtered = [d for d in DANGER_TYPES if d["severity"] == target_severity]
         return random.choice(filtered).copy()
 
+    # ==================== PRODUTOS PARA ESCANEAR ====================
+    PRODUCTS = [
+        {"id": "bread", "name": "Pão", "emoji": "🍞", "scan_time": 2.0},
+        {"id": "milk", "name": "Leite", "emoji": "🥛", "scan_time": 1.5},
+        {"id": "eggs", "name": "Ovos", "emoji": "🥚", "scan_time": 2.5},
+        {"id": "cheese", "name": "Queijo", "emoji": "🧀", "scan_time": 1.8},
+        {"id": "apples", "name": "Maçãs", "emoji": "🍎", "scan_time": 3.0},
+        {"id": "coffee_beans", "name": "Grãos de Café", "emoji": "☕", "scan_time": 2.2},
+    ]
+
+    # ==================== CARIMBOS ====================
+    STAMPS = [
+        {"id": "approved", "name": "APROVADO", "color": "#44ff44"},
+        {"id": "validated", "name": "VALIDADO", "color": "#f4d03f"},
+        {"id": "processed", "name": "PROCESSADO", "color": "#4444ff"},
+    ]
+
 # ==================== VARIÁVEIS DE ESTADO ====================
 default game_state = "menu"  # menu, playing, paused, game_over
 default time_left = 90
@@ -231,3 +248,18 @@ default mouse_y = 360
 default arm_stability = 100.0  # 0-100
 default stability_decay_rate = 5.0  # por segundo
 default last_stability_update = 0.0
+
+# Sistema de produtos para escanear
+default products_to_scan = []  # Lista de produtos que aparecem no balcão
+default scanned_products = []  # Produtos já escaneados
+default scanning_product = None  # Produto sendo escaneado atualmente
+default scan_start_time = 0.0  # Quando começou a escanear
+
+# Sistema de carimbos
+default stamps_available = []  # Carimbos disponíveis para usar
+default current_stamp = None  # Carimbo selecionado
+
+# Sistema de café
+default coffee_available = True  # Se café está disponível para beber
+default coffee_cooldown = 0.0  # Tempo até poder beber café novamente
+default last_coffee_time = 0.0  # Última vez que bebeu café

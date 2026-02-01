@@ -80,6 +80,9 @@ init python:
         if current_time - store.last_difficulty_increase >= GameConfig.DIFFICULTY_INCREASE_INTERVAL:
             store.last_difficulty_increase = current_time
             store.difficulty_multiplier *= GameConfig.DIFFICULTY_MULTIPLIER
+        
+        # Atualizar escaneamento de produtos
+        update_scanning()
     
     def try_spawn():
         """Tenta spawnar cliente ou perigo"""
@@ -104,6 +107,8 @@ init python:
         store.customer_enter_time = pytime.time()
         # voltar ao estado normal ao aparecer cliente
         store.player_status = "normal"
+        # Spawn produtos para escanear
+        spawn_products()
     
     def spawn_danger():
         """Spawna um novo perigo"""
@@ -164,6 +169,121 @@ init python:
         store.player_status = "normal"
         renpy.notify("Perigo resolvido! +" + str(points) + " pontos")
         return True
+    
+    def spawn_products():
+        """Spawna produtos aleatórios no balcão para escanear"""
+        if store.current_customer and not store.products_to_scan:
+            # Escolhe 2-4 produtos aleatórios
+            num_products = random.randint(2, 4)
+            available_products = store.PRODUCTS.copy()
+            random.shuffle(available_products)
+            store.products_to_scan = available_products[:num_products]
+            store.scanned_products = []
+            store.scanning_product = None
+            renpy.notify("Produtos no balcão! Use o scanner para bipar.")
+    
+    def scan_product(product_id):
+        """Inicia o escaneamento de um produto"""
+        if store.mask_on:
+            renpy.notify("Tire a máscara para usar o scanner!")
+            return
+        
+        if product_id in store.scanned_products:
+            renpy.notify("Produto já escaneado!")
+            return
+        
+        if store.scanning_product:
+            renpy.notify("Já escaneando um produto!")
+            return
+        
+        # Encontra o produto
+        product = next((p for p in store.products_to_scan if p["id"] == product_id), None)
+        if not product:
+            return
+        
+        store.scanning_product = product
+        store.scan_start_time = pytime.time()
+        renpy.notify("Escaneando " + product["name"] + "...")
+    
+    def update_scanning():
+        """Atualiza o progresso do escaneamento"""
+        if not store.scanning_product:
+            return
+        
+        elapsed = pytime.time() - store.scan_start_time
+        if elapsed >= store.scanning_product["scan_time"]:
+            # Escaneamento completo
+            store.scanned_products.append(store.scanning_product["id"])
+            renpy.notify(store.scanning_product["name"] + " escaneado!")
+            store.scanning_product = None
+            
+            # Verifica se todos os produtos foram escaneados
+            if len(store.scanned_products) >= len(store.products_to_scan):
+                store.products_to_scan = []
+                store.scanned_products = []
+                renpy.notify("Todos os produtos escaneados! Pronto para carimbar.")
+    
+    def select_stamp(stamp_id):
+        """Seleciona um carimbo para usar"""
+        if store.mask_on:
+            renpy.notify("Tire a máscara para usar os carimbos!")
+            return
+        
+        stamp = next((s for s in store.STAMPS if s["id"] == stamp_id), None)
+        if stamp:
+            store.current_stamp = stamp
+            renpy.notify("Carimbo '" + stamp["name"] + "' selecionado.")
+    
+    def apply_stamp():
+        """Aplica o carimbo selecionado para validar a compra"""
+        if not store.current_stamp:
+            renpy.notify("Selecione um carimbo primeiro!")
+            return
+        
+        if not store.current_customer:
+            renpy.notify("Nenhum cliente para validar!")
+            return
+        
+        if store.mask_on:
+            renpy.notify("Tire a máscara para carimbar!")
+            return
+        
+        # Verificar se todos os produtos foram escaneados
+        if store.products_to_scan and len(store.scanned_products) < len(store.products_to_scan):
+            renpy.notify("Escaneie todos os produtos primeiro!")
+            return
+        
+        # Aplica o carimbo e finaliza a venda
+        points = store.current_customer["points"] + 5  # Pontos extras por validação
+        store.score += points
+        store.customers_served += 1
+        store.current_customer = None
+        store.current_stamp = None
+        store.products_to_scan = []
+        store.scanned_products = []
+        store.player_status = "normal"
+        renpy.notify("Compra validada com carimbo! +" + str(points) + " pontos")
+    
+    def drink_coffee():
+        """Bebe café para recuperar estabilidade do braço"""
+        if store.mask_on:
+            renpy.notify("Tire a máscara para beber café!")
+            return
+        
+        current_time = pytime.time()
+        if current_time - store.last_coffee_time < 30.0:  # Cooldown de 30 segundos
+            remaining = int(30.0 - (current_time - store.last_coffee_time))
+            renpy.notify("Café em cooldown! " + str(remaining) + "s restantes.")
+            return
+        
+        # Recupera estabilidade
+        recovery_amount = 40.0
+        old_stability = store.arm_stability
+        store.arm_stability = min(100.0, store.arm_stability + recovery_amount)
+        actual_recovery = store.arm_stability - old_stability
+        
+        store.last_coffee_time = current_time
+        renpy.notify("Café bebido! Estabilidade +" + str(int(actual_recovery)))
 
 # Transform para texto rolando da lore removido
 # transform scrolling_lore:
@@ -254,6 +374,69 @@ screen game_hud():
     add "surveillance_eye" xpos 30 ypos 30
     add "surveillance_eye" xpos 1200 ypos 30
     add "surveillance_eye" xpos 1200 ypos 350
+    
+    # Scanner e produtos no balcão (quando há produtos para escanear)
+    if products_to_scan:
+        # Background do scanner
+        add "mask/scannerbarcode.jpg" xpos 400 ypos 500 size (480, 150)
+        
+        # Produtos clicáveis no balcão
+        $ product_positions = [(450, 520), (550, 520), (650, 520), (750, 520)]
+        for i, product in enumerate(products_to_scan):
+            if i < len(product_positions):
+                $ pos_x, pos_y = product_positions[i]
+                $ is_scanned = product["id"] in scanned_products
+                $ is_scanning = scanning_product and scanning_product["id"] == product["id"]
+                
+                # Botão de texto para o produto
+                textbutton product["emoji"] + "\n" + product["name"]:
+                    pos (pos_x, pos_y)
+                    anchor (0.5, 0.5)
+                    action Function(scan_product, product["id"])
+                    style "product_button"
+                    text_color ("#44ff44" if is_scanned else "#ffffff")
+                
+                # Barra de progresso se escaneando
+                if is_scanning:
+                    $ elapsed = pytime.time() - scan_start_time
+                    $ progress = min(1.0, elapsed / scanning_product["scan_time"])
+                    bar value progress range 1.0 pos (pos_x - 30, pos_y + 40) xsize 60 ysize 8
+    
+    # Carimbos (sempre visíveis quando máscara está baixa)
+    if not mask_on:
+        frame:
+            xalign 0.0
+            yalign 0.8
+            xoffset 20
+            background "#2a2a4eDD"
+            xpadding 15
+            ypadding 15
+            
+            vbox:
+                spacing 8
+                text "CARIMBOS" size 16 color "#f4d03f"
+                
+                for stamp in STAMPS:
+                    $ is_selected = current_stamp and current_stamp["id"] == stamp["id"]
+                    textbutton stamp["name"]:
+                        action Function(select_stamp, stamp["id"])
+                        style "stamp_button"
+                        text_color (stamp["color"] if not is_selected else "#ffffff")
+                        background ("#444444" if is_selected else "#2a2a2a")
+                
+                null height 10
+                
+                textbutton "Aplicar Carimbo":
+                    action Function(apply_stamp)
+                    style "game_button"
+                    sensitive (current_stamp is not None and current_customer is not None)
+    
+    # Botão de Café
+    if not mask_on:
+        textbutton "☕ CAFÉ":
+            pos (1100, 600)
+            action Function(drink_coffee)
+            style "game_button"
     
     # Overlay da máscara (se ativa) - segue mouse apenas quando estabilidade baixa
     if mask_on:
@@ -397,8 +580,9 @@ screen game_hud():
     
     # Atalhos de teclado
     key "K_z" action Function(toggle_mask)
-    key "K_x" action Function(serve_customer)
+    key "K_x" action Function(apply_stamp)  # Aplicar carimbo
     key "K_c" action Function(resolve_danger)
+    key "K_v" action Function(drink_coffee)  # Beber café
     key "K_ESCAPE" action Jump("pause_game")
 
 # ==================== TELA DE MENU ====================
@@ -667,3 +851,27 @@ style game_button_disabled:
 style game_button_disabled_text:
     color "#666666"
     size 16
+
+style stamp_button:
+    background "#2a2a2a"
+    hover_background "#3a3a3a"
+    padding (10, 5)
+    xsize 120
+
+style stamp_button_text:
+    color "#ffffff"
+    size 14
+    bold True
+
+style product_button:
+    background "#2a2a4e"
+    hover_background "#3a3a5e"
+    padding (10, 10)
+    xsize 80
+    ysize 60
+
+style product_button_text:
+    color "#ffffff"
+    size 12
+    text_align 0.5
+    bold True

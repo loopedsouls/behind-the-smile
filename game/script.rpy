@@ -53,9 +53,9 @@ label customer_dialogue_label:
     customer_char "[dialogue_line]"
     
     menu:
-        "Claro, como posso ajudar?":
-            $ serve_customer()
-        "Desculpe, estou ocupado agora.":
+        "Entendido, vou preparar a compra.":
+            pass
+        "Um momento, por favor.":
             pass
     
     return
@@ -95,6 +95,21 @@ label start_game:
     $ difficulty_multiplier = 1.0
     $ next_customer_time = pytime.time() + 3.0
     $ customer_leave_time = None
+    
+    # Resetar sistema de produtos
+    $ products_to_scan = []
+    $ scanned_products = []
+    $ scanning_product = None
+    $ scan_start_time = 0.0
+    
+    # Resetar sistema de carimbos
+    $ stamps_available = []
+    $ current_stamp = None
+    
+    # Resetar sistema de café
+    $ coffee_available = True
+    $ coffee_cooldown = 0.0
+    $ last_coffee_time = 0.0
     
     # Ocultar elementos de visual novel
     window hide
