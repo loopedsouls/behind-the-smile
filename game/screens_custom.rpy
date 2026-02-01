@@ -674,8 +674,8 @@ screen customer_dialogue(customer):
     if game_state != "playing":
         pass
     else:
-        # Timer para esconder após 3 segundos
-        timer 3.0 action Hide("customer_dialogue")
+        # Timer para esconder após 5 segundos
+        timer 5.0 action Hide("customer_dialogue")
 
         # Tecla espaço para pular
         key "K_SPACE" action Hide("customer_dialogue")
@@ -697,7 +697,7 @@ screen customer_dialogue(customer):
                 # Nome do cliente
                 text customer["name"] size 24 color "#f4d03f" bold True
                 # Linha de diálogo com efeito letra por letra
-                text "{cps=25}" + customer["line"] size 18 color "#ffffff"
+                text "{cps=20}" + customer["line"] size 18 color "#ffffff"
                 # Botão para atender
                 textbutton "Atender" action Function(serve_customer) style "game_button" xalign 1.0
         
