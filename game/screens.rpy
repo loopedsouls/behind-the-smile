@@ -136,11 +136,7 @@ style window:
     yalign gui.textbox_yalign
     ysize gui.textbox_height
 
-    # Sombra preta sutil para facilitar leitura
-    background Frame("#000000", # Preto sólido
-                     Borders(15, 15, 15, 15),
-                     tile=False,
-                     alpha=0.3) # Transparente para não interferir demais
+    background Frame("gui/frame.png", gui.frame_borders, tile=gui.frame_tile)
 
 style namebox:
     xpos gui.name_xpos
@@ -149,11 +145,7 @@ style namebox:
     ypos gui.name_ypos
     ysize gui.namebox_height
 
-    # Sombra preta sutil para facilitar leitura
-    background Frame("#000000", # Preto sólido
-                     Borders(8, 8, 8, 8),
-                     tile=False,
-                     alpha=0.4) # Ligeiramente mais opaco para nomes
+    background Frame("gui/frame.png", gui.frame_borders, tile=gui.frame_tile)
     padding gui.namebox_borders.padding
 
 style say_label:

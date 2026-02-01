@@ -494,11 +494,12 @@ screen game_hud():
             text "Estabilidade do Braço" size 14 color "#ffffff" xalign 0.5
             bar value arm_stability range 100 xsize 200 ysize 25 at Transform(rotate=270)
     
-    # Relógio de Spawn de Cliente (Canvas Sprite)
+    # Relógio de Spawn de Cliente (Canvas Sprite) - Lado esquerdo acima da barra
     frame:
-        xalign 0.5
-        yalign 1.0
-        yoffset -100
+        xalign 0.0
+        xoffset 20
+        yalign 0.0
+        yoffset 100
         xpadding 15
         ypadding 10
         background "#1a1a2eDD"
