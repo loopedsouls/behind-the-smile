@@ -4,6 +4,7 @@
 # ==================== PERSONAGEM NARRADOR ====================
 define narrator_dystopia = Character(None, what_color="#cccccc")
 define system = Character("SISTEMA", color="#f4d03f", what_color="#ffdd88")
+define customer_char = Character(None, color="#f4d03f", what_color="#ffffff")
 
 init python:
     # Fix for renpy.error not being callable
@@ -20,7 +21,7 @@ init python:
         client_inst['is_looking'] = random.choice([True, False])
         store.current_customer = client_inst
         store.customer_leave_time = pytime.time() + random.uniform(4.0, 8.0)
-        renpy.show_screen("customer_dialogue", customer=client_inst)
+        renpy.call("customer_dialogue_label")
         # schedule next spawn
         store.next_customer_time = pytime.time() + random.uniform(5.0, 12.0)
         # Ativar máscara automaticamente
@@ -46,6 +47,18 @@ init python:
 
     def on_mask_raise():
         store.mask_on = True
+
+label customer_dialogue_label:
+    $ dialogue_line = current_customer["line"]
+    customer_char "[dialogue_line]"
+    
+    menu:
+        "Claro, como posso ajudar?":
+            $ serve_customer()
+        "Desculpe, estou ocupado agora.":
+            pass
+    
+    return
 
 # ==================== INÍCIO DO JOGO ====================
 label start:

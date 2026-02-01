@@ -144,7 +144,6 @@ init python:
         store.current_customer = None
         # voltar ao estado visual normal
         store.player_status = "normal"
-        renpy.hide_screen("customer_dialogue")  # Esconder diálogo ao atender
         renpy.notify("Cliente atendido! +" + str(points) + " pontos")
         return True
     
@@ -665,45 +664,6 @@ style game_button_disabled:
     background "#2a2a3e"
     padding (20, 10)
 
-# ==================== TELA DE DIÁLOGO DO CLIENTE ====================
-screen customer_dialogue(customer):
-    zorder 100
-    modal False
-
-    # Só mostrar se o jogo estiver rodando
-    if game_state != "playing":
-        pass
-    else:
-        # Timer para esconder após 5 segundos
-        timer 5.0 action Hide("customer_dialogue")
-
-        # Tecla espaço para pular
-        key "K_SPACE" action Hide("customer_dialogue")
-
-        # Fundo semi-transparente
-        add Solid("#00000080")
-
-        # Caixa de diálogo no centro inferior
-        frame:
-            xalign 0.5
-            yalign 1.0
-            xsize 800
-            ysize 200
-            background Solid("#1a1a2e")
-            padding (20, 20)
-
-            vbox:
-                spacing 10
-                # Nome do cliente
-                text customer["name"] size 24 color "#f4d03f" bold True
-                # Linha de diálogo com efeito letra por letra
-                text "{cps=20}" + customer["line"] size 18 color "#ffffff"
-                # Botão para atender
-                textbutton "Atender" action Function(serve_customer) style "game_button" xalign 1.0
-        
-        # Botão para pular diálogo
-        textbutton "Pular" action Hide("customer_dialogue") xalign 0.95 yalign 0.05 style "menu_button_secondary"
-    
 style game_button_disabled_text:
     color "#666666"
     size 16
