@@ -11,6 +11,7 @@ init python:
         store.last_spawn_check = store.game_start_time
         store.last_difficulty_increase = store.game_start_time
         store.last_stability_update = store.game_start_time
+        store.last_announcement = store.game_start_time
     
     def update_game_logic():
         """Atualiza a lógica do jogo a cada frame"""
@@ -62,8 +63,10 @@ init python:
                 if store.arm_stability <= 0:
                     store.game_state = "game_over"
                     store.game_over_reason = "exhaustion"
-                    renpy.jump("game_over")
-        else:
+                    renpy.jump("game_over")        
+        # Screenshake quando estabilidade baixa
+        if store.arm_stability < 30 and random.random() < 0.1:  # 10% chance por frame
+            renpy.with_statement(hpunch)        else:
             # Recuperar estabilidade gradualmente quando máscara está baixa
             stability_elapsed = current_time - store.last_stability_update
             if stability_elapsed >= 1.0:  # Atualizar a cada segundo
@@ -76,10 +79,11 @@ init python:
             store.last_spawn_check = current_time
             try_spawn()
         
-        # Dificuldade progressiva
-        if current_time - store.last_difficulty_increase >= GameConfig.DIFFICULTY_INCREASE_INTERVAL:
-            store.last_difficulty_increase = current_time
-            store.difficulty_multiplier *= GameConfig.DIFFICULTY_MULTIPLIER
+        # Anúncios da Gerência (fragments de lore)
+        if not hasattr(store, 'last_announcement') or current_time - store.last_announcement >= 30.0:
+            store.last_announcement = current_time
+            fragment = random.choice(store.LORE["fragments"])
+            renpy.notify("ANÚNCIO DA GERÊNCIA: " + fragment)
         
         # Atualizar escaneamento de produtos
         update_scanning()
@@ -455,6 +459,18 @@ screen game_hud():
         # Texto "SORRIA!" no topo (sem emojis)
         text "SORRIA!" xalign 0.5 ypos 40 size 36 color "#f4d03f" outlines [(2, "#000000", 0, 0)]
     
+    # Relógio Digital no topo direito
+    frame:
+        xalign 1.0
+        yalign 0.0
+        xoffset -20
+        yoffset 20
+        xpadding 15
+        ypadding 10
+        background "#1a1a2eDD"
+        
+        text "[time_left]s" size 24 color "#f4d03f" bold True
+    
     # Barra de Estabilidade do Braço
     frame:
         xalign 0.5
@@ -709,6 +725,8 @@ screen game_over_screen():
             xalign 0.5
             
             text "GAME OVER" size 48 color "#ff4444" xalign 0.5
+            
+            text "Turno [current_shift]/5" size 24 color "#ffffff" xalign 0.5
             
             # Razão do game over
             if game_over_reason == "caught":

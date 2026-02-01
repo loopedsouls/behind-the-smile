@@ -18,7 +18,9 @@ init python:
     def spawn_customer():
         client = store.get_random_customer()
         client_inst = dict(client)
-        client_inst['is_looking'] = random.choice([True, False])
+        # Chance de olhar aumenta com o número de clientes atendidos
+        look_chance = min(0.8, 0.3 + (store.customers_served * 0.05))  # Começa em 30%, até 80%
+        client_inst['is_looking'] = random.random() < look_chance
         store.current_customer = client_inst
         store.customer_leave_time = pytime.time() + random.uniform(4.0, 8.0)
         renpy.call("customer_dialogue_label")

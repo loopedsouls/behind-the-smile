@@ -238,6 +238,8 @@ default customers_served = 0
 default dangers_resolved = 0
 default game_over_reason = ""
 
+default current_shift = 1  # Turno atual (1-5)
+
 # Controle de animação
 default customer_entering = False
 default customer_enter_time = 0.0
