@@ -292,58 +292,71 @@ init python:
         store.last_coffee_time = current_time
         renpy.notify("Café bebido! Estabilidade +" + str(int(actual_recovery)))
 
-    # ==================== FUNÇÕES DO RELÓGIO DE SPAWN ====================
+    # ==================== DISPLAYABLES DO RELÓGIO ====================
     
-    def draw_clock_background(canvas):
-        """Desenha o fundo circular do relógio"""
-        # Círculo externo (borda)
-        canvas.circle("#2a2a4e", (40, 40), 38, 2)  # Borda azul escura
-        # Círculo interno (fundo)
-        canvas.circle("#1a1a2e", (40, 40), 35, 0)  # Fundo roxo escuro
-        
-        # Marcas das horas (12, 3, 6, 9)
-        for angle in [0, 90, 180, 270]:  # 0 = topo (12h), 90 = direita (3h), etc.
-            rad = math.radians(angle - 90)  # -90 para começar do topo
-            x1 = 40 + 28 * math.cos(rad)
-            y1 = 40 + 28 * math.sin(rad)
-            x2 = 40 + 35 * math.cos(rad)
-            y2 = 40 + 35 * math.sin(rad)
-            canvas.line("#f4d03f", (x1, y1), (x2, y2), 2)  # Linhas amarelas
-    
-    def draw_clock_hand(canvas):
-        """Desenha o ponteiro do relógio baseado no tempo restante"""
-        if not hasattr(store, 'next_customer_time') or store.next_customer_time is None:
-            return
+    class ClockDisplayable(renpy.Displayable):
+        def __init__(self, **kwargs):
+            super().__init__(**kwargs)
             
-        current_time = pytime.time()
-        time_to_next = max(0, store.next_customer_time - current_time)
-        
-        # Máximo 60 segundos para uma volta completa
-        max_time = 60.0
-        progress = min(1.0, time_to_next / max_time)
-        
-        # Calcular ângulo (começa do topo e vai no sentido horário)
-        angle = (1.0 - progress) * 360.0  # 360 graus = volta completa
-        rad = math.radians(angle - 90)  # -90 para começar do topo
-        
-        # Desenhar ponteiro
-        hand_length = 25
-        x_end = 40 + hand_length * math.cos(rad)
-        y_end = 40 + hand_length * math.sin(rad)
-        
-        # Cor baseada no tempo restante
-        if time_to_next <= 10:
-            color = "#ff4444"  # Vermelho quando pouco tempo
-        elif time_to_next <= 30:
-            color = "#ffaa44"  # Laranja
-        else:
-            color = "#44ff44"  # Verde
-        
-        canvas.line(color, (40, 40), (x_end, y_end), 3)
-    
-    def draw_clock_center(canvas):
-        """Desenha o centro do relógio"""
-        canvas.circle("#f4d03f", (40, 40), 3, 0)  # Centro amarelo
+        def render(self, width, height, st, at):
+            # Forçar redesenho a cada frame
+            renpy.redraw(self, 0)
+            
+            rv = renpy.Render(width, height)
+            
+            # Criar superfície para desenhar
+            surf = renpy.display.pgrender.surface((width, height), True)
+            
+            # Fundo do relógio (círculo simples)
+            import pygame
+            pygame.draw.circle(surf, renpy.color.Color("#1a1a2e"), (width//2, height//2), width//2)
+            pygame.draw.circle(surf, renpy.color.Color("#2a2a4e"), (width//2, height//2), width//2 - 2, 2)
+            
+            # Marcas das horas
+            center_x, center_y = width // 2, height // 2
+            for i in range(12):
+                angle = i * 30  # 30 graus por hora
+                rad = math.radians(angle - 90)
+                x1 = center_x + 25 * math.cos(rad)
+                y1 = center_y + 25 * math.sin(rad)
+                pygame.draw.circle(surf, renpy.color.Color("#f4d03f"), (int(x1), int(y1)), 1)
+            
+            # Ponteiro baseado no tempo
+            if hasattr(store, 'next_customer_time') and store.next_customer_time:
+                current_time = pytime.time()
+                time_to_next = max(0, store.next_customer_time - current_time)
+                max_time = 60.0
+                progress = min(1.0, time_to_next / max_time)
+                
+                angle = (1.0 - progress) * 360.0
+                rad = math.radians(angle - 90)
+                
+                hand_length = 28
+                x_end = center_x + hand_length * math.cos(rad)
+                y_end = center_y + hand_length * math.sin(rad)
+                
+                # Cor do ponteiro
+                if time_to_next <= 10:
+                    color = "#ff4444"
+                elif time_to_next <= 30:
+                    color = "#ffaa44"
+                else:
+                    color = "#44ff44"
+                
+                # Desenhar linha do ponteiro
+                pygame.draw.line(surf, renpy.color.Color(color), (center_x, center_y), (x_end, y_end), 3)
+            
+            # Centro do relógio
+            pygame.draw.circle(surf, renpy.color.Color("#f4d03f"), (center_x, center_y), 3)
+            
+            # Converter superfície para texture e blitar no render
+            tex = renpy.display.draw.load_texture(surf)
+            rv.blit(tex, (0, 0))
+            
+            return rv
+            
+        def visit(self):
+            return []
 
 # Transform para texto rolando da lore removido
 # transform scrolling_lore:
@@ -500,14 +513,8 @@ screen game_hud():
                 ysize 80
                 align (0.5, 0.5)
                 
-                # Círculo do relógio (fundo)
-                add Canvas(80, 80, draw_clock_background)
-                
-                # Ponteiro do tempo restante
-                add Canvas(80, 80, draw_clock_hand)
-                
-                # Centro do relógio
-                add Canvas(80, 80, draw_clock_center)
+                # Relógio completo em um displayable
+                add ClockDisplayable()
             
             # Texto com tempo restante
             $ time_to_next = max(0, int(store.next_customer_time - pytime.time())) if store.next_customer_time else 0
