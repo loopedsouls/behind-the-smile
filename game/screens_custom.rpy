@@ -104,7 +104,13 @@ init python:
     
     def spawn_customer():
         """Spawna um novo cliente"""
-        store.current_customer = get_random_customer()
+        # Filtrar clientes não atendidos
+        available_customers = [c for c in CUSTOMER_TYPES if c["id"] not in store.served_customers]
+        if not available_customers:
+            # Se todos foram atendidos, resetar lista para variedade
+            store.served_customers = []
+            available_customers = CUSTOMER_TYPES
+        store.current_customer = random.choice(available_customers).copy()
         # Reduzir paciência baseado no número de clientes atendidos (mais rápido a cada 3 atendidos)
         speed_reduction = store.customers_served // 3
         store.current_customer["patience"] = max(1, store.current_customer["patience"] - speed_reduction)
@@ -264,6 +270,7 @@ init python:
         points = store.current_customer["points"] + 5  # Pontos extras por validação
         store.score += points
         store.customers_served += 1
+        store.served_customers.append(store.current_customer["id"])  # Adicionar à lista de atendidos
         store.current_customer = None
         store.current_stamp = None
         store.products_to_scan = []
@@ -391,23 +398,23 @@ screen game_hud():
         $ danger_bg = danger_bg_map.get(current_danger["id"], "bg store_normal")
         add danger_bg size (1280, 720) at bg_crossfade
     elif player_status == "normal":
-        if mask_on:
+        if not mask_on:
             add "bg store_normal" at bg_crossfade
         else:
             add "bg store_unmasked_normal" at bg_crossfade
     elif player_status == "alert":
-        if mask_on:
+        if not mask_on:
             add "bg store_alert" at bg_crossfade
         else:
             add "bg store_unmasked_alert" at bg_crossfade
     elif player_status == "infected":
-        if mask_on:
+        if not mask_on:
             add "bg store_infected" at bg_crossfade
         else:
             add "bg store_unmasked_infected" at bg_crossfade
     else:
         # fallback
-        if mask_on:
+        if not mask_on:
             add "bg store_normal" at bg_crossfade
         else:
             add "bg store_unmasked_normal" at bg_crossfade

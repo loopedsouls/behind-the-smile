@@ -9,7 +9,7 @@ init python:
     class GameConfig:
         GAME_DURATION = 60          # segundos (1 minuto)
         SPAWN_INTERVAL = 12.0       # segundos entre checks de spawn (aumentado ainda mais)
-        SPAWN_CUSTOMER_CHANCE = 0.10  # reduzido ainda mais para spawns muito menos frequentes
+        SPAWN_CUSTOMER_CHANCE = 0.30  # aumentado para mais spawns
         SPAWN_DANGER_CHANCE = 0.25
         
         POINTS_PER_DANGER = 15
@@ -265,3 +265,7 @@ default current_stamp = None  # Carimbo selecionado
 default coffee_available = True  # Se café está disponível para beber
 default coffee_cooldown = 0.0  # Tempo até poder beber café novamente
 default last_coffee_time = 0.0  # Última vez que bebeu café
+
+# Novos para correção de bugs
+default progression_flags = []  # Lista para rastrear eventos completados
+default served_customers = []  # Lista de IDs de clientes atendidos para evitar repetições

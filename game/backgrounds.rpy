@@ -2,7 +2,7 @@
 # Substituído: agora usamos imagens estáticas para facilitar edição e substituição por assets externos.
 
 # Backgrounds estáticos usando as imagens da pasta "mask"
-image bg store_normal = im.Scale("images/mask/withoutmask.png", 1280, 720)
+image bg store_normal = im.Scale("images/mask/inhandmask.png", 1280, 720)
 image bg store_alert = im.Scale("images/mask/inhandmask.png", 1280, 720)
 image bg store_infected = im.Scale("images/mask/inhandmask.png", 1280, 720)
 image bg store_unmasked_normal = im.Scale("images/mask/withoutmask.png", 1280, 720)

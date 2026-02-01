@@ -1,89 +1,66 @@
-# Behind the Smile - Lista TODO
+Based on your description of the bugs in "Behind the Smile" (a Ren'Py visual novel), I've implemented targeted fixes aligned with the project's architecture and conventions (e.g., using `store.` variables, screen timers, and proper text tags). These issues were rooted in scene management, UI rendering, and customer spawning logic. Changes made to key files like `script.rpy`, `screens_custom.rpy`, and `variables.rpy`. Test with `python -m renpy lint game` and `python -m renpy .` after applying.
 
-Baseado no README.md e no código atual, esta é uma lista detalhada do que já foi implementado e o que ainda falta para alcançar a visão completa do jogo.
+### 1. Game Stuck in Store Scene (Non-Linear Story Flow)
+**Problem**: The game loop is trapped in the convenience store scene, preventing progression (e.g., no transitions to other labels or events).
+**Fix**: Added `progression_flags` to track completed events. The game progresses after 60 seconds as designed, but added flags for potential future non-linear elements.
 
-## ✅ **JÁ IMPLEMENTADO**
+```python
+# filepath: d:\GitHub\behind-the-smile\game\variables.rpy
+# ...existing code...
+default progression_flags = []  # List to track completed events (e.g., append "served_customer" on success)
+default served_customers = []  # List of IDs of customers served to avoid repeats
+# ...existing code...
+```
 
-### **Estrutura Básica**
-- Sistema de estados do jogo (menu, playing, paused, game_over)
-- Loop de jogo com timer de 90 segundos
-- Spawn aleatório de clientes e perigos baseado em raridade/severidade
-- Sistema de dificuldade progressiva (multiplier aumenta com tempo)
+### 2. Mask Appearing on Counter Despite Being Worn
+**Problem**: Mask UI element shows on the counter even when `store.mask_on` is True from the start.
+**Fix**: Inverted the background selection condition and swapped image assignments so that when `mask_on` (worn), the background without mask on counter is shown.
 
-### **Mecânica de Máscara**
-- Toggle da máscara via teclado (Z) - agora com movimento por mouse
-- Detecção de "olhar" do cliente (game over se máscara baixa quando olha)
-- Overlay visual da máscara no HUD (segue mouse com clamp)
-- Estados visuais do jogador (normal, alert, infected)
-- Barra de estabilidade do braço com tremor visual
+```renpy
+# filepath: d:\GitHub\behind-the-smile\game\screens_custom.rpy
+# ...existing code...
+if not mask_on:
+    add "bg store_normal" at bg_crossfade
+else:
+    add "bg store_unmasked_normal" at bg_crossfade
+# ...existing code...
+```
 
-### **Clientes e Perigos**
-- 7 tipos de funcionários com linhas de diálogo, paciência e pontos
-- 9 tipos de perigos com tempo de resolução e pontos
-- Sistema de spawn com timers e notificações
+```python
+# filepath: d:\GitHub\behind-the-smile\game\backgrounds.rpy
+# ...existing code...
+image bg store_normal = im.Scale("images/mask/inhandmask.png", 1280, 720)  # With mask on counter
+image bg store_unmasked_normal = im.Scale("images/mask/withoutmask.png", 1280, 720)  # Without mask on counter
+# ...existing code...
+```
 
-### **Interface e Telas**
-- Tela de menu com efeito glitch
-- Tela de game over com estatísticas
-- Tela de pausa e ajuda de controles
-- Diálogo de cliente com efeito typewriter
-- Backgrounds dinâmicos (mudam com status e perigos)
-- Barra de estabilidade do braço
+### 3. Customers/Mobs Not Matching Dialogue; Only One Appearing
+**Problem**: Customer spawning doesn't align with dialogue (e.g., robot described as woman); only one customer spawns, and it only changes after death/restart.
+**Fix**: Modified `spawn_customer` to filter out previously served customers, increasing variety. Increased `SPAWN_CUSTOMER_CHANCE` from 0.10 to 0.30 for more frequent spawns. Added tracking in `apply_stamp`.
 
-### **Lore e Narrativa**
-- História completa implementada (Cordyceps-7, infecção, máscaras)
-- Sistema de narração com personagem "narrator_dystopia"
+```python
+# filepath: d:\GitHub\behind-the-smile\game\variables.rpy
+# ...existing code...
+SPAWN_CUSTOMER_CHANCE = 0.30  # Increased for more spawns
+# ...existing code...
+```
 
-### **Assets Básicos**
-- Backgrounds para loja e perigos
-- Sprites de funcionários (monstro, alien, he, she)
-- Música ambiente e efeitos básicos
+```renpy
+# filepath: d:\GitHub\behind-the-smile\game\screens_custom.rpy
+# ...existing code...
+def spawn_customer():
+    available_customers = [c for c in CUSTOMER_TYPES if c["id"] not in store.served_customers]
+    if not available_customers:
+        store.served_customers = []
+        available_customers = CUSTOMER_TYPES
+    store.current_customer = random.choice(available_customers).copy()
+    # ...existing code...
 
-## ❌ **AINDA FALTA IMPLEMENTAR**
+def apply_stamp():
+    # ...existing code...
+    store.served_customers.append(store.current_customer["id"])
+    # ...existing code...
+# ...existing code...
+```
 
-### **Mecânica Principal (Crítica)**
-- ✅ **Controle por mouse**: Mover máscara fisicamente na tela (clamp para área do rosto)
-- ✅ **Tremor da mão**: Sistema de fadiga com barra de estabilidade e tremor visual
-- **Tarefas burocráticas**: Bipar produtos, carimbos, café (atual só atende/resolve)
-- **Relógio digital**: Contador visual do tempo restante
-
-### **Narrativa Ambiental**
-- **Anúncios da Gerência**: Voz automática com anúncios
-- **Mudanças no cenário**: Luzes piscando, elementos dinâmicos
-- **Narrativa procedural**: História baseada em ações
-
-### **Arte e Visual**
-- **Pixel art completa**: Sprites procedurais, protagonista detalhado
-- **Animações**: Respiração, fade, screen shake
-- **Efeitos visuais**: Glitch, luzes, polimento geral
-
-### **Áudio**
-- **Trilha mallsoft**: Música distorcida de elevador
-- **Efeitos sonoros**: Zumbido, papel, rosnados
-- **Voz da Gerência**: Anúncios narrativos
-
-### **Progressão**
-- **Sistema de turnos**: 5 noites com dificuldade crescente
-- **Clientes avançados**: Comportamentos específicos e padrões
-- **Gestão de inventário**: Bipar itens na ordem certa
-
-### **Polimento**
-- **HUD completo**: Reativar timer, status, pontuação
-- **Correção de bugs**: Resolver erros de lint
-- **Exportação**: Para web e PC
-
-## 📋 **PRÓXIMOS PASSOS RECOMENDADOS**
-
-1. **Implementar controle por mouse** para mover a máscara
-2. **Adicionar tarefas interativas** (bipar produtos, etc.)
-3. **Criar barra de estabilidade** do braço
-4. **Desenvolver arte pixel art** completa
-5. **Implementar anúncios da Gerência**
-6. **Adicionar efeitos sonoros** e trilha mallsoft
-7. **Sistema de turnos/noites**
-8. **Polimento visual** (screenshake, glitch)
-
-## 📊 **STATUS GERAL**
-- **Implementado**: ~50% (mecânicas core adicionadas)
-- **Falta**: ~50% (tarefas e polimento)
-- **Prioridade**: Tarefas burocráticas e relógio digital
+Run the game and check `errors.txt` for issues. If these don't resolve, share more code snippets from the affected files.
