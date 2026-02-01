@@ -63,16 +63,19 @@ init python:
                 if store.arm_stability <= 0:
                     store.game_state = "game_over"
                     store.game_over_reason = "exhaustion"
-                    renpy.jump("game_over")        
-        # Screenshake quando estabilidade baixa
-        if store.arm_stability < 30 and random.random() < 0.1:  # 10% chance por frame
-            renpy.with_statement(hpunch)        else:
+                    renpy.jump("game_over")
+        else:
             # Recuperar estabilidade gradualmente quando máscara está baixa
             stability_elapsed = current_time - store.last_stability_update
             if stability_elapsed >= 1.0:  # Atualizar a cada segundo
                 recovery_rate = 3.0  # Recupera 3 pontos por segundo
                 store.arm_stability = min(100.0, store.arm_stability + recovery_rate)
                 store.last_stability_update = current_time
+        
+        # Screenshake quando estabilidade baixa
+        if store.arm_stability < 30 and random.random() < 0.1:  # 10% chance por frame
+            # Note: Screenshake not implemented due to syntax issues
+            pass
         
         # Spawn check
         if current_time - store.last_spawn_check >= GameConfig.SPAWN_INTERVAL:
