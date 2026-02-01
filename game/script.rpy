@@ -277,7 +277,7 @@ label pause_game:
 label day_1_intro:
     $ current_day = 1
     window show
-    scene black
+    scene bg meu_quarto
     
     "O alarme toca às 6:00 da manhã. Meu apartamento é um cubículo mínimo, com paredes de concreto cinza e uma única janela que dá para um beco escuro."
     
@@ -338,7 +338,7 @@ label day_1_gameplay:
 label day_2_intro:
     $ current_day = 2
     window show
-    scene black
+    scene bg meu_quarto
     
     "Dia 2. O alarme toca novamente. Meu corpo dói como se tivesse corrido uma maratona ontem."
     
@@ -387,7 +387,7 @@ label day_2_gameplay:
 label day_3_intro:
     $ current_day = 3
     window show
-    scene black
+    scene bg meu_quarto
     
     "Dia 3. Acordo suando frio. O telefone tocou a noite toda com chamadas silenciosas."
     
@@ -434,7 +434,7 @@ label day_3_gameplay:
 label day_4_intro:
     $ current_day = 4
     window show
-    scene black
+    scene bg meu_quarto
     
     "Dia 4. O mundo parece mais frágil agora. Como se uma rachadura invisível estivesse se abrindo na realidade."
     
@@ -481,7 +481,7 @@ label day_4_gameplay:
 label day_5_intro:
     $ current_day = 5
     window show
-    scene black
+    scene bg meu_quarto
     
     "Dia 5. O último dia. Ou o primeiro do fim."
     

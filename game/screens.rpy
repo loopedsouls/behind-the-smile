@@ -136,7 +136,11 @@ style window:
     yalign gui.textbox_yalign
     ysize gui.textbox_height
 
-    background Image("gui/textbox.png", xalign=0.5, yalign=1.0)
+    # Sombra preta sutil para facilitar leitura
+    background Frame("#000000", # Preto sólido
+                     Borders(15, 15, 15, 15),
+                     tile=False,
+                     alpha=0.3) # Transparente para não interferir demais
 
 style namebox:
     xpos gui.name_xpos
@@ -145,13 +149,20 @@ style namebox:
     ypos gui.name_ypos
     ysize gui.namebox_height
 
-    background Frame("gui/namebox.png", gui.namebox_borders, tile=gui.namebox_tile, xalign=gui.name_xalign)
+    # Sombra preta sutil para facilitar leitura
+    background Frame("#000000", # Preto sólido
+                     Borders(8, 8, 8, 8),
+                     tile=False,
+                     alpha=0.4) # Ligeiramente mais opaco para nomes
     padding gui.namebox_borders.padding
 
 style say_label:
     properties gui.text_properties("name", accent=True)
     xalign gui.name_xalign
     yalign 0.5
+    
+    # Efeitos cyberpunk para nomes
+    outlines [(1, "#ffff00", 0, 0), (1, "#ff6600", 0, 0)] # Outline mais sutil
 
 style say_dialogue:
     properties gui.text_properties("dialogue")
@@ -161,6 +172,9 @@ style say_dialogue:
     ypos gui.dialogue_ypos
 
     adjust_spacing False
+    
+    # Efeitos cyberpunk para o texto
+    outlines [(1, "#ff00ff", 0, 0), (1, "#00ffff", 0, 0)] # Outline mais sutil
 
 ## Tela de entrada #############################################################
 ##

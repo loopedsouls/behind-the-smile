@@ -23,40 +23,40 @@ define config.check_conflicting_properties = True
 
 ## Cores #######################################################################
 ##
-## As cores do texto na interface - Tema Behind The Smile (Distópico)
+## As cores do texto na interface - Tema Behind The Smile (Cyber-Distópico)
 
 ## Uma cor de destaque usada em toda a interface para rotular e destacar o
-## texto.
-define gui.accent_color = '#f4d03f'
+## texto. (Amarelo neon)
+define gui.accent_color = '#ffff00'
 
 ## A cor usada para um botão de texto quando ele não está selecionado nem passa
-## o mouse.
-define gui.idle_color = '#888888'
+## o mouse. (Cinza azulado)
+define gui.idle_color = '#6688aa'
 
 ## A cor pequena é usada para texto pequeno, que precisa ser mais claro/escuro
-## para obter o mesmo efeito.
-define gui.idle_small_color = '#aaaaaa'
+## para obter o mesmo efeito. (Azul claro sujo)
+define gui.idle_small_color = '#88aacc'
 
-## A cor que é usada para botões e barras que passam pelo mouse.
-define gui.hover_color = '#f4d03f'
+## A cor que é usada para botões e barras que passam pelo mouse. (Magenta neon)
+define gui.hover_color = '#ff00ff'
 
 ## A cor usada em um botão de texto quando ele está selecionado, mas não
 ## focalizado. Um botão estará selecionado se for a tela atual ou o valor de
-## preferência.
-define gui.selected_color = '#ffffff'
+## preferência. (Branco com tom cyan)
+define gui.selected_color = '#ccffff'
 
 ## A cor usada para um botão de texto quando ele não pode ser selecionado.
-define gui.insensitive_color = '#4444447f'
+define gui.insensitive_color = '#4444667f'
 
 ## Cores usadas para as partes das barras que não estão preenchidas. Elas não
 ## são usadas diretamente, mas são usadas ao gerar novamente os arquivos de
 ## imagem de barra.
-define gui.muted_color = '#1a1a2e'
-define gui.hover_muted_color = '#2a2a4e'
+define gui.muted_color = '#1a0a2e'
+define gui.hover_muted_color = '#2a1a4e'
 
-## As cores usadas para o diálogo e o texto da opção de menu.
-define gui.text_color = '#ffffff'
-define gui.interface_text_color = '#cccccc'
+## As cores usadas para o diálogo e o texto da opção de menu. (Verde neon mais brilhante para contraste)
+define gui.text_color = '#aaffaa'
+define gui.interface_text_color = '#88cc88'
 
 
 ## Fontes e tamanhos de fonte ##################################################
