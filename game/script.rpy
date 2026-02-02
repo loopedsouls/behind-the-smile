@@ -290,6 +290,7 @@ label day_1_intro:
     $ current_day = 1
     window show
     scene bg meu_quarto
+    play sound "audio/alarm-clock-90867.mp3"
     
     "O alarme toca às 6:00 da manhã. Meu apartamento é um cubículo mínimo, com paredes de concreto cinza e uma única janela que dá para um beco escuro."
     
