@@ -26,3 +26,28 @@ image pause_plate = im.Scale("images/plate.png", 800, 480)
 image bg dark = Solid("#0f0f23")
 image bg game_over = Solid("#1a0f0f")
 
+# ==================== PLACEHOLDERS - Dia 1 ====================
+# Cenas narrativas do Dia 1
+image bg uniform_hanging = Solid("#1a1a1a")  # add img uniform_hanging.jpg
+image bg mirror_putting_mask = Solid("#1a1a1a")  # add img mirror_putting_mask.jpg
+image bg behind_counter_masked = Solid("#1a1a1a")  # add img behind_counter_masked.jpg
+image bg street_neon_dystopia = Solid("#1a1a1a")  # add img street_neon_dystopia.jpg
+image bg store_neon_sign = Solid("#1a1a1a")  # add img store_neon_sign.jpg
+image bg store_entrance = Solid("#1a1a1a")  # add img store_entrance.jpg
+
+# ==================== PLACEHOLDERS - Monstros ====================
+image bg spider_legs_monster = Solid("#0a0a0a")  # add img spider_legs_monster.jpg
+
+# ==================== PLACEHOLDERS - Dias Seguintes ====================
+image bg bedroom_day2 = Solid("#1a1a1a")  # add img bedroom_more_deteriorated.jpg
+image bg performance_report = Solid("#1a1a1a")  # add img performance_report_bg.jpg
+image bg creepy_customer = Solid("#1a1a1a")  # add img creepy_looking_customer.jpg
+image bg mysterious_note = Solid("#1a1a1a")  # add img mysterious_note.jpg
+image bg corrupted_coffee = Solid("#1a1a1a")  # add img corrupted_coffee.jpg
+image bg city_chaos = Solid("#1a1a1a")  # add img city_chaos.jpg
+image bg fallen_masks = Solid("#1a1a1a")  # add img fallen_masks_street.jpg
+image bg nightmare_surreal = Solid("#1a1a1a")  # add img nightmare_surreal.jpg
+image bg waking_in_pain = Solid("#1a1a1a")  # add img waking_in_pain.jpg
+image bg day4_deteriorated = Solid("#1a1a1a")  # add img day4_deteriorated_mask.jpg
+image bg mask_on_nightstand = Solid("#1a1a1a")  # add img mask_on_nightstand.jpg
+

@@ -294,11 +294,15 @@ label day_1_intro:
     
     "O alarme toca às 6:00 da manhã. Meu apartamento é um cubículo mínimo, com paredes de concreto cinza e uma única janela que dá para um beco escuro."
     
+    scene bg uniform_hanging  # add img uniform_hanging.jpg
+    
     "Levanto-me da cama estreita, sentindo o peso da noite anterior. Os olhos queimam, as mãos tremem ligeiramente. É o meu primeiro dia como Funcionário #404."
     
     "A Gerência me recrutou há uma semana. Disseram que eu era 'perfeito para o cargo' - alguém que já estava quebrado o suficiente para não questionar as regras."
     
     "Visto o uniforme: calças pretas, camisa branca engomada, gravata fina. E a máscara. Aquela máscara de sorriso amarelo brilhante que nunca sai do meu rosto durante o expediente."
+    
+    scene bg mirror_putting_mask  # add img mirror_putting_mask.jpg
     
     "O espelho reflete um estranho. Olheiras profundas, pele pálida, olhos vazios. Mas a máscara... a máscara sorri eternamente."
     
@@ -308,11 +312,19 @@ label day_1_intro:
     
     gerente "Hoje começa seu treinamento. Mantenha o sorriso. Atenda os clientes. Não falhe."
     
+    scene bg street_neon_dystopia  # add img street_neon_dystopia.jpg
+    
     "Saio para a rua. A cidade é um labirinto de prédios altos e ruas iluminadas por neon distorcido. Pessoas caminham como autômatos, todas com suas máscaras sorridentes."
+    
+    scene bg store_neon_sign  # add img store_neon_sign.jpg
     
     "Chego à loja de conveniência. A placa pisca: 'SORRIA - VOCÊ ESTÁ SENDO OBSERVADO'."
     
+    scene bg store_entrance  # add img store_entrance.jpg
+    
     "Entro. O ar condicionado zumbe como um inseto gigante. As prateleiras estão impecavelmente arrumadas. O balcão brilha sob as luzes fluorescentes."
+    
+    scene bg behind_counter_masked  # add img behind_counter_masked.jpg
     
     "É hora de começar o turno."
     
@@ -341,12 +353,18 @@ label day_1_gameplay:
     else:
         gerente "Desempenho insuficiente. Melhore ou enfrente as consequências."
     
+    scene bg meu_quarto
+    
     "Volto para casa exausto. A máscara pesa no meu rosto como chumbo. Meus braços doem de segurá-la por tanto tempo."
     
     "Mas... algo estranho aconteceu hoje. Um cliente olhou para mim de um jeito diferente. Não com raiva ou impaciência. Com... reconhecimento?"
     
+    scene bg nightmare_surreal  # add img nightmare_surreal.jpg
+    play sound "audio/ambiente.mp3"  # Usar som ambiente como fundo
+    
     "Durmo inquieto, sonhando com sorrisos que se transformam em gritos."
     
+    stop sound
     window hide
     jump day_2_intro
 
@@ -354,8 +372,11 @@ label day_2_intro:
     $ current_day = 2
     window show
     scene bg meu_quarto
+    play sound "audio/alarm-clock-90867.mp3"
     
     "Dia 2. O alarme toca novamente. Meu corpo dói como se tivesse corrido uma maratona ontem."
+    
+    scene bg waking_in_pain  # add img waking_in_pain.jpg
     
     "Olho no espelho. As olheiras estão piores. A máscara sorri, mas meus olhos... eles traem tudo."
     
@@ -391,9 +412,13 @@ label day_2_gameplay:
     
     "Minhas mãos tremem mais agora. A máscara pesa como uma âncora. Mas não posso tirá-la. Nunca durante o expediente."
     
+    scene bg meu_quarto
+    
     "À noite, recebo uma ligação anônima. Uma voz distorcida sussurra: 'Eles sabem quem você é. Fuja enquanto pode.'"
     
     "Desligo o telefone. Paranóia? Ou aviso legítimo?"
+    
+    scene bg mask_on_nightstand  # add img mask_on_nightstand.jpg
     
     "Durmo com a máscara ao lado da cama, sorrindo para mim no escuro."
     
@@ -407,6 +432,8 @@ label day_3_intro:
     
     "Dia 3. Acordo suando frio. O telefone tocou a noite toda com chamadas silenciosas."
     
+    scene bg bedroom_day2  # add img bedroom_more_deteriorated.jpg
+    
     "A mensagem da Gerência hoje é mais direta: 'Não questione. Apenas obedeça.'"
     
     "No caminho para o trabalho, noto que algumas pessoas nas ruas não estão mais sorrindo. Suas máscaras pendem frouxas, revelando olhares vazios."
@@ -414,6 +441,8 @@ label day_3_intro:
     "Será que estou imaginando coisas? Ou a cidade está... mudando?"
     
     "Na loja, o ar parece mais pesado hoje. As luzes fluorescentes piscam ocasionalmente, lançando sombras estranhas."
+    
+    scene bg creepy_customer  # add img creepy_looking_customer.jpg
     
     "Um cliente chega primeiro - uma mulher com uniforme de supervisora. Ela me olha de um jeito que me faz arrepiar."
     
@@ -435,13 +464,23 @@ label day_3_gameplay:
     
     gerente "Dia 3 concluído. Lealdade confirmada."
     
+    scene bg store_normal
+    
     "Hoje foi... diferente. A supervisora me deu instruções específicas. 'Mantenha a fachada', ela disse. 'A verdade é relativa.'"
     
     "Os clientes pareciam mais agressivos, mais exigentes. Um deles tentou arrancar minha máscara. Graças aos céus consegui mantê-la no lugar."
     
-    "À noite, encontro um bilhete na minha porta: 'A Gerência não é o que parece. Procure a verdade nos arquivos.'"
+    scene bg meu_quarto
+    
+    "À noite, encontro um bilhete na minha porta:"
+    
+    scene bg mysterious_note  # add img mysterious_note.jpg
+    
+    "'A Gerência não é o que parece. Procure a verdade nos arquivos.'"
     
     "Que arquivos? Onde?"
+    
+    scene bg meu_quarto
     
     "Durmo com um olho aberto, a máscara sempre por perto."
     
@@ -455,6 +494,8 @@ label day_4_intro:
     
     "Dia 4. O mundo parece mais frágil agora. Como se uma rachadura invisível estivesse se abrindo na realidade."
     
+    scene bg day4_deteriorated  # add img day4_deteriorated_mask.jpg
+    
     "A Gerência mandou uma atualização: 'Protocolo de Emergência ativado. Aumente vigilância.'"
     
     "Nas ruas, vejo pessoas discutindo em voz baixa. Máscaras caídas revelam expressões de medo e confusão."
@@ -462,6 +503,8 @@ label day_4_intro:
     "Será que estou causando isso? Ou sou apenas uma peça no quebra-cabeça?"
     
     "Na loja, o scanner de produtos começa a falhar. Os carimbos aparecem borrados. O café tem gosto de metal."
+    
+    scene bg corrupted_coffee  # add img corrupted_coffee.jpg
     
     "Um inspetor chega primeiro hoje. Seus olhos perfuram através da máscara."
     
@@ -483,11 +526,15 @@ label day_4_gameplay:
     
     gerente "Dia 4. Segredos revelados."
     
+    scene bg store_normal
+    
     "O inspetor me contou coisas... coisas que não deveriam ser ditas. Sobre a 'verdadeira natureza' da Gerência."
     
     "Clientes chegam em hordas agora. Alguns parecem... errados. Suas formas mudam quando não estou olhando diretamente."
     
     "Minhas mãos tremem incontrolavelmente. A máscara escorrega. Mas não posso tirá-la. Não agora."
+    
+    scene bg nightmare_surreal  # add img nightmare_surreal.jpg
     
     "À noite, os sonhos vêm. Sonhos com rostos sem olhos, sorrisos eternos, e uma voz que sussurra meu nome verdadeiro."
     
@@ -503,11 +550,17 @@ label day_5_intro:
     
     "Dia 5. O último dia. Ou o primeiro do fim."
     
+    scene bg city_chaos  # add img city_chaos.jpg
+    
     "A cidade está em caos. Máscaras caídas nas ruas, pessoas gritando, luzes piscando erraticamente."
     
     "A Gerência não mandou mensagem hoje. Talvez saibam que descobri tudo."
     
+    scene bg fallen_masks  # add img fallen_masks_street.jpg
+    
     "Entro na loja pela última vez. O ar está carregado de eletricidade estática. Os produtos nas prateleiras... se movem sozinhos?"
+    
+    scene bg store_normal
     
     "Um robô chega primeiro. Seus olhos vermelhos piscam com dados que não quero ver."
     

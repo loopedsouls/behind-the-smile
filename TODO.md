@@ -1,66 +1,102 @@
-Based on your description of the bugs in "Behind the Smile" (a Ren'Py visual novel), I've implemented targeted fixes aligned with the project's architecture and conventions (e.g., using `store.` variables, screen timers, and proper text tags). These issues were rooted in scene management, UI rendering, and customer spawning logic. Changes made to key files like `script.rpy`, `screens_custom.rpy`, and `variables.rpy`. Test with `python -m renpy lint game` and `python -m renpy .` after applying.
+# TODO.md - Jogo Behind the Smile
 
-### 1. Game Stuck in Store Scene (Non-Linear Story Flow)
-**Problem**: The game loop is trapped in the convenience store scene, preventing progression (e.g., no transitions to other labels or events).
-**Fix**: Added `progression_flags` to track completed events. The game progresses after 60 seconds as designed, but added flags for potential future non-linear elements.
+## Dia 1
+- [x] Colocar áudio de despertador na cena inicial
+  - `audio/alarm-clock-90867.mp3` ✓
+- [ ] Mostrar imagem do uniforme pendurado e da máscara
+  - `add img uniform_hanging.jpg`
+- [x] Espelho reflete um estranho: imagem do homem de terno com olheiras colocando a máscara (igual ao da capa)
+  - Placeholder adicionado: `bg mirror_putting_mask`
+- [x] Cena "Mantenha o sorriso": personagem atrás do balcão com a máscara, pronto para atender clientes
+  - Placeholder adicionado: `bg behind_counter_masked`
+- [x] Saída para a rua: inserir imagem conforme descrição
+  - Placeholder adicionado: `bg street_neon_dystopia`
+- [x] Chegada à conveniência: adicionar neon "Sorria, você está sendo observado"
+  - Placeholder adicionado: `bg store_neon_sign`
+- [x] Entrada: mostrar corredor com prateleiras e balcão vazio ao fundo
+  - Placeholder adicionado: `bg store_entrance`
+- [ ] Atender clientes:
+  - [ ] Ação violenta na parte negativa (ex.: tela escurece com berro do atendente → game over no monstro com pernas de aranha)
+    - `add audio scream_horror.mp3`
+    - `add img spider_legs_monster.jpg`
+  - [ ] Definir ações específicas para outros monstros
+    - `add audio bizarre_sound.mp3`
+    - `add audio angry_growl.mp3`
+    - `add audio robot_beep.mp3`
+  - [ ] Adicionar sons para os monstros
+    - `add audio vip_footsteps.mp3`
+    - `add audio paranoid_whisper.mp3`
+- [ ] Animações ocasionais no cenário (ex.: goteira pingando)
+  - `add audio dripping_water.mp3`
+- [ ] Som de caixa registradora quando algum monstro comprar algo
+  - `add audio cash_register.mp3`
 
-```python
-# filepath: d:\GitHub\behind-the-smile\game\variables.rpy
-# ...existing code...
-default progression_flags = []  # List to track completed events (e.g., append "served_customer" on success)
-default served_customers = []  # List of IDs of customers served to avoid repeats
-# ...existing code...
-```
+## Dias seguintes (Dia 2, Dia 3, Dia 4, Dia 5)
+- [x] Início novamente no quarto
+  - `audio/alarm-clock-90867.mp3` (reutilizado) ✓
+  - Placeholder adicionado: `bg waking_in_pain`, `bg bedroom_day2`, `bg day4_deteriorated`
+- [ ] Tela de desempenho: janela com resultados
+  - Placeholder adicionado: `bg performance_report`
+- [ ] Adicionar transição entre os dias
+  - Estrutura de dias criada ✓
 
-### 2. Mask Appearing on Counter Despite Being Worn
-**Problem**: Mask UI element shows on the counter even when `store.mask_on` is True from the start.
-**Fix**: Inverted the background selection condition and swapped image assignments so that when `mask_on` (worn), the background without mask on counter is shown.
+### Dia 2 Específico
+- [x] Cliente olhando: mostrar cara sinistra
+  - Placeholder adicionado: `bg creepy_customer`
+- [ ] Telefone tocando à noite: imagem/áudio
+  - `add audio phone_ringing_distorted.mp3`
 
-```renpy
-# filepath: d:\GitHub\behind-the-smile\game\screens_custom.rpy
-# ...existing code...
-if not mask_on:
-    add "bg store_normal" at bg_crossfade
-else:
-    add "bg store_unmasked_normal" at bg_crossfade
-# ...existing code...
-```
+### Dia 3 Específico
+- [x] Bilhete misterioso na porta
+  - Placeholder adicionado: `bg mysterious_note`
 
-```python
-# filepath: d:\GitHub\behind-the-smile\game\backgrounds.rpy
-# ...existing code...
-image bg store_normal = im.Scale("images/mask/inhandmask.png", 1280, 720)  # With mask on counter
-image bg store_unmasked_normal = im.Scale("images/mask/withoutmask.png", 1280, 720)  # Without mask on counter
-# ...existing code...
-```
+### Dia 4 Específico
+- [ ] Scanner de produtos falhando
+  - `add audio scanner_glitch.mp3`
+- [x] Café com gosto de metal
+  - Placeholder adicionado: `bg corrupted_coffee`
 
-### 3. Customers/Mobs Not Matching Dialogue; Only One Appearing
-**Problem**: Customer spawning doesn't align with dialogue (e.g., robot described as woman); only one customer spawns, and it only changes after death/restart.
-**Fix**: Modified `spawn_customer` to filter out previously served customers, increasing variety. Increased `SPAWN_CUSTOMER_CHANCE` from 0.10 to 0.30 for more frequent spawns. Added tracking in `apply_stamp`.
+### Dia 5 Específico (Clímax)
+- [x] Cidade em caos: imagem deteriorada
+  - Placeholder adicionado: `bg city_chaos`
+- [x] Máscaras caídas nas ruas
+  - Placeholder adicionado: `bg fallen_masks`
 
-```python
-# filepath: d:\GitHub\behind-the-smile\game\variables.rpy
-# ...existing code...
-SPAWN_CUSTOMER_CHANCE = 0.30  # Increased for more spawns
-# ...existing code...
-```
+## Elementos adicionais
 
-```renpy
-# filepath: d:\GitHub\behind-the-smile\game\screens_custom.rpy
-# ...existing code...
-def spawn_customer():
-    available_customers = [c for c in CUSTOMER_TYPES if c["id"] not in store.served_customers]
-    if not available_customers:
-        store.served_customers = []
-        available_customers = CUSTOMER_TYPES
-    store.current_customer = random.choice(available_customers).copy()
-    # ...existing code...
+### UI Elements
+- [ ] Café: imagem de uma xícara de café
+  - `add img coffee_cup.jpg`
+- [ ] Carimbo: imagem do carimbo
+  - `add img stamp_icon.jpg`
+- [ ] Diagnóstico do sistema: imagem representando sistema
+  - `add img system_diagnostic.jpg`
+- [ ] Protocolo: imagem correspondente
+  - `add img protocol_screen.jpg`
 
-def apply_stamp():
-    # ...existing code...
-    store.served_customers.append(store.current_customer["id"])
-    # ...existing code...
-# ...existing code...
-```
+### Cenas Narrativas
+- [x] Dormir inquieto: imagem de pesadelo + som de gritos
+  - Placeholder adicionado: `bg nightmare_surreal` ✓
+  - Som ambiente reutilizado: `audio/ambiente.mp3`
+- [x] Alarme toca novamente: personagem sentado na cama com expressão de dor
+  - Placeholder adicionado: `bg waking_in_pain` ✓
+- [x] Dia em que está pior: imagem dele com a máscara e aparência deteriorada
+  - Placeholder adicionado: `bg day4_deteriorated` ✓
+- [x] Dorme com a máscara na frente: adicionar imagem
+  - Placeholder adicionado: `bg mask_on_nightstand` ✓
 
-Run the game and check `errors.txt` for issues. If these don't resolve, share more code snippets from the affected files.
+### Ambient Sounds
+- [ ] Som da cafeteira para dar mais vida
+  - `add audio coffee_machine.mp3`
+- [ ] Fluorescent lights humming
+  - `add audio fluorescent_hum.mp3`
+- [ ] Clock ticking
+  - `add audio clock_ticking.mp3`
+
+---
+
+## Observações
+- Sons e imagens devem ser consistentes com a estética sombria do jogo.
+- Transições entre dias devem reforçar a atmosfera de desgaste psicológico.
+- Cada monstro deve ter comportamento e áudio próprios para aumentar a imersão.
+- Placeholders: `add img [nome]` para imagens, `add audio [nome]` para áudios
