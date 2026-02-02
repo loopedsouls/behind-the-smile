@@ -26,8 +26,7 @@
 
 ## Dias seguintes (Dia 2, Dia 3, etc.)
 - [x] Início novamente no quarto
-- [ ] Tela de desempenho: janela com resultados
-  - Falta: img performance_report_bg.jpg
+- [x] Tela de desempenho: janela com resultados
 - [x] Adicionar transição entre os dias
   - Falta: audio day_transition.mp3 (opcional)
 

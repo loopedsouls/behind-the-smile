@@ -817,6 +817,114 @@ screen game_over_screen():
             null height 20
             
             # Botões
+
+screen day_performance_screen():
+    tag menu
+    modal True
+    
+    # Fundo escuro com overlay
+    add Solid("#0f0f23")
+    
+    frame:
+        xalign 0.5
+        yalign 0.5
+        xpadding 60
+        ypadding 50
+        background "#1a1a2eEE"
+        
+        vbox:
+            spacing 25
+            xalign 0.5
+            
+            text "RELATÓRIO DO DIA [current_day]" size 42 color "#f4d03f" xalign 0.5 bold True
+            
+            null height 10
+            
+            # Estatísticas do dia
+            frame:
+                background "#0f0f23"
+                xpadding 40
+                ypadding 30
+                xalign 0.5
+                
+                vbox:
+                    spacing 20
+                    
+                    # Performance geral
+                    hbox:
+                        spacing 70
+                        xalign 0.5
+                        
+                        vbox:
+                            spacing 5
+                            xalign 0.5
+                            text "Pontuação Total" size 16 color "#888888" xalign 0.5
+                            text "[score]" size 40 color "#f4d03f" xalign 0.5 bold True
+                        
+                        vbox:
+                            spacing 5
+                            xalign 0.5
+                            text "Clientes Atendidos" size 16 color "#888888" xalign 0.5
+                            text "[customers_served]" size 40 color "#44ff44" xalign 0.5 bold True
+                        
+                        vbox:
+                            spacing 5
+                            xalign 0.5
+                            text "Emergências Resolvidas" size 16 color "#888888" xalign 0.5
+                            text "[dangers_resolved]" size 40 color "#ffaa00" xalign 0.5 bold True
+                    
+                    null height 15
+                    
+                    # Barra de progresso
+                    vbox:
+                        spacing 8
+                        xalign 0.5
+                        
+                        text "Eficiência do Turno" size 16 color "#888888" xalign 0.5
+                        
+                        bar:
+                            value score
+                            range 100
+                            xsize 400
+                            ysize 30
+                            left_bar "#44ff44"
+                            right_bar "#331111"
+                            xalign 0.5
+            
+            null height 15
+            
+            # Avaliação da Gerência
+            frame:
+                background "#2a1a1a"
+                xpadding 30
+                ypadding 20
+                xalign 0.5
+                
+                vbox:
+                    spacing 10
+                    xalign 0.5
+                    
+                    text "AVALIAÇÃO DA GERÊNCIA" size 18 color "#ff4444" xalign 0.5
+                    
+                    if score >= 80:
+                        text "Desempenho exemplar. A Gerência está satisfeita." size 16 color "#44ff44" xalign 0.5
+                    elif score >= 50:
+                        text "Desempenho aceitável. Continue assim." size 16 color "#ffaa00" xalign 0.5
+                    else:
+                        text "Desempenho insuficiente. Melhore ou enfrente as consequências." size 16 color "#ff6666" xalign 0.5
+            
+            null height 20
+            
+            # Botão continuar
+            textbutton "CONTINUAR" action Return():
+                xalign 0.5
+                text_size 24
+                text_color "#ffffff"
+                text_hover_color "#f4d03f"
+                background "#2a2a3e"
+                hover_background "#3a3a4e"
+                xpadding 40
+                ypadding 15
             hbox:
                 spacing 20
                 xalign 0.5

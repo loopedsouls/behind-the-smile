@@ -341,6 +341,8 @@ label day_1_gameplay:
     call game_loop()
     
     # Após o turno
+    call screen day_performance_screen()
+    
     window show
     scene bg store_normal
     
@@ -402,6 +404,8 @@ label day_2_gameplay:
     
     call game_loop()
     
+    call screen day_performance_screen()
+    
     window show
     
     gerente "Relatório do Dia 2."
@@ -459,6 +463,8 @@ label day_3_gameplay:
     $ game_state = "playing"
     
     call game_loop()
+    
+    call screen day_performance_screen()
     
     window show
     
@@ -522,6 +528,8 @@ label day_4_gameplay:
     
     call game_loop()
     
+    call screen day_performance_screen()
+    
     window show
     
     gerente "Dia 4. Segredos revelados."
@@ -577,6 +585,8 @@ label day_5_gameplay:
     $ game_state = "playing"
     
     call game_loop()
+    
+    call screen day_performance_screen()
     
     window show
     
