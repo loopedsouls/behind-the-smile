@@ -817,6 +817,27 @@ screen game_over_screen():
             null height 20
             
             # Botões
+            hbox:
+                spacing 30
+                xalign 0.5
+                
+                textbutton "Tentar Novamente" action Jump("retry_current_day"):
+                    text_size 22
+                    text_color "#ffffff"
+                    text_hover_color "#f4d03f"
+                    background "#2a2a3e"
+                    hover_background "#3a3a4e"
+                    xpadding 30
+                    ypadding 12
+                
+                textbutton "Menu Principal" action Jump("main_menu"):
+                    text_size 22
+                    text_color "#ffffff"
+                    text_hover_color "#ff4444"
+                    background "#2a2a3e"
+                    hover_background "#3a3a4e"
+                    xpadding 30
+                    ypadding 12
 
 screen day_performance_screen():
     tag menu
