@@ -28,6 +28,7 @@ image bg game_over = Solid("#1a0f0f")
 
 # ==================== UI ELEMENTS ====================
 image ui_coffee_cup = im.Scale("images/store/coffee_cup.jpg", 200, 200)
+image bg_carimbo = im.Scale("images/store/carimbo.jpg", 1280, 720)
 
 # ==================== PLACEHOLDERS - Dia 1 ====================
 # Cenas narrativas do Dia 1
@@ -39,8 +40,8 @@ image bg store_neon_sign = im.Scale("images/store/store_neon_sign.jpg", 1280, 72
 image bg store_entrance = im.Scale("images/store/store_entrance.jpg", 1280, 720)
 
 # ==================== PLACEHOLDERS - Monstros ====================
-image bg spider_monster = Solid("#0a0a0a")  # add img spider_monster.jpg
-image monster_spider_legs = Solid("#0a0a0a")  # add img spider_monster.jpg (alias)
+image bg spider_monster = im.Scale("images/monster/gameover_spider.jpg", 1280, 720)
+image monster_spider_legs = im.Scale("images/monster/spider_monster.jpg", 1280, 720)
 
 # ==================== PLACEHOLDERS - Dias Seguintes ====================
 image bg bedroom_day2 = Solid("#1a1a1a")  # add img bedroom_more_deteriorated.jpg

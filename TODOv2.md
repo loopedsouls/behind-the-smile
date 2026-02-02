@@ -10,8 +10,7 @@
 - [x] Chegada à conveniência: adicionar neon "Sorria, você está sendo observado"
 - [x] Entrada: mostrar corredor com prateleiras e balcão vazio ao fundo
 - [ ] Atender clientes:
-  - [ ] Ação violenta na parte negativa (ex.: tela escurece com berro do atendente → game over no monstro com pernas de aranha)
-    - Falta: img spider_monster.jpg
+  - [x] Ação violenta na parte negativa (ex.: tela escurece com berro do atendente → game over no monstro com pernas de aranha)
     - Falta: audio scream_horror.mp3
   - [ ] Definir ações específicas para outros monstros
   - [ ] Adicionar sons para os monstros
@@ -34,8 +33,7 @@
 
 ## Elementos adicionais
 - [x] Café: imagem de uma xícara de café
-- [ ] Carimbo: imagem do carimbo
-  - Falta: img stamp_icon.jpg
+- [x] Carimbo: imagem do carimbo
 - [ ] Diagnóstico do sistema: imagem representando sistema
   - Falta: img system_diagnostic.jpg
 - [ ] Protocolo: imagem correspondente

@@ -658,6 +658,12 @@ label game_over:
     hide screen game_hud
     window hide
     
+    # Mostrar cena do monstro aranha se foi pego sem máscara
+    if game_over_reason == "caught" or game_over_reason == "mask_off_spawn":
+        scene bg spider_monster with fade
+        # play sound audio.scream_horror  # TODO: adicionar arquivo scream_horror.mp3
+        pause 2.0
+    
     call screen game_over_screen()
     
     return
