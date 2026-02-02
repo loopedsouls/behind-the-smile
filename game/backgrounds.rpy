@@ -28,7 +28,7 @@ image bg game_over = Solid("#1a0f0f")
 
 # ==================== PLACEHOLDERS - Dia 1 ====================
 # Cenas narrativas do Dia 1
-image bg uniform_hanging = Solid("#1a1a1a")  # add img uniform_hanging.jpg
+image bg uniform_hanging = im.Scale("images/quarto/uniforme_pendurado_mascara.jpg", 1280, 720)
 image bg mirror_putting_mask = Solid("#1a1a1a")  # add img mirror_putting_mask.jpg
 image bg behind_counter_masked = Solid("#1a1a1a")  # add img behind_counter_masked.jpg
 image bg street_neon_dystopia = Solid("#1a1a1a")  # add img street_neon_dystopia.jpg

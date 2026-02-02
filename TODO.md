@@ -3,8 +3,8 @@
 ## Dia 1
 - [x] Colocar áudio de despertador na cena inicial
   - `audio/alarm-clock-90867.mp3` ✓
-- [ ] Mostrar imagem do uniforme pendurado e da máscara
-  - `add img uniform_hanging.jpg`
+- [x] Mostrar imagem do uniforme pendurado e da máscara
+  - `images/quarto/uniforme_pendurado_mascara.jpg` ✓
 - [x] Espelho reflete um estranho: imagem do homem de terno com olheiras colocando a máscara (igual ao da capa)
   - Placeholder adicionado: `bg mirror_putting_mask`
 - [x] Cena "Mantenha o sorriso": personagem atrás do balcão com a máscara, pronto para atender clientes
