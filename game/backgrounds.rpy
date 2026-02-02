@@ -26,17 +26,21 @@ image pause_plate = im.Scale("images/plate.png", 800, 480)
 image bg dark = Solid("#0f0f23")
 image bg game_over = Solid("#1a0f0f")
 
+# ==================== UI ELEMENTS ====================
+image ui_coffee_cup = im.Scale("images/store/coffee_cup.jpg", 200, 200)
+
 # ==================== PLACEHOLDERS - Dia 1 ====================
 # Cenas narrativas do Dia 1
 image bg uniform_hanging = im.Scale("images/quarto/uniforme_pendurado_mascara.jpg", 1280, 720)
 image bg mirror_putting_mask = Solid("#1a1a1a")  # add img mirror_putting_mask.jpg
-image bg behind_counter_masked = Solid("#1a1a1a")  # add img behind_counter_masked.jpg
-image bg street_neon_dystopia = Solid("#1a1a1a")  # add img street_neon_dystopia.jpg
-image bg store_neon_sign = Solid("#1a1a1a")  # add img store_neon_sign.jpg
-image bg store_entrance = Solid("#1a1a1a")  # add img store_entrance.jpg
+image bg behind_counter_masked = im.Scale("images/store/behind_counter_masked.jpg", 1280, 720)
+image bg street_neon_dystopia = im.Scale("images/street/street_neon_dystopia.jpg", 1280, 720)
+image bg store_neon_sign = im.Scale("images/store/store_neon_sign.jpg", 1280, 720)
+image bg store_entrance = im.Scale("images/store/store_entrance.jpg", 1280, 720)
 
 # ==================== PLACEHOLDERS - Monstros ====================
-image bg spider_legs_monster = Solid("#0a0a0a")  # add img spider_legs_monster.jpg
+image bg spider_monster = Solid("#0a0a0a")  # add img spider_monster.jpg
+image monster_spider_legs = Solid("#0a0a0a")  # add img spider_monster.jpg (alias)
 
 # ==================== PLACEHOLDERS - Dias Seguintes ====================
 image bg bedroom_day2 = Solid("#1a1a1a")  # add img bedroom_more_deteriorated.jpg
