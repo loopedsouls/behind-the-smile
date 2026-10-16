@@ -338,7 +338,7 @@ label day_1_gameplay:
     $ time_left = GameConfig.GAME_DURATION
     $ game_state = "playing"
     
-    call game_loop()
+    call game_loop() from _call_game_loop
     
     # Após o turno
     call screen day_performance_screen()
@@ -402,7 +402,7 @@ label day_2_gameplay:
     $ time_left = GameConfig.GAME_DURATION
     $ game_state = "playing"
     
-    call game_loop()
+    call game_loop() from _call_game_loop_1
     
     call screen day_performance_screen()
     
@@ -462,7 +462,7 @@ label day_3_gameplay:
     $ time_left = GameConfig.GAME_DURATION
     $ game_state = "playing"
     
-    call game_loop()
+    call game_loop() from _call_game_loop_2
     
     call screen day_performance_screen()
     
@@ -526,7 +526,7 @@ label day_4_gameplay:
     $ time_left = GameConfig.GAME_DURATION
     $ game_state = "playing"
     
-    call game_loop()
+    call game_loop() from _call_game_loop_3
     
     call screen day_performance_screen()
     
@@ -584,7 +584,7 @@ label day_5_gameplay:
     $ time_left = GameConfig.GAME_DURATION
     $ game_state = "playing"
     
-    call game_loop()
+    call game_loop() from _call_game_loop_4
     
     call screen day_performance_screen()
     
